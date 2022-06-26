@@ -1,0 +1,44 @@
+#once
+
+{
+	.ProjectName = 'TransceiverCircuitLib'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/TransceiverCircuit'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/live555Extra/include'
+		+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+	.SourcePath = .ProjectPath
+	.SourceExcludedFiles
+		+ 'main.cpp'
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+		+ 'curl'
+		+ 'live555'
+		+ 'openssl'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#if __WINDOWS__
+		.CompilerOptions + ' /wd4373 /wd4250'
+#endif
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+#include "../fbuild/gen_ide_project.bff"
+}

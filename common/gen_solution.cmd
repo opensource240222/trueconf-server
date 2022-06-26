@@ -1,0 +1,1 @@
+FBuild -clean solution

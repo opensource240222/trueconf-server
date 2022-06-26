@@ -1,0 +1,7 @@
+#if HAVE_GOOGLETEST
+^LinkerOptions
+	+ ."googletest_LinkerOptions_$Toolchain$_$Platform$_$Config$"
+#else
+^Libraries
+	+ 'googletest-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif

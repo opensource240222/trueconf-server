@@ -1,0 +1,8 @@
+#pragma once
+
+#define CPPDB_MAJOR 0
+#define CPPDB_MINOR 3
+#define CPPDB_PATCH 1
+
+#define CPPDB_VERSION "0.3.1" // "$CPPDB_MAJOR.$CPPDB_MINOR.$CPPDB_PATCH"
+#define CPPDB_SOVERSION "0" // "$CPPDB_MAJOR"

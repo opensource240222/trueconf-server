@@ -1,0 +1,8 @@
+#if HAVE_SPEEX
+^LinkerOptions
+	+ ."speex_LinkerOptions_$Toolchain$_$Platform$_$Config$"
+#else
+^Libraries
+	+ 'libspeex-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif
+

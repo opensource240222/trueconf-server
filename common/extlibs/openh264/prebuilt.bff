@@ -1,0 +1,42 @@
+#define HAVE_OPENH264
+.openh264_Includes = '$RepoPath_TCCommon$/extlibs/openh264/include'
+.openh264_LinkerOptions_MSVC141_Win32_Debug     = ' $RepoPath_TCCommon$/extlibs/openh264/win32/openh264.lib'
+.openh264_LinkerOptions_MSVC141_Win32_Release   = ' $RepoPath_TCCommon$/extlibs/openh264/win32/openh264.lib'
+.openh264_LinkerOptions_MSVC141_Win64_Debug     = '' // TODO
+.openh264_LinkerOptions_MSVC141_Win64_Release   = '' // TODO
+
+.openh264_LinkerOptions_MSVC141_Win32XP_Debug   = .openh264_LinkerOptions_MSVC141_Win32_Debug
+.openh264_LinkerOptions_MSVC141_Win32XP_Release = .openh264_LinkerOptions_MSVC141_Win32_Release
+
+.openh264_LinkerOptions_MSVC141_Win32_VLD       = .openh264_LinkerOptions_MSVC141_Win32_Debug
+.openh264_LinkerOptions_MSVC141_Win32XP_VLD     = .openh264_LinkerOptions_MSVC141_Win32XP_Debug
+.openh264_LinkerOptions_MSVC141_Win64_VLD       = .openh264_LinkerOptions_MSVC141_Win64_Debug
+
+.openh264_LinkerOptions_Clang_Win32_Debug       = .openh264_LinkerOptions_MSVC141_Win32_Debug
+.openh264_LinkerOptions_Clang_Win32_Release     = .openh264_LinkerOptions_MSVC141_Win32_Release
+.openh264_LinkerOptions_Clang_Win32XP_Debug     = .openh264_LinkerOptions_Clang_Win32_Debug
+.openh264_LinkerOptions_Clang_Win32XP_Release   = .openh264_LinkerOptions_Clang_Win32_Release
+.openh264_LinkerOptions_Clang_Win64_Debug       = .openh264_LinkerOptions_MSVC141_Win64_Debug
+.openh264_LinkerOptions_Clang_Win64_Release     = .openh264_LinkerOptions_MSVC141_Win64_Release
+.openh264_LinkerOptions_Clang_Win64_ASan        = .openh264_LinkerOptions_Clang_Win64_Release
+
+.openh264_LinkerOptions_GCC_Linux32_Debug     = ' $RepoPath_TCCommon$/extlibs/openh264/linux32/libopenh264.a'
+.openh264_LinkerOptions_GCC_Linux32_Release   = ' $RepoPath_TCCommon$/extlibs/openh264/linux32/libopenh264.a'
+.openh264_LinkerOptions_Clang_Linux32_Debug   = ' $RepoPath_TCCommon$/extlibs/openh264/linux32/libopenh264.a'
+.openh264_LinkerOptions_Clang_Linux32_Release = ' $RepoPath_TCCommon$/extlibs/openh264/linux32/libopenh264.a'
+.openh264_LinkerOptions_GCC_Linux64_Debug     = ' $RepoPath_TCCommon$/extlibs/openh264/linux64/libopenh264.a'
+.openh264_LinkerOptions_GCC_Linux64_Release   = ' $RepoPath_TCCommon$/extlibs/openh264/linux64/libopenh264.a'
+.openh264_LinkerOptions_Clang_Linux64_Debug   = ' $RepoPath_TCCommon$/extlibs/openh264/linux64/libopenh264.a'
+.openh264_LinkerOptions_Clang_Linux64_Release = ' $RepoPath_TCCommon$/extlibs/openh264/linux64/libopenh264.a'
+
+.openh264_LinkerOptions_GCC_Linux32_ASan      = .openh264_LinkerOptions_GCC_Linux32_Release
+.openh264_LinkerOptions_GCC_Linux32_UBSan     = .openh264_LinkerOptions_GCC_Linux32_Release
+.openh264_LinkerOptions_GCC_Linux64_ASan      = .openh264_LinkerOptions_GCC_Linux64_Release
+.openh264_LinkerOptions_GCC_Linux64_TSan      = .openh264_LinkerOptions_GCC_Linux64_Release
+.openh264_LinkerOptions_GCC_Linux64_UBSan     = .openh264_LinkerOptions_GCC_Linux64_Release
+.openh264_LinkerOptions_Clang_Linux32_ASan    = .openh264_LinkerOptions_Clang_Linux32_Release
+.openh264_LinkerOptions_Clang_Linux32_UBSan   = .openh264_LinkerOptions_Clang_Linux32_Release
+.openh264_LinkerOptions_Clang_Linux64_ASan    = .openh264_LinkerOptions_Clang_Linux64_Release
+.openh264_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.openh264_LinkerOptions_Clang_Linux64_TSan    = .openh264_LinkerOptions_Clang_Linux64_Release
+.openh264_LinkerOptions_Clang_Linux64_UBSan   = .openh264_LinkerOptions_Clang_Linux64_Release

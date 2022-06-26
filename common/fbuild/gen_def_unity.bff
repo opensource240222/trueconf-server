@@ -1,0 +1,16 @@
+// Marco that generates Unity node with common parameters
+// These variables are expected to be defined:
+//   .ProjectName
+//   .SourcePath
+//   .SourceFiles
+//   .SourceExcludePath
+//   .SourceExcludedFiles
+
+Unity('$ProjectName$-Unity')
+{
+	.UnityInputPath = .SourcePath
+	.UnityInputFiles = .SourceFiles
+	.UnityInputExcludePath = .SourceExcludePath
+	.UnityInputExcludedFiles = .SourceExcludedFiles
+	.UnityOutputPath = '$UnityPath$/$ProjectName$'
+}

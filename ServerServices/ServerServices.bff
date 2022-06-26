@@ -1,0 +1,40 @@
+#once
+
+{
+	.ProjectName = 'ServerServices'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludes
+		+ .websocketpp_Includes
+	.ExtraIncludesLocal
+	    + '$RepoPath_TCCommon$/lua/lua-src/src'
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'libtorrent'
+		+ 'boost'
+		+ 'curl'
+		+ 'openldap'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../common/fbuild/update_config.bff"
+
+#include "../common/fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../common/fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{A461EE56-AAE7-4AC2-9E9A-F34F1D3591F2}'
+#include "../common/fbuild/gen_ide_project.bff"
+}

@@ -1,0 +1,63 @@
+#once
+
+{
+	.ProjectName = 'RegOffline'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Link
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /DYNAMICBASE:NO'
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ ' Gdi32.lib'
+		+ ' User32.lib'
+		+ ' Wininet.lib'
+		+ ' Ws2_32.lib'
+		+ ' wsock32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../common/fbuild/update_config.bff"
+
+#include "../common/fbuild/gen_def_objlist.bff"
+#include "../common/fbuild/gen_def_resource.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transport-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../common/fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{F7DF450F-B7B3-4A4B-89DA-5164198B40CA}'
+#include "../common/fbuild/gen_ide_project.bff"
+}

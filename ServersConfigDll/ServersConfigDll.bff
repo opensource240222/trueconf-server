@@ -1,0 +1,74 @@
+#once
+
+{
+	.ProjectName = 'ServersConfigDll'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/$ProjectName$'
+	.TargetName = 'tc_conf$DLLSuffix$'
+
+	.ExtraDefinitions
+		+ 'SERVERSCONFIGDLL_EXPORTS'
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ExternalLibraries_Link
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /DYNAMICBASE:NO'
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ ' dnsapi.lib'
+		+ ' Gdi32.lib'
+		+ ' User32.lib'
+		+ ' Wininet.lib'
+		+ ' wldap32.lib'
+		+ ' Ws2_32.lib'
+		+ ' wsock32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../common/fbuild/update_config.bff"
+
+#include "../common/fbuild/gen_def_objlist.bff"
+#include "../common/fbuild/gen_def_resource.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		DLL('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-DLL')
+		{
+			.Libraries
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'AppServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'LicenseLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ProtectionLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ServersConfigLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ServerServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transport-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /DLL /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-DLL' }
+	}
+
+#include "../common/fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{240FD3F4-784D-4756-AA6D-6A85FE6FA2AD}'
+#include "../common/fbuild/gen_ide_project.bff"
+}

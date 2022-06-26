@@ -1,0 +1,90 @@
+Просто может тебе пригодиться - подумал и записал:
+
+
+Чаты бывают разного типа, и состоят из "сообщений" разного типа
+
+В чате есть две составляющие - log(история) (которую надо синхронизировать кусками) и  state, который всегда можно вычислить по логу (то есть зная state в момент времени 1 и историю от времени 1 до времеи 2 можно восстановить state однозначно, в любой части системы)
+
+Для группового чата state это как минимум список участников.
+
+Клиент, подсоединяющийся к чату, должен сначала получить state в определенной точке и далее получать уже лог.
+
+
+Логика такая - у клиента есть спецчат  - список чатов (из звонков)
+Когда клиент стартует, он получает обновления или state  этого спецчата и показыват в интерфейсе
+
+Типы чатов
+
+1-1
+Group
+Whiteboard
+MyChats  #список чатов юзера
+PublicChats #список публичных чатов сервера
+
+*Chat state
+Chat ID
+Chat type
+Participant list
+Beautiful Chat ID
+Topic # имя чата
+Is public
+Whiteboard state
+
+
+
+
+*типы сообщения
+   Text
+   Meta (для редактирования state)
+   File
+   Audio
+   Call (элемент списка звонков)
+   Chat (элемент списка чата)
+   Vector object (элемент whiteboard)
+
+*режим редактирования
+   Add
+   Replace (заменить сообщение с Reference ID)
+   Delete (удалить сообщение с Reference ID)
+   Forward (переслать сообщение с Reference ID)
+
+
+*поля сообщения
+ID
+Type
+Edit Mode
+Reference ID #ID редактируемого сообщения
+
+поля ниже могут быть зашифрованы, выше - всегда открыты
+
+Text
+
+Field name  #для редактирования metadata
+Rights #для редактирования списка участников
+
+Preview
+Short audio
+File type
+File link
+File name
+
+Call type (для типа call - incoming, outgoing, missed)
+Call id   (для типа call, включая групповые)
+
+Vector (для типа vector object)
+
+и т.д.
+
+
+обычное сообщение
+Message{ID:1234,Type:Text,Text:"something"};
+
+редактирование
+Message{ID:1235, Type:Text, Edit mode:Replace,Reference ID: 1234, Text:"something"};
+
+редактирование топика
+Message{ID:1236, Type:Meta, Field name:"Topic",  Text:"some topic"};
+
+добавление человека
+
+Message{ID:1236, Type:Meta, Edit mode:Add,  Field name:"Participant List",  Call ID:"user@server.name", Rights:Operator}; 

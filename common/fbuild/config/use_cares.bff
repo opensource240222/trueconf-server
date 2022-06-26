@@ -1,0 +1,6 @@
+^Includes
+	+ .cares_Includes
+#if __WINDOWS__
+^Definitions
+	+ 'CARES_STATICLIB'
+#endif

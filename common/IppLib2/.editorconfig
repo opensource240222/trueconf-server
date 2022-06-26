@@ -1,0 +1,5 @@
+[ipp*.h]
+end_of_line = crlf
+# Indentation rules doesn't seem to be consistent.
+indent_style = unset
+trim_trailing_whitespace = false

@@ -1,0 +1,9 @@
+^IncludesLocal
+	+ '$RepoPath_TCCommon$/extlibs/libtorrent/include'
+^Definitions
+	+ 'TORRENT_DISABLE_GEO_IP'
+	+ 'TORRENT_DISABLE_ENCRYPTION'
+	+ 'TORRENT_DISABLE_LOGGING'
+	+ 'TORRENT_DISABLE_DHT'
+	+ 'TORRENT_NO_DEPRECATE'
+	+ 'VS_TORRENT_NO_EXCEPTIONS'

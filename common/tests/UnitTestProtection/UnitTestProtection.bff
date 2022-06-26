@@ -1,0 +1,74 @@
+#once
+
+{
+	.ProjectName = 'UnitTestProtection'
+	^AllProjects + .ProjectName
+	^TestProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/tests/$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'googletest'
+		+ 'openssl'
+	.ExternalLibraries_Link
+		+ 'googletest'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ ' Gdi32.lib'
+		+ ' User32.lib'
+		+ ' ws2_32.lib'
+	.ExtraLinkerOptions_Release
+		+ ' /MAP' // VMProtect works better with .map files
+
+#endif
+#if __LINUX__
+	.ExtraLinkerOptions_Release
+		+ ' -lVMProtectSDK'
+		+ ' -Wl,-rpath=^$ORIGIN'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../fbuild/update_config.bff"
+
+#include "../../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'ProtectionLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+
+			// Technically this is a run-time dependency, not a pre-build dependency. But FASTBuild doesn't have them.
+			.PreBuildDependencies = {}
+				+ 'VMProtectSDK-$Toolchain$-$Platform$-$Config$-$Trait$'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+
+		Test('Test-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$')
+		{
+			.TestExecutable = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+			.TestOutput = '$OutputPath$/TestOutput.txt'
+		}
+	}
+
+#include "../../fbuild/gen_project_aliases.bff"
+
+#include "../../fbuild/gen_ide_project.bff"
+}

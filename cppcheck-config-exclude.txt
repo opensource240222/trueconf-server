@@ -1,0 +1,22 @@
+// Don't extract configurations from external library headers.
+common/commonlibs/extlibs/
+common/extlibs/
+common/googletest/
+common/IppLib2/
+common/libcurl/
+common/libspeex/
+common/live555/
+common/lua/
+common/tlb_import/
+common/Transcoder/intel_mdk/
+common/Transcoder/ipp_speech_core/
+common/Transcoder/lame/
+common/Transcoder/nvidia/
+common/Transcoder/openh264/
+common/Transcoder/opus/
+common/Transcoder/vpx/
+common/Video/libyuv/
+common/VSClient/glew/
+
+// Don't try different define configurations from ProtectionLib, use the default one.
+common/std/ProtectionLib/

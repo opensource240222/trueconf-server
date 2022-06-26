@@ -1,0 +1,8 @@
+#if __LINUX__
+^Libraries
+	+ 'openldap-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if HAVE_SASL
+^LinkerOptions
+	+ ."sasl_LinkerOptions_$Toolchain$_$Platform$_$Config$"
+#endif
+#endif

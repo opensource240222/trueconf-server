@@ -1,0 +1,34 @@
+#once
+
+{
+	.ProjectName = 'Video'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.SourcePath = .ProjectPath
+	.SourceExcludePath
+		+ '$ProjectPath$/TestVideo'
+
+	.ExternalLibraries_Use
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{56C93638-E786-4F1F-B625-9EA5DFCBDBC9}'
+#include "../fbuild/gen_ide_project.bff"
+}

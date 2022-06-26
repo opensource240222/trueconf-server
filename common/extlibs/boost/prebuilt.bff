@@ -1,0 +1,42 @@
+#if __WINDOWS__
+
+.boost_Libraries_Debug = ''
+	+ ' libboost_chrono-vc140-mt-sgd-1_62.lib'
+	+ ' libboost_filesystem-vc140-mt-sgd-1_62.lib'
+	+ ' libboost_locale-vc140-mt-sgd-1_62.lib'
+	+ ' libboost_program_options-vc140-mt-sgd-1_62.lib'
+	+ ' libboost_regex-vc140-mt-sgd-1_62.lib'
+	+ ' libboost_system-vc140-mt-sgd-1_62.lib'
+	+ ' libboost_timer-vc140-mt-sgd-1_62.lib'
+.boost_Libraries_Release = ''
+	+ ' libboost_chrono-vc140-mt-s-1_62.lib'
+	+ ' libboost_filesystem-vc140-mt-s-1_62.lib'
+	+ ' libboost_locale-vc140-mt-s-1_62.lib'
+	+ ' libboost_program_options-vc140-mt-s-1_62.lib'
+	+ ' libboost_regex-vc140-mt-s-1_62.lib'
+	+ ' libboost_system-vc140-mt-s-1_62.lib'
+	+ ' libboost_timer-vc140-mt-s-1_62.lib'
+
+#define HAVE_BOOST
+.boost_Includes = '$RepoPath_TCCommon$/extlibs/boost'
+.boost_LinkerOptions_MSVC141_Win32_Debug     = ' /LIBPATH:$RepoPath_TCCommon$/extlibs/boost/lib'
+.boost_LinkerOptions_MSVC141_Win32_Release   = ' /LIBPATH:$RepoPath_TCCommon$/extlibs/boost/lib'
+.boost_LinkerOptions_MSVC141_Win64_Debug     = ' /LIBPATH:$RepoPath_TCCommon$/extlibs/boost/lib/x64'
+.boost_LinkerOptions_MSVC141_Win64_Release   = ' /LIBPATH:$RepoPath_TCCommon$/extlibs/boost/lib/x64'
+
+.boost_LinkerOptions_MSVC141_Win32XP_Debug   = .boost_LinkerOptions_MSVC141_Win32_Debug
+.boost_LinkerOptions_MSVC141_Win32XP_Release = .boost_LinkerOptions_MSVC141_Win32_Release
+
+.boost_LinkerOptions_MSVC141_Win32_VLD       = .boost_LinkerOptions_MSVC141_Win32_Debug
+.boost_LinkerOptions_MSVC141_Win32XP_VLD     = .boost_LinkerOptions_MSVC141_Win32XP_Debug
+.boost_LinkerOptions_MSVC141_Win64_VLD       = .boost_LinkerOptions_MSVC141_Win64_Debug
+
+.boost_LinkerOptions_Clang_Win32_Debug       = .boost_LinkerOptions_MSVC141_Win32_Debug   + .boost_Libraries_Debug
+.boost_LinkerOptions_Clang_Win32_Release     = .boost_LinkerOptions_MSVC141_Win32_Release + .boost_Libraries_Release
+.boost_LinkerOptions_Clang_Win32XP_Debug     = .boost_LinkerOptions_Clang_Win32_Debug
+.boost_LinkerOptions_Clang_Win32XP_Release   = .boost_LinkerOptions_Clang_Win32_Release
+.boost_LinkerOptions_Clang_Win64_Debug       = .boost_LinkerOptions_MSVC141_Win64_Debug   + .boost_Libraries_Debug
+.boost_LinkerOptions_Clang_Win64_Release     = .boost_LinkerOptions_MSVC141_Win64_Release + .boost_Libraries_Release
+.boost_LinkerOptions_Clang_Win64_ASan        = .boost_LinkerOptions_Clang_Win64_Release
+
+#endif

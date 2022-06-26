@@ -1,0 +1,94 @@
+#once
+
+{
+	.ProjectName = 'CodecsDll'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$DLLSuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+	.ExtraDefinitions
+		+ 'CODECSDLL_EXPORTS'
+		+ '_CODECSDLL_'
+	.SourcePath = .ProjectPath
+	.SourceFiles
+		+ '$RepoPath_TCCommon$/Transcoder/AppDependedImp.cpp'
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+	.ExternalLibraries_Link
+		+ 'webrtc'
+		+ 'cppdb'
+		+ 'boost'
+		+ 'openh264'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /DYNAMICBASE:NO'
+		+ ' /NODEFAULTLIB:"libmmt.lib"'
+		+ ' /NODEFAULTLIB:"libirc.lib"'
+		+ ' /NODEFAULTLIB:"svml_disp.lib"'
+		+ ' /NODEFAULTLIB:"libdecimal.lib"'
+		+ ' /DELAYLOAD:"nvcuda.dll"'
+		+ ' /DELAYLOAD:"nvcuvid.dll"'
+		+ ' Advapi32.lib'
+		+ ' libavcodec.lib'
+		+ ' libavformat.lib'
+		+ ' libavutil.lib'
+		+ ' libswresample.lib'
+		+ ' libmfx.lib'
+		+ ' Msacm32.lib'
+		+ ' oldnames.lib'
+		+ ' pdh.lib'
+		+ ' Setupapi.lib'
+		+ ' ShLwApi.lib'
+		+ ' User32.lib'
+		+ ' Vfw32.lib'
+		+ ' version.lib'
+		+ ' winmm.lib'
+		+ ' cuda.lib'
+		+ ' delayimp.lib'
+		+ ' nvcuvid.lib'
+	.ExtraLinkerOptions_Debug
+		+ ' /NODEFAULTLIB:"libcmt.lib"'
+#endif
+
+	.LinkerStamp_Release = .LinkerStampUPX
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+#include "../fbuild/gen_def_resource.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		DLL('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-DLL')
+		{
+			.Libraries
+				+ 'IppLib2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transcoder-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /DLL /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-DLL' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{9034D3C2-E906-43E5-A30A-454C1D0A96E7}'
+#include "../fbuild/gen_ide_project.bff"
+}

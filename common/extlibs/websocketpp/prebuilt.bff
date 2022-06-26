@@ -1,0 +1,2 @@
+#define HAVE_WEBSOCKETPP
+.websocketpp_Includes = '$RepoPath_TCCommon$/extlibs/websocketpp'

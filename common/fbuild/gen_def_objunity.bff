@@ -1,0 +1,14 @@
+// Marco that generates ObjectList node with common parameters
+// These variables are expected to be defined:
+//   .ProjectName
+//   .Toolchain
+//   .Platform
+//   .Config
+//   .Trait
+
+ObjectList('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ')
+{
+	.CompilerInputUnity = '$ProjectName$-Unity'
+}
+.Libraries                 + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ'
+.LibrarianAdditionalInputs + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ'

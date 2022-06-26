@@ -1,0 +1,30 @@
+#once
+
+{
+	.ProjectName = 'GetLicenseKey'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.SourcePath = .ProjectPath
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../common/fbuild/update_config.bff"
+
+		.CompilerOptions - '/we4777'
+#include "../common/fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../common/fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{FA3A041C-B721-4F08-B1B3-E0242342F3E7}'
+#include "../common/fbuild/gen_ide_project.bff"
+}

@@ -1,0 +1,124 @@
+#once
+
+{
+	.ProjectName = 'VCSFake'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/_VCSFake'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.ExtraIncludes
+		+ .websocketpp_Includes
+	.ExtraIncludesLocal
+		+ {}
+#if !HAVE_TC3
+		+ '$RepoPath_TCCommon$/../VCSFakeDeps'
+#endif
+		+ '$RepoPath_TCCommon$/lua/lua-src/src'
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ExternalLibraries_Link
+		+ 'webrtc'
+		+ 'libtorrent'
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'curl'
+		+ 'cares'
+		+ 'sqlite'
+		+ 'openssl'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' Crypt32.lib'
+		+ ' dnsapi.lib'
+		+ ' Gdi32.lib'
+		+ ' pdh.lib'
+		+ ' Shell32.lib'
+		+ ' Secur32.lib'
+		+ ' Wininet.lib'
+		+ ' Winmm.lib'
+		+ ' wldap32.lib'
+		+ ' Ws2_32.lib'
+		+ ' wsock32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'acs_v2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Bwt-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'chatlib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'CheckSrv-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'FakeClient-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'FileTransfer-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'H323Lib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'IppLib2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'JPEGUtils-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'http-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ldap_core-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'lualib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'mdnslib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'MDNS_Responderlib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'MediaParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'newtransport-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ProtectionLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Server-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SIPParserBase-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SIPParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SmtpMailer-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'statuslib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'streams-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'TransceiverLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transport-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'TrueGateway-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Watchdog-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'WebSocket-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'WinFirewallManager-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if HAVE_TC3
+				+ 'AppServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'BaseServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'LicenseLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ServerServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'VCSServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+#if !HAVE_TC3
+			.LinkerOptions
+				+ ' $RepoPath_TCCommon$/../VCSFakeDeps/$Toolchain$-$Platform$-$Config$-$Trait$/AppServices$LIBSuffix$'
+				+ ' $RepoPath_TCCommon$/../VCSFakeDeps/$Toolchain$-$Platform$-$Config$-$Trait$/BaseServices$LIBSuffix$'
+				+ ' $RepoPath_TCCommon$/../VCSFakeDeps/$Toolchain$-$Platform$-$Config$-$Trait$/LicenseLib$LIBSuffix$'
+				+ ' $RepoPath_TCCommon$/../VCSFakeDeps/$Toolchain$-$Platform$-$Config$-$Trait$/ServerServices$LIBSuffix$'
+				+ ' $RepoPath_TCCommon$/../VCSFakeDeps/$Toolchain$-$Platform$-$Config$-$Trait$/VCSServices$LIBSuffix$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{1DD53365-147B-4400-92F9-9D100F1E73E9}'
+#include "../fbuild/gen_ide_project.bff"
+}

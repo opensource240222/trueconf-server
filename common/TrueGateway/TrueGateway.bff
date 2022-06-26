@@ -1,0 +1,37 @@
+#once
+
+{
+	.ProjectName = 'TrueGateway'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/lua/lua-src/src'
+	.SourcePath = .ProjectPath
+	.SourceExcludePath
+		+ '$ProjectPath$/Test'
+
+	.ExternalLibraries_Use
+		+ 'boost'
+		+ 'curl'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{4EE9F5BB-15F4-47A9-8D42-56AA561BA40F}'
+#include "../fbuild/gen_ide_project.bff"
+}

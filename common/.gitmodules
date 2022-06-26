@@ -1,0 +1,6 @@
+[submodule "commonlibs"]
+	path = commonlibs
+	url = ../../libs/cpp/common
+[submodule "extlibs/webrtc"]
+	path = extlibs/webrtc
+	url = ../../server/webrtc

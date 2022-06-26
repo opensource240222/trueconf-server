@@ -1,0 +1,10 @@
+[*.{c,cpp,cc,h,hpp,hh,bff}]
+end_of_line = lf
+indent_style = tab
+trim_trailing_whitespace = true
+
+[*.vmp]
+# This matches the formatting rules that VMProtect GUI uses.
+end_of_line = crlf
+indent_style = space
+indent_size = 4

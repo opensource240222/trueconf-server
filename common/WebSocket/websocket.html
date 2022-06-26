@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>WS-Test</title>
+		<meta charset="utf-8">
+		<style>
+			.block { 
+				width: 320px;
+				background: #ddd;
+				padding: 5px;
+				border: solid 1px black; 
+				margin-left: auto;
+				margin-right: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			var ws;
+			function connect(){
+				var str;
+				if(document.getElementById("secure").checked) str = "ws://";
+				else str = "wss://"
+				str = str + document.getElementById("addr").value;
+				str = str + "/websocket/";
+				ws = new WebSocket(str);
+				ws.onopen = function() { 
+					alert("Connection opened...");
+					document.getElementById("con").disabled = true;
+					document.getElementById("snd").disabled = false;
+					document.getElementById("sndimg").disabled = false;
+					document.getElementById("dcon").disabled = false;
+				};
+				ws.onclose = function() { 
+					alert("Connection closed...");
+					document.getElementById("con").disabled = false;
+					document.getElementById("snd").disabled = true;
+					document.getElementById("sndimg").disabled = true;
+					document.getElementById("dcon").disabled = true;		
+				};
+				ws.onerror = function(error) { alert("Error: " + error.message); };
+				ws.onmessage = function(evt) { 
+					var x = document.getElementById("history");
+					x.value = x.value + "Server(echo): " + evt.data + "\n";
+					x.scrollTop = x.scrollHeight;
+				};			
+			}
+			function disconnect(){
+				ws.close();
+			}	
+			function sendmsg(){
+				var x = document.getElementById("msg_area");
+				var msg = x.value;
+				ws.send(msg);
+				x.value = "";
+				x = document.getElementById("history");
+				x.value = x.value + "Client: " + msg + "\n";
+				document.getElementById("msg_area").focus();
+			}
+			function sendimg(){
+				ws.send(document.getElementById("file").files[0]);
+			}
+		</script>
+		<div class="block">
+			<form id="1">
+				<h3 align=center>Эхо-чат</h3>
+				<table align=center>
+					<tr>
+						<td>Адрес[:порт]:</td>
+						<td align=right><input type="text" size="21" value="192.168.66.184:4307" id="addr"></td>
+					</tr>
+					<tr>
+						<td colspan="2" align=right>
+							<input type="radio" name="secure" value="ws" id="secure" checked>ws</input>
+							<input type="radio" name="secure" value="wss">wss</input>
+						</td>
+					</tr>
+					<tr>
+						<td><input type="button" value="Disconnect" onclick=disconnect() id="dcon" disabled></td>
+						<td align=right><input type="button" value="Connect" onclick=connect() id="con"></td>
+					</tr>
+					<tr>
+						<td colspan="2"><textarea rows="3" name="message" style="resize:none;width:300px" id="msg_area" placeholder="Текст сообщения"></textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2" align=right><input type="button" value="Send" onclick=sendmsg() id="snd" disabled></td>
+					</tr>
+					<tr>
+						<td colspan="2"><textarea rows="15" name="history" style="resize:none;width:300px" id="history" disabled></textarea></td>
+					</tr>
+					<tr>
+						<td colspan="2" align=center>Изображение:</td>
+					</tr>
+					<tr>
+						<td colspan="2" align=center><input type="file" id="file" size="10"></td>
+					</tr>
+					<tr>
+						<td colspan="2" align=right><input type="button" value="Send image" onclick=sendimg() id="sndimg" disabled></td>
+					</tr>
+					<tr>
+						<td colspan="2" align=right><input type="reset" value="Clear"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>

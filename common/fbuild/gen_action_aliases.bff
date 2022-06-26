@@ -1,0 +1,50 @@
+// Macro that generates action aliases (build, clean, test) for all projects.
+// These variables are expected to be defined:
+//   .AllProjects
+//   .TestProjects
+
+{
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "result_path.bff"
+
+		// Final build results are stored in a directory common to all projects
+		// and are not cleaned by per-project Clean targets.
+		// We need to clean that directory when global Clean target is used.
+		RemoveDir('Clean-$Toolchain$-$Platform$-$Config$-$Trait$-ResultPath')
+		{
+			.RemovePaths = .ResultPath
+		}
+
+		.Targets_All = {}
+		.Targets_Clean = {}
+			+ 'Clean-$Toolchain$-$Platform$-$Config$-$Trait$-ResultPath'
+		.Targets_Compile = {}
+		ForEach(.Project in .AllProjects)
+		{
+			^Targets_All     +         '$Project$-$Toolchain$-$Platform$-$Config$-$Trait$'
+			^Targets_Clean   +   'Clean-$Project$-$Toolchain$-$Platform$-$Config$-$Trait$'
+			^Targets_Compile + 'Compile-$Project$-$Toolchain$-$Platform$-$Config$-$Trait$'
+		}
+
+		.Targets_Test = {}
+		ForEach(.Project in .TestProjects)
+		{
+			^Targets_Test    +   'Test-$Project$-$Toolchain$-$Platform$-$Config$-$Trait$'
+		}
+
+		Alias(    'All-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .Targets_All     }
+		Alias(  'Clean-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .Targets_Clean   }
+		Alias('Compile-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .Targets_Compile  }
+		Alias(   'Test-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .Targets_Test    }
+	}
+	.TargetName = 'All'
+#include "gen_target_aliases.bff"
+	.TargetName = 'Clean'
+#include "gen_target_aliases.bff"
+	.TargetName = 'Compile'
+#include "gen_target_aliases.bff"
+	.TargetName = 'Test'
+#include "gen_target_aliases.bff"
+}

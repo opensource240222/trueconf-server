@@ -1,0 +1,103 @@
+#once
+
+{
+	.ProjectName = 'php_trueconf'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$DLLSuffix$'
+
+	.ExtraIncludes
+		+ {}
+#if __LINUX__
+		+ .php_Includes
+#endif
+	.ExtraIncludesLocal
+		+ {}
+#if __WINDOWS__
+		+ '$RepoPath_TCCommon$/extlibs/php/php-devel-VC15-x86/include'
+		+ '$RepoPath_TCCommon$/extlibs/php/php-devel-VC15-x86/include/main'
+		+ '$RepoPath_TCCommon$/extlibs/php/php-devel-VC15-x86/include/Zend'
+		+ '$RepoPath_TCCommon$/extlibs/php/php-devel-VC15-x86/include/TSRM'
+		+ '$RepoPath_TCCommon$/extlibs/php/php-devel-VC15-x86/include/ext'
+#endif
+	.ExtraDefinitions
+		+ 'COMPILE_DL_TRUECONF'
+#if __LINUX__
+		+ 'PTHREADS'
+#endif
+#if __WINDOWS__
+		+ 'ZEND_WIN32=1'
+		+ 'PHP_WIN32=1'
+		+ 'ZEND_WIN32_FORCE_INLINE'
+		+ 'ZEND_DEBUG=0'
+		+ 'ZTS=1'
+		+ 'FD_SETSIZE=256'
+#endif
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'boost'
+		+ 'openldap'
+	.ExternalLibraries_Link
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'curl'
+		+ 'cares'
+		+ 'openldap'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' $RepoPath_TCCommon$/extlibs/php/php-devel-VC15-x86/lib/php7ts.lib'
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ ' Gdi32.lib'
+		+ ' Pdh.lib'
+		+ ' User32.lib'
+		+ ' Ws2_32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#if __LINUX__
+		.CompilerOptions + ' -fpic -fvisibility=hidden'
+#endif
+
+#include "../fbuild/gen_def_objlist.bff"
+#include "../fbuild/gen_def_resource.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		DLL('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-DLL')
+		{
+			.Libraries
+				+ 'ldap_core-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /DLL /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+#if __LINUX__
+			.LinkerOptions + ' -shared'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-DLL' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+#if __WINDOWS__
+	.LocalDebuggerCommand = '$ProjectPath$/update_web_config.bat'
+	.LocalDebuggerCommandArguments = '^$(Configuration)'
+#endif
+#include "../fbuild/gen_ide_project.bff"
+}

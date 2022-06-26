@@ -1,0 +1,73 @@
+#once
+{
+	.ProjectName = 'cppdb'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/extlibs/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ .ProjectPath
+
+#if __WINDOWS__
+	.ExtraDefinitions
+		+ 'CPPDB_LIBRARY_PREFIX=\"\"'
+		+ 'CPPDB_LIBRARY_SUFFIX=\".dll\"'
+#endif
+#if __LINUX__
+	.ExtraDefinitions
+		+ 'CPPDB_LIBRARY_PREFIX="lib"'
+		+ 'CPPDB_LIBRARY_SUFFIX=".so"'
+#endif
+
+#if !__WINDOWS__
+	.ExtraDefinitions
+		+ 'CPPDB_HAS_GCC_SYNC'
+#endif
+
+	.SourcePath = '$ProjectPath$/src'
+
+	.ExternalLibraries_Use
+		+ 'sqlite'
+#if HAVE_LIBPQ
+		+ 'libpq'
+#endif
+	.ProjectConfigs = {}
+
+#include "../../fbuild/gen_def_unity.bff"
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../fbuild/update_config.bff"
+
+#if __LINUX__
+		.CompilerOptions + ' -fpic -fvisibility=hidden'
+#endif
+
+#include "../../fbuild/gen_def_objunity.bff"
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+
+#if HAVE_LIBPQ
+		ObjectList('$ProjectName$_postgres-$Toolchain$-$Platform$-$Config$-$Trait$')
+		{
+			.CompilerInputFiles = '$ProjectPath$/drivers/postgres_backend.cpp'
+		}
+		.LibrarianAdditionalInputs + '$ProjectName$_postgres-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif
+		ObjectList('$ProjectName$_sqlite-$Toolchain$-$Platform$-$Config$-$Trait$')
+		{
+			.CompilerInputFiles = '$ProjectPath$/drivers/sqlite3_backend.cpp'
+		}
+		.LibrarianAdditionalInputs + '$ProjectName$_sqlite-$Toolchain$-$Platform$-$Config$-$Trait$'
+
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+	}
+#include "../../fbuild/gen_project_aliases.bff"
+
+	.SourcePath = '$ProjectPath$'
+
+#include "../../fbuild/gen_ide_project.bff"
+}

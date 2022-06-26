@@ -1,0 +1,10 @@
+var PHP_ZTS ="yes"
+var PHP_DEBUG="yes"
+var PHP_DLL_LIB ="php7ts_debug.lib"
+var PHP_DLL ="php7ts_debug.dll"
+var PHP_SECURITY_FLAGS ="no"
+var PHP_ANALYZER ="no"
+var PHP_PGO ="no"
+var PHP_PGI ="no"
+var PHP_ALL_SHARED ="no"
+

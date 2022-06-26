@@ -1,0 +1,95 @@
+VCXProject('All-proj')
+{
+	.ProjectOutput = '$VCXPath$/All.vcxproj'
+	.ProjectFiles = .SolutionItems // Temporary, until support for individual files in solution is added
+
+	.ProjectConfigs = {}
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.T = // Anonymous structs aren't supported, using temporary name
+		[
+			.ProjectBuildCommand   = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ $SolutionProjectGroup$-$Toolchain$-$Platform$-$Config$-$Trait$'
+			.ProjectRebuildCommand = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ -clean $SolutionProjectGroup$-$Toolchain$-$Platform$-$Config$-$Trait$' - '-cache ' - '-cacheread '
+			.ProjectCleanCommand   = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ Clean-$Toolchain$-$Platform$-$Config$-$Trait$'
+
+			.Config = '$Toolchain$ $Platform$ $Config$ $Trait$'
+			.Platform = 'Win32' // See update_config.bff for explanation
+			.PlatformToolset = .PlatformToolset // importing from parent scope
+		]
+		^ProjectConfigs + { .T }
+	}
+}
+
+VCXProject('Test-proj')
+{
+	.ProjectOutput = '$VCXPath$/Test.vcxproj'
+
+	.ProjectConfigs = {}
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.T = // Anonymous structs aren't supported, using temporary name
+		[
+			.ProjectBuildCommand   = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ Test-$Toolchain$-$Platform$-$Config$-$Trait$'
+			.ProjectRebuildCommand = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ -clean Test-$Toolchain$-$Platform$-$Config$-$Trait$' - '-cache ' - '-cacheread '
+
+			.Config = '$Toolchain$ $Platform$ $Config$ $Trait$'
+			.Platform = 'Win32' // See update_config.bff for explanation
+			.PlatformToolset = .PlatformToolset // importing from parent scope
+		]
+		^ProjectConfigs + { .T }
+	}
+}
+
+VCXProject('Compile-proj')
+{
+	.ProjectOutput = '$VCXPath$/Compile.vcxproj'
+
+	.ProjectConfigs = {}
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.T = // Anonymous structs aren't supported, using temporary name
+		[
+			.ProjectBuildCommand   = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ Compile-$Toolchain$-$Platform$-$Config$-$Trait$'
+			.ProjectRebuildCommand = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ -clean Compile-$Toolchain$-$Platform$-$Config$-$Trait$' - '-cache ' - '-cacheread '
+
+			.Config = '$Toolchain$ $Platform$ $Config$ $Trait$'
+			.Platform = 'Win32' // See update_config.bff for explanation
+			.PlatformToolset = .PlatformToolset // importing from parent scope
+		]
+		^ProjectConfigs + { .T }
+	}
+}
+
+VCXProject('UpdateSolution-proj')
+{
+	.ProjectOutput = '$VCXPath$/UpdateSolution.vcxproj'
+	.ProjectAllowedFileExtensions = { "*.bff" "*.ps1" }
+	.ProjectInputPaths =
+	{
+		'$RepoPath_TCCommon$/fbuild'
+	}
+	.ProjectFiles =
+	{
+		.RootBFF
+		'projects.bff'
+	}
+
+	.ProjectConfigs = {}
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.T = // Anonymous structs aren't supported, using temporary name
+		[
+			.ProjectBuildCommand   = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ solution -vs'
+			.ProjectRebuildCommand = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ solution -vs -clean'
+
+			.Config = '$Toolchain$ $Platform$ $Config$ $Trait$' // See update_config.bff for explanation
+			.Platform = 'Win32' // See update_config.bff for explanation
+			.PlatformToolset = .PlatformToolset // importing from parent scope
+		]
+		^ProjectConfigs + { .T }
+	}
+}

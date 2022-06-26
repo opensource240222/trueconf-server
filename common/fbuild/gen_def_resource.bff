@@ -1,0 +1,20 @@
+// Marco that generates ObjectList node for Windows resource with common parameters
+// These variables are expected to be defined:
+//   .ProjectName
+//   .Toolchain
+//   .Platform
+//   .Config
+//   .Trait
+
+#if __WINDOWS__
+
+ObjectList('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-RES')
+{
+	.Compiler = 'Compiler_RC'
+	.CompilerOutputExtension = '.res'
+	.CompilerOptions = '$ResourceCompilerOptions$ "%1"'
+	.CompilerInputFiles = '$ProjectPath$/$ProjectName$.rc'
+}
+.Libraries + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-RES'
+
+#endif

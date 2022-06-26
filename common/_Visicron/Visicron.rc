@@ -1,0 +1,233 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+#include "version.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION FILEVER
+ PRODUCTVERSION PRODUCTVER
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", VS_COMPANY_NAME
+			VALUE "FileDescription", VS_PRODUCT_NAME
+			VALUE "FileVersion", STRFILEVER
+            VALUE "LegalCopyright", VS_LEGAL_COPYRIGHT
+			VALUE "ProductName", VS_PRODUCT_NAME
+            VALUE "ProductVersion", STRPRODUCTVER
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LOGO                BITMAP                  "Logo_Video.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PROPERTYCAPTURE DIALOGEX 0, 0, 294, 248
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Property"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+	DEFPUSHBUTTON   "OK", IDOK, 131, 229, 50, 14
+	PUSHBUTTON      "Cancel", IDCANCEL, 185, 229, 50, 14, BS_CENTER | BS_VCENTER
+	PUSHBUTTON      "Apply", IDC_APPLY, 239, 229, 50, 14
+	CONTROL         "", IDC_BRIGHTNESS, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 8, 142, 10
+	RTEXT           "Brightness", IDC_TEXT_BRIGHTNESS, 25, 8, 35, 10
+	CONTROL         "Auto", IDC_CHECK_BRIGHTNESS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 8, 31, 10
+	EDITTEXT        IDC_EDIT_BRIGHTNESS, 218, 6, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_CONTRAST, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 21, 142, 10
+	RTEXT           "Contrast", IDC_TEXT_CONTRAST, 25, 21, 35, 10
+	CONTROL         "Auto", IDC_CHECK_CONTRAST, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 21, 31, 10
+	EDITTEXT        IDC_EDIT_CONTRAST, 218, 19, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_HUE, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 34, 142, 10
+	RTEXT           "Hue", IDC_TEXT_HUE, 24, 34, 35, 10
+	CONTROL         "Auto", IDC_CHECK_HUE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 34, 31, 10
+	EDITTEXT        IDC_EDIT_HUE, 218, 32, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_SATURATION, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 46, 142, 10
+	RTEXT           "Saturation", IDC_TEXT_SATURATION, 24, 46, 35, 10
+	CONTROL         "Auto", IDC_CHECK_SATURATION, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 46, 31, 10
+	EDITTEXT        IDC_EDIT_SATURATION, 218, 45, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_SHARPNESS, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 59, 142, 10
+	RTEXT           "Sharpness", IDC_TEXT_SHARPNESS, 24, 59, 35, 10
+	CONTROL         "Auto", IDC_CHECK_SHARPNESS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 59, 31, 10
+	EDITTEXT        IDC_EDIT_SHARPNESS, 218, 58, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_GAMMA, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 73, 142, 10
+	RTEXT           "Gamma", IDC_TEXT_GAMMA, 24, 73, 35, 10
+	CONTROL         "Auto", IDC_CHECK_GAMMA, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 73, 31, 10
+	EDITTEXT        IDC_EDIT_GAMMA, 218, 71, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_WHITEBALANCE, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 87, 142, 10
+	RTEXT           "White Balance", IDC_TEXT_WHITEBALANCE, 3, 87, 56, 10
+	CONTROL         "Auto", IDC_CHECK_WHITEBALANCE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 87, 31, 10
+	EDITTEXT        IDC_EDIT_WHITEBALANCE, 218, 84, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_BACKLIGHT, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 99, 142, 10
+	RTEXT           "Backlight Comp.", IDC_TEXT_BACKLIGHT, 5, 99, 54, 10
+	CONTROL         "Auto", IDC_CHECK_BACKLIGHT, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 99, 31, 10
+	EDITTEXT        IDC_EDIT_BACKLIGHT, 218, 97, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_GAIN, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 112, 142, 10
+	RTEXT           "Gain", IDC_TEXT_GAIN, 8, 112, 50, 10
+	CONTROL         "Auto", IDC_CHECK_GAIN, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 112, 31, 10
+	EDITTEXT        IDC_EDIT_GAIN, 218, 110, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "Color enable ", IDC_CHECK_COLORENABLE, "Button", BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP, 61, 196, 58, 10, WS_EX_RIGHT
+	COMBOBOX        IDC_COMBO_POWERFREQ, 205, 201, 36, 60, CBS_DROPDOWNLIST | CBS_SORT | WS_TABSTOP
+	LTEXT           "Powerline frequency", IDC_TEXT_POWERFREQ, 121, 203, 77, 8, 0, WS_EX_RIGHT
+	PUSHBUTTON      "Default", IDC_DEFAULT, 4, 229, 60, 14
+	CONTROL         "", IDC_FOCUS, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 125, 142, 10
+	RTEXT           "Focus", IDC_TEXT_FOCUS, 15, 125, 43, 10
+	CONTROL         "Auto", IDC_CHECK_FOCUS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 125, 31, 10
+	EDITTEXT        IDC_EDIT_FOCUS, 218, 123, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_EXPOSURE, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 138, 142, 10
+	RTEXT           "Exposure", IDC_TEXT_EXPOSURE, 12, 138, 46, 10
+	CONTROL         "Auto", IDC_CHECK_EXPOSURE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 138, 31, 10
+	EDITTEXT        IDC_EDIT_EXPOSURE, 218, 136, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "Low-light Comp.", IDC_CHECK_LOWLIGHT, "Button", BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP, 52, 210, 67, 10, WS_EX_RIGHT
+	CONTROL         "", IDC_PAN, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 150, 142, 10
+	RTEXT           "Pan", IDC_TEXT_PAN, 12, 150, 46, 10
+	CONTROL         "Auto", IDC_CHECK_PAN, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 150, 31, 10
+	EDITTEXT        IDC_EDIT_PAN, 218, 149, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_TILT, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 163, 142, 10
+	RTEXT           "Tilt", IDC_TEXT_TILT, 12, 163, 46, 10
+	CONTROL         "Auto", IDC_CHECK_TILT, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 163, 31, 10
+	EDITTEXT        IDC_EDIT_TILT, 218, 162, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+	CONTROL         "", IDC_ZOOM, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 68, 177, 142, 10
+	RTEXT           "Zoom", IDC_TEXT_ZOOM, 12, 177, 46, 10
+	CONTROL         "Auto", IDC_CHECK_ZOOM, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 260, 177, 31, 10
+	EDITTEXT        IDC_EDIT_ZOOM, 218, 175, 34, 12, ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | ES_NUMBER
+END
+
+IDD_PROPERTYCAPTURE_SC DIALOGEX 0, 0, 316, 48
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Applications list"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,205,27,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,259,27,50,14
+    COMBOBOX        IDC_COMBO_APPLIST,18,8,280,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_PROPERTYCAPTURE, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 290
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 200
+    END
+
+    IDD_PROPERTYCAPTURE_SC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        BOTTOMMARGIN, 41
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

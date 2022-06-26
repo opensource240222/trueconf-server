@@ -1,0 +1,19 @@
+// Macro that generates action aliases (build) for all projects in a group.
+// These variables are expected to be defined:
+//   .GroupName
+//   ."$GroupName$Project"
+
+{
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.Targets_All = {}
+		ForEach(.Project in ."$GroupName$Projects")
+		{
+			^Targets_All + '$Project$-$Toolchain$-$Platform$-$Config$-$Trait$'
+		}
+		Alias('$GroupName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .Targets_All }
+	}
+	.TargetName = .GroupName
+#include "gen_target_aliases.bff"
+}

@@ -1,0 +1,129 @@
+#once
+
+{
+	.ProjectName = 'TestTranscoder'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/Transcoder/$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+	.ExtraDefinitions
+		+ '_H323GATEWAYCLIENT_'
+		+ '_H264_INCLUDED_'
+		+ '_VPX_INCLUDED_'
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+		+ 'ipp'
+	.ExternalLibraries_Link
+		+ 'webrtc'
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'openh264'
+		+ 'speex'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /DYNAMICBASE:NO'
+		+ ' /NODEFAULTLIB:"libmmt.lib"'
+		+ ' /NODEFAULTLIB:"libirc.lib"'
+		+ ' /NODEFAULTLIB:"svml_disp.lib"'
+		+ ' /NODEFAULTLIB:"libdecimal.lib"'
+		+ ' /DELAYLOAD:"nvcuda.dll"'
+		+ ' /DELAYLOAD:"nvcuvid.dll"'
+		+ ' comsupp.lib'
+		+ ' comsuppw.lib'
+		+ ' cuda.lib'
+		+ ' cudart_static.lib'
+		+ ' d3d9.lib'
+		+ ' ddraw.lib'
+		+ ' delayimp.lib'
+		+ ' dxguid.lib'
+		+ ' Gdi32.lib'
+		+ ' libavcodec.lib'
+		+ ' libavformat.lib'
+		+ ' libavutil.lib'
+		+ ' libswresample.lib'
+		+ ' libmfx.lib'
+		+ ' libmp3lame.lib'
+		+ ' Msacm32.lib'
+		+ ' Mswsock.lib'
+		+ ' nppi.lib'
+		+ ' nvcuvid.lib'
+		+ ' oldnames.lib'
+		+ ' pdh.lib'
+		+ ' Setupapi.lib'
+		+ ' ShLwApi.lib'
+		+ ' strmiids.lib'
+		+ ' version.lib'
+		+ ' Vfw32.lib'
+		+ ' Wininet.lib'
+		+ ' winmm.lib'
+		+ ' Ws2_32.lib'
+	.ExtraLinkerOptions_Debug
+		+ ' /NODEFAULTLIB:"libcmt.lib"'
+	.ExtraLinkerOptions_MSVC141
+		+ ' Dmoguids.lib'
+		+ ' Msdmo.lib'
+		+ ' Strmiids.lib'
+		+ ' Winmm.lib'
+		+ ' wmcodecdspuuid.lib'
+	.ExtraLinkerOptions_Clang = .ExtraLinkerOptions_MSVC141
+	.ExtraLinkerOptions_Win32
+		+ ' /DELAYLOAD:"nppi32_65.dll"'
+	.ExtraLinkerOptions_Win32XP = .ExtraLinkerOptions_Win32
+#endif
+#if __LINUX__
+	.ExtraLinkerOptions
+		+ ' -l:libavformat.a'
+		+ ' -l:libavcodec.a'
+		+ ' -l:libswresample.a'
+		+ ' -l:libavutil.a'
+		+ ' -l:libvpx.a'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../fbuild/update_config.bff"
+
+#include "../../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'IppLib2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'MediaParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transcoder-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'stb-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+				+ 'Audio-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Client-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Hidapi-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Video-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{486C7EDF-C89A-4D7D-8148-77DFB7ABAE8A}'
+#include "../../fbuild/gen_ide_project.bff"
+}

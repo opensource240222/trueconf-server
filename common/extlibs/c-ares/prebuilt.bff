@@ -1,0 +1,25 @@
+#if __WINDOWS__
+
+#define HAVE_CARES
+.cares_Includes = '$RepoPath_TCCommon$/extlibs/c-ares/include'
+.cares_LinkerOptions_MSVC141_Win32_Debug     = ' $RepoPath_TCCommon$/extlibs/c-ares/msvc140/lib32/libcaresd.lib'
+.cares_LinkerOptions_MSVC141_Win32_Release   = ' $RepoPath_TCCommon$/extlibs/c-ares/msvc140/lib32/libcares.lib'
+.cares_LinkerOptions_MSVC141_Win64_Debug     = ' $RepoPath_TCCommon$/extlibs/c-ares/msvc140/lib64/libcaresd.lib'
+.cares_LinkerOptions_MSVC141_Win64_Release   = ' $RepoPath_TCCommon$/extlibs/c-ares/msvc140/lib64/libcares.lib'
+
+.cares_LinkerOptions_MSVC141_Win32XP_Debug   = .cares_LinkerOptions_MSVC141_Win32_Debug
+.cares_LinkerOptions_MSVC141_Win32XP_Release = .cares_LinkerOptions_MSVC141_Win32_Release
+
+.cares_LinkerOptions_MSVC141_Win32_VLD       = .cares_LinkerOptions_MSVC141_Win32_Debug
+.cares_LinkerOptions_MSVC141_Win32XP_VLD     = .cares_LinkerOptions_MSVC141_Win32XP_Debug
+.cares_LinkerOptions_MSVC141_Win64_VLD       = .cares_LinkerOptions_MSVC141_Win64_Debug
+
+.cares_LinkerOptions_Clang_Win32_Debug       = .cares_LinkerOptions_MSVC141_Win32_Debug
+.cares_LinkerOptions_Clang_Win32_Release     = .cares_LinkerOptions_MSVC141_Win32_Release
+.cares_LinkerOptions_Clang_Win32XP_Debug     = .cares_LinkerOptions_Clang_Win32_Debug
+.cares_LinkerOptions_Clang_Win32XP_Release   = .cares_LinkerOptions_Clang_Win32_Release
+.cares_LinkerOptions_Clang_Win64_Debug       = .cares_LinkerOptions_MSVC141_Win64_Debug
+.cares_LinkerOptions_Clang_Win64_Release     = .cares_LinkerOptions_MSVC141_Win64_Release
+.cares_LinkerOptions_Clang_Win64_ASan        = .cares_LinkerOptions_Clang_Win64_Release
+
+#endif

@@ -1,0 +1,144 @@
+#once
+
+{
+	.ProjectName = 'UnitTestCommonWebRTC'
+	^AllProjects + .ProjectName
+	^TestProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/tests/$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/live555Extra/include'
+		+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'googletest'
+		+ 'boost'
+		+ 'live555'
+	.ExternalLibraries_Link
+		+ 'webrtc'
+		+ 'googletest'
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'curl'
+		+ 'cares'
+		+ 'openssl'
+		+ 'live555'
+		+ 'openh264'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /NODEFAULTLIB:"libmmt.lib"'
+		+ ' /NODEFAULTLIB:"libirc.lib"'
+		+ ' /NODEFAULTLIB:"svml_disp.lib"'
+		+ ' /NODEFAULTLIB:"libdecimal.lib"'
+		+ ' /DELAYLOAD:"nvcuda.dll"'
+		+ ' /DELAYLOAD:"nvcuvid.dll"'
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ ' comsupp.lib'
+		+ ' comsuppw.lib'
+		+ ' cuda.lib'
+		+ ' cudart_static.lib'
+		+ ' delayimp.lib'
+		+ ' dxguid.lib'
+		+ ' Gdiplus.lib'
+		+ ' libavcodec.lib'
+		+ ' libavformat.lib'
+		+ ' libavutil.lib'
+		+ ' libswresample.lib'
+		+ ' libmfx.lib'
+		+ ' libvpx.lib'
+		+ ' Msacm32.lib'
+		+ ' Mswsock.lib'
+		+ ' nppi.lib'
+		+ ' nvapi.lib'
+		+ ' nvcuvid.lib'
+		+ ' pdh.lib'
+		+ ' Secur32.lib'
+		+ ' version.lib'
+		+ ' Vfw32.lib'
+		+ ' winmm.lib'
+		+ ' Ws2_32.lib'
+		+ ' User32.lib'
+	.ExtraLinkerOptions_Debug
+		+ ' /NODEFAULTLIB:"libcmt.lib"'
+	.ExtraLinkerOptions_MSVC141
+		+ ' Dmoguids.lib'
+		+ ' Gdi32.lib'
+		+ ' Msdmo.lib'
+		+ ' Strmiids.lib'
+		+ ' Winmm.lib'
+		+ ' wmcodecdspuuid.lib'
+	.ExtraLinkerOptions_Clang = .ExtraLinkerOptions_MSVC141
+	.ExtraLinkerOptions_Win32
+		+ ' /DELAYLOAD:"nppi32_65.dll"'
+	.ExtraLinkerOptions_Win32XP = .ExtraLinkerOptions_Win32
+#endif
+#if __LINUX__
+	.ExtraLinkerOptions
+		+ ' -l:libavformat.a'
+		+ ' -l:libavcodec.a'
+		+ ' -l:libswresample.a'
+		+ ' -l:libavutil.a'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../fbuild/update_config.bff"
+
+#include "../../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ {} // TODO: Fix FASTBuild, it complains about unexpected # after variable name
+				+ 'FrameFilterLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'H323Lib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'IppLib2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'JPEGUtils-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'live555Extra-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'MediaParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Server-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SingleGatewayLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'stb-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'streams-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'TransceiverCircuitLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'TransceiverLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transcoder-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'webrtc_api-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+
+		Test('Test-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$')
+		{
+			.TestExecutable = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+			.TestOutput = '$OutputPath$/TestOutput.txt'
+		}
+	}
+
+#include "../../fbuild/gen_project_aliases.bff"
+
+#include "../../fbuild/gen_ide_project.bff"
+}

@@ -1,0 +1,44 @@
+// Marco that generates aliases for configuration groups for a specified target.
+// These variables are expected to be defined:
+//   .TargetName
+{
+	.TargetsAll = {}
+
+	.Targets_MSVC141 = {}
+	.Targets_GCC = {}
+	.Targets_Clang = {}
+
+	.Targets_Win32 = {}
+	.Targets_Win32XP = {}
+	.Targets_Win64 = {}
+	.Targets_Linux32 = {}
+	.Targets_Linux64 = {}
+
+	.Targets_Debug = {}
+	.Targets_Release = {}
+	.Targets_VLD = {}
+	.Targets_ReleaseLTO = {}
+	.Targets_ASan = {}
+	.Targets_MSan = {}
+	.Targets_TSan = {}
+	.Targets_UBSan = {}
+
+	.Targets_Default = {}
+	.Targets_SVKSM = {}
+	.Targets_Conferendo = {}
+	.Targets_Terminal = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		^TargetsAll            + '$TargetName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+		^"Targets_$Toolchain$" + '$TargetName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+		^"Targets_$Platform$"  + '$TargetName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+		^"Targets_$Config$"    + '$TargetName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+		^"Targets_$Trait$"     + '$TargetName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+	}
+
+	Alias('$TargetName$') { .Targets = .TargetsAll }
+	.Aliases = .Enabled_Toolchains + .Enabled_Platforms + .Enabled_Traits + .Enabled_Configs
+	ForEach(.Alias in .Aliases) { Alias('$TargetName$-$Alias$') { .Targets = ."Targets_$Alias$" } }
+}

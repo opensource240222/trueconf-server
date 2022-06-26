@@ -1,0 +1,8 @@
+#if __LINUX__
+#if HAVE_SASL
+^Includes
+	+ .sasl_Includes
+#endif
+^IncludesLocal
+	+ '$RepoPath_TCCommon$/extlibs/openldap/include'
+#endif

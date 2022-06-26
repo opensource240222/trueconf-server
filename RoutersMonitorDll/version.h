@@ -1,0 +1,5 @@
+#define FILEVER        2,4,0,571
+#define STRFILEVER     "2, 4, 0, 571\0"
+
+#define PRODUCTVER     FILEVER
+#define STRPRODUCTVER  STRFILEVER

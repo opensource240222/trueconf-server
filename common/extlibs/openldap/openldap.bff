@@ -1,0 +1,47 @@
+#once
+
+#if !__LINUX__
+#error openldap is Linux-only project
+#endif
+
+{
+	.ProjectName = 'openldap'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/extlibs/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ '$ProjectPath$/include'
+	.ExtraDefinitions
+		+ 'SIZEOF_INT=4'
+		+ 'SIZEOF_SHORT=2'
+	.SourcePath = .ProjectPath
+	.SourceExcludedFiles
+		+ '$ProjectPath$/libraries/liblber/nt_err.c' // windows only file
+
+	.ExternalLibraries_Use
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../fbuild/update_config.bff"
+
+		.CompilerOptions + ' -Wno-implicit-fallthrough'
+		.CompilerOptions + ' -include $ProjectPath$/include/ac/bytes.h'
+		.CompilerOptions + ' -fpic -fvisibility=hidden'
+
+#include "../../fbuild/gen_def_objlist_c.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../../fbuild/gen_project_aliases.bff"
+
+#include "../../fbuild/gen_ide_project.bff"
+}
+

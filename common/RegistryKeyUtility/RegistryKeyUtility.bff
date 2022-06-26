@@ -1,0 +1,55 @@
+#once
+
+{
+	.ProjectName = 'RegistryKeyUtility'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName  = 'tc_regkey$EXESuffix$'
+
+	.SourcePath = {}
+	.SourceFiles
+		+ '$ProjectPath$/main.cpp'
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ExternalLibraries_Link
+		+ 'cppdb_postgres'
+		+ 'boost'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' Advapi32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'RegistryKeyUtilityLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{1a513a79-098d-49ba-a62c-df60805bc7d0}'
+#include "../fbuild/gen_ide_project.bff"
+}

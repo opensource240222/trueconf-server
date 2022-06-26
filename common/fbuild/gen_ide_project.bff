@@ -1,0 +1,23 @@
+// Marco that generates Visual Studio project
+// These variables are expected to be defined:
+//   .ProjectName
+//   .ProjectPath
+//   .SourceExcludedFiles
+//   .SourceExcludePath
+//   .ProjectConfigs
+
+#if __WINDOWS__
+
+VCXProject('$ProjectName$-proj')
+{
+	.ProjectOutput = '$VCXPath$/$ProjectName$.vcxproj'
+	.ProjectBasePath = '$ProjectPath$'
+
+	.ProjectInputPaths = .SourcePath
+	.ProjectFiles = .SourceFiles
+		+ '$ProjectPath$/$ProjectName$.bff'
+	.ProjectInputPathsExclude = .SourceExcludePath
+	.ProjectFilesToExclude = .SourceExcludedFiles
+}
+
+#endif

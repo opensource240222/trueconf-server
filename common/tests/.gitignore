@@ -1,0 +1,3 @@
+# Local configuration for RegistryKey tests
+/RegistryKeyTest_config.h
+/ChatPostgreSQLBackend_config.h

@@ -1,0 +1,119 @@
+#once
+
+#include "common/projects.bff"
+
+#if !HAVE_MYSQLCLIENT
+	// We will use bundled MySQL Connector C instead
+#	include "common/extlibs/mysql-connector-c/prebuilt.bff"
+#else
+#	if __WINDOWS__
+		Print("warning: HAVE_MYSQLCLIENT is defined in local.bff, using user-specified MySQL Connector C instead of one from $RepoPath_TCCommon$/extlibs/")
+#	endif
+#endif
+#if !HAVE_MYSQLCLIENT
+#if __WINDOWS__ ; Not ported
+	Print("NOTE: libmysqlclient is missing, following projects will be disabled:")
+	Print("  BaseServer")
+#endif
+#endif
+
+#if !HAVE_LDAP
+Print("NOTE: Cyrus SASL is missing, following projects will be disabled:")
+Print("  ServerServices")
+Print("  UnitTestTC3")
+Print("  VCS_v2")
+Print("  VCSServices")
+#endif
+
+//
+// Static libraries
+//
+#include "AppServer/Services/AppServices.bff"
+#include "BaseServer/Services/BaseServices.bff"
+#include "LicenseLib/LicenseLib.bff"
+#if HAVE_LDAP
+#include "ServerServices/ServerServices.bff"
+#include "VCS/Services/VCSServices.bff"
+#endif
+
+#if __WINDOWS__ ; Not ported
+#include "GetLicenseKey/GetLicenseKey.bff"
+#include "RegistryServer/Services/RegistryServices.bff"
+#include "RoutingServer/Services/RoutingServices.bff"
+#include "ServerManager/Services/ServerManagerServices.bff"
+#include "ServersConfigLib/ServersConfigLib.bff"
+#endif
+
+//
+// Main executables
+//
+#if __WINDOWS__ ; Not ported
+#include "AppServer/AppServer.bff"
+#include "RegistryServer/RegistryServer.bff"
+#include "RegOffline/RegOffline.bff"
+#include "RoutersMonitorDll/RoutersMonitorDll.bff"
+#include "RoutingServer/RoutingServer.bff"
+#include "ServerManager/ServerManager.bff"
+#include "ServersConfigDll/ServersConfigDll.bff"
+#include "VCS/VCS.bff"
+#if HAVE_MYSQLCLIENT
+#include "BaseServer/BaseServer.bff"
+#endif
+#endif
+
+//
+// Tests
+//
+#if HAVE_LDAP
+#include "tests/UnitTestTC3/UnitTestTC3.bff"
+#endif
+
+//
+// Other
+//
+#if HAVE_LDAP
+#include "VCS_v2/VCS_v2.bff"
+#endif
+
+#if __WINDOWS__ ; Not ported
+// We need to add VCSFake here due to dependencies on tc3 libs.
+#include "common/_VCSFake/VCSFake.bff"
+#endif
+
+//
+// Solution folders
+//
+#if __WINDOWS__
+
+.SLNProjects_LibsTC3 = {}
+	+ 'AppServices-proj'
+	+ 'BaseServices-proj'
+	+ 'GetLicenseKey-proj'
+	+ 'LicenseLib-proj'
+	+ 'RegistryServices-proj'
+	+ 'RoutingServices-proj'
+	+ 'ServerManagerServices-proj'
+	+ 'ServersConfigLib-proj'
+	+ 'ServerServices-proj'
+	+ 'VCSServices-proj'
+
+.SLNProjects_Main
+	+ 'AppServer-proj'
+#if HAVE_MYSQLCLIENT
+	+ 'BaseServer-proj'
+#endif
+	+ 'RegistryServer-proj'
+	+ 'RegOffline-proj'
+	+ 'RoutersMonitorDll-proj'
+	+ 'RoutingServer-proj'
+	+ 'ServerManager-proj'
+	+ 'ServersConfigDll-proj'
+	+ 'VCS-proj'
+
+.SLNProjects_Tests
+	+ 'UnitTestTC3-proj'
+
+.SLNProjects_Other
+	+ 'VCS_v2-proj'
+
+#endif

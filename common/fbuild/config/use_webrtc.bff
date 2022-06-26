@@ -1,0 +1,10 @@
+^Includes
+	+ .webrtc_Includes
+#if __WINDOWS__
+^Definitions
+	+ 'WEBRTC_WIN'
+#endif
+#if __LINUX__
+^Definitions
+	+ 'WEBRTC_POSIX'
+#endif

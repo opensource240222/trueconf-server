@@ -1,0 +1,681 @@
+// Enable experimental FDB migration (in the future this will be the default).
+.AllowDBMigration_Experimental = true
+
+#if __WINDOWS__
+
+; If some toolchain is missing then corresponding #define must be removed/commented.
+#define HAVE_MSVC141
+.msvc141_dir   = 'C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional'
+; .msvc141_ver should be a full version of the the MSVC toolchain to use.
+; Available versions can be found in the folder "VC/Tools/MSVC" inside the VS install path (specified in .msvc141_dir).
+.msvc141_ver   = '14.16.27023'
+; Uncomment if you want to build with Clang:
+; #define HAVE_CLANG
+; .clang_dir =  'C:/Program Files/LLVM'
+; .clang_ver =  '7.0.0'
+
+.winsdk10_dir  = 'C:/Program Files (x86)/Windows Kits/10'
+; WinSDK 7.1 is required only when building for WinXP (if Win32XP platform is enabled below).
+.winsdk71a_dir = 'C:/Program Files (x86)/Microsoft SDKs/Windows/v7.1A'
+.dxsdk_dir     = 'C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)'
+
+; These lists can edited to remove unwanted configurations.
+.Enabled_Platforms = { 'Win32' 'Win64' }
+; Uncomment if you want to build Visicron.dll for WinXP:
+; .Enabled_Platforms + { 'Win32XP' }
+.Enabled_Configs = { 'Debug' 'Release' }
+; Uncomment if you have VLD (Visual Leak Detector):
+; .Enabled_Configs + { 'VLD' }
+; Uncomment if you want to use AddressSanitizer with Clang:
+; .Enabled_Configs + { 'ASan' }
+.Enabled_Traits = { 'Default' }
+; Uncomment if you need to build TCS rebranded to SVKS-M:
+; .Enabled_Traits + { 'SVKSM' }
+; Uncomment if you need to build Visicron.dll for Conferendo client:
+; .Enabled_Traits + { 'Conferendo' }
+
+; Uncomment and edit if you have VLD instaled to a non-standard directory:
+; .vld_dir = 'C:/Program Files (x86)/Visual Leak Detector'
+
+; Uncomment and edit if you want to store intermediate build results (.obj .lib) in a different directory (eg. on a RAM drive).
+; .build_dir = 'D:/ram_disk'
+
+//#define HAVE_BOOST
+//.boost_Includes = 'C:/boost
+//.boost_LinkerOptions_MSVC141_Win32_Debug     = ' /LIBPATH:C:/boost/lib'
+//.boost_LinkerOptions_MSVC141_Win32_Release   = ' /LIBPATH:C:/boost/lib'
+//.boost_LinkerOptions_MSVC141_Win64_Debug     = ' /LIBPATH:C:/boost/lib/x64'
+//.boost_LinkerOptions_MSVC141_Win64_Release   = ' /LIBPATH:C:/boost/lib/x64'
+
+//.boost_LinkerOptions_MSVC141_Win32XP_Debug   = .boost_LinkerOptions_MSVC141_Win32_Debug
+//.boost_LinkerOptions_MSVC141_Win32XP_Release = .boost_LinkerOptions_MSVC141_Win32_Release
+
+//.boost_LinkerOptions_MSVC141_Win32_VLD       = .boost_LinkerOptions_MSVC141_Win32_Debug
+//.boost_LinkerOptions_MSVC141_Win32XP_VLD     = .boost_LinkerOptions_MSVC141_Win32XP_Debug
+//.boost_LinkerOptions_MSVC141_Win64_VLD       = .boost_LinkerOptions_MSVC141_Win64_Debug
+
+//.boost_Libraries_Debug = ''
+//	+ ' libboost_chrono-vc140-mt-sgd-1_57.lib'
+//	+ ' libboost_filesystem-vc140-mt-sgd-1_57.lib'
+//	+ ' libboost_locale-vc140-mt-sgd-1_57.lib'
+//	+ ' libboost_program_options-vc140-mt-sgd-1_57.lib'
+//	+ ' libboost_regex-vc140-mt-sgd-1_57.lib'
+//	+ ' libboost_system-vc140-mt-sgd-1_57.lib'
+//	+ ' libboost_timer-vc140-mt-sgd-1_57.lib'
+//.boost_Libraries_Release = ''
+//	+ ' libboost_chrono-vc140-mt-s-1_57.lib'
+//	+ ' libboost_filesystem-vc140-mt-s-1_57.lib'
+//	+ ' libboost_locale-vc140-mt-s-1_57.lib'
+//	+ ' libboost_program_options-vc140-mt-s-1_57.lib'
+//	+ ' libboost_regex-vc140-mt-s-1_57.lib'
+//	+ ' libboost_system-vc140-mt-s-1_57.lib'
+//	+ ' libboost_timer-vc140-mt-s-1_57.lib'
+//.boost_LinkerOptions_Clang_Win32_Debug       = .boost_LinkerOptions_MSVC141_Win32_Debug   + .boost_Libraries_Debug
+//.boost_LinkerOptions_Clang_Win32_Release     = .boost_LinkerOptions_MSVC141_Win32_Release + .boost_Libraries_Release
+//.boost_LinkerOptions_Clang_Win32XP_Debug     = .boost_LinkerOptions_Clang_Win32_Debug
+//.boost_LinkerOptions_Clang_Win32XP_Release   = .boost_LinkerOptions_Clang_Win32_Release
+//.boost_LinkerOptions_Clang_Win64_Debug       = .boost_LinkerOptions_MSVC141_Win64_Debug   + .boost_Libraries_Debug
+//.boost_LinkerOptions_Clang_Win64_Release     = .boost_LinkerOptions_MSVC141_Win64_Release + .boost_Libraries_Release
+//.boost_LinkerOptions_Clang_Win64_ASan        = .boost_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_OPENSSL
+//.openssl_Includes = 'C:/openssl/include'
+//.openssl_LinkerOptions_MSVC141_Win32_Debug     = ' C:/openssl/win32-debug/libcrypto.lib   C:/openssl/win32-debug/libssl.lib'
+//.openssl_LinkerOptions_MSVC141_Win32_Release   = ' C:/openssl/win32-release/libcrypto.lib C:/openssl/win32-release/libssl.lib'
+//.openssl_LinkerOptions_MSVC141_Win64_Debug     = ' C:/openssl/win64-debug/libcrypto.lib   C:/openssl/win64-debug/libssl.lib'
+//.openssl_LinkerOptions_MSVC141_Win64_Release   = ' C:/openssl/win64-release/libcrypto.lib C:/openssl/win64-release/libssl.lib'
+
+//.openssl_LinkerOptions_MSVC141_Win32XP_Debug   = .openssl_LinkerOptions_MSVC141_Win32_Debug
+//.openssl_LinkerOptions_MSVC141_Win32XP_Release = .openssl_LinkerOptions_MSVC141_Win32_Release
+
+//.openssl_LinkerOptions_MSVC141_Win32_VLD       = .openssl_LinkerOptions_MSVC141_Win32_Debug
+//.openssl_LinkerOptions_MSVC141_Win32XP_VLD     = .openssl_LinkerOptions_MSVC141_Win32XP_Debug
+//.openssl_LinkerOptions_MSVC141_Win64_VLD       = .openssl_LinkerOptions_MSVC141_Win64_Debug
+
+//.openssl_LinkerOptions_Clang_Win32_Debug       = .openssl_LinkerOptions_MSVC141_Win32_Debug
+//.openssl_LinkerOptions_Clang_Win32_Release     = .openssl_LinkerOptions_MSVC141_Win32_Release
+//.openssl_LinkerOptions_Clang_Win32XP_Debug     = .openssl_LinkerOptions_Clang_Win32_Debug
+//.openssl_LinkerOptions_Clang_Win32XP_Release   = .openssl_LinkerOptions_Clang_Win32_Release
+//.openssl_LinkerOptions_Clang_Win64_Debug       = .openssl_LinkerOptions_MSVC141_Win64_Debug
+//.openssl_LinkerOptions_Clang_Win64_Release     = .openssl_LinkerOptions_MSVC141_Win64_Release
+//.openssl_LinkerOptions_Clang_Win64_ASan        = .openssl_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_SQLITE
+//.sqlite_Includes = ''
+//.sqlite_LinkerOptions_MSVC141_Win32_Debug     = ''
+//.sqlite_LinkerOptions_MSVC141_Win32_Release   = ''
+//.sqlite_LinkerOptions_MSVC141_Win32XP_Debug   = .sqlite_LinkerOptions_MSVC141_Win32_Debug
+//.sqlite_LinkerOptions_MSVC141_Win32XP_Release = .sqlite_LinkerOptions_MSVC141_Win32_Release
+//.sqlite_LinkerOptions_MSVC141_Win64_Debug     = ''
+//.sqlite_LinkerOptions_MSVC141_Win64_Release   = ''
+
+//.sqlite_LinkerOptions_MSVC141_Win32_VLD       = .sqlite_LinkerOptions_MSVC141_Win32_Debug
+//.sqlite_LinkerOptions_MSVC141_Win32XP_VLD     = .sqlite_LinkerOptions_MSVC141_Win32XP_Debug
+//.sqlite_LinkerOptions_MSVC141_Win64_VLD       = .sqlite_LinkerOptions_MSVC141_Win64_Debug
+
+//.sqlite_LinkerOptions_Clang_Win32_Debug       = .sqlite_LinkerOptions_MSVC141_Win32_Debug
+//.sqlite_LinkerOptions_Clang_Win32_Release     = .sqlite_LinkerOptions_MSVC141_Win32_Release
+//.sqlite_LinkerOptions_Clang_Win32XP_Debug     = .sqlite_LinkerOptions_Clang_Win32_Debug
+//.sqlite_LinkerOptions_Clang_Win32XP_Release   = .sqlite_LinkerOptions_Clang_Win32_Release
+//.sqlite_LinkerOptions_Clang_Win64_Debug       = .sqlite_LinkerOptions_MSVC141_Win64_Debug
+//.sqlite_LinkerOptions_Clang_Win64_Release     = .sqlite_LinkerOptions_MSVC141_Win64_Release
+//.sqlite_LinkerOptions_Clang_Win64_ASan        = .sqlite_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_GOOGLETEST
+//.googletest_Includes = ''
+//.googletest_LinkerOptions_MSVC141_Win32_Debug     = ''
+//.googletest_LinkerOptions_MSVC141_Win32_Release   = ''
+//.googletest_LinkerOptions_MSVC141_Win32XP_Debug   = .googletest_LinkerOptions_MSVC141_Win32_Debug
+//.googletest_LinkerOptions_MSVC141_Win32XP_Release = .googletest_LinkerOptions_MSVC141_Win32_Release
+//.googletest_LinkerOptions_MSVC141_Win64_Debug     = ''
+//.googletest_LinkerOptions_MSVC141_Win64_Release   = ''
+
+//.googletest_LinkerOptions_MSVC141_Win32_VLD       = .googletest_LinkerOptions_MSVC141_Win32_Debug
+//.googletest_LinkerOptions_MSVC141_Win32XP_VLD     = .googletest_LinkerOptions_MSVC141_Win32XP_Debug
+//.googletest_LinkerOptions_MSVC141_Win64_VLD       = .googletest_LinkerOptions_MSVC141_Win64_Debug
+
+//.googletest_LinkerOptions_Clang_Win32_Debug       = .googletest_LinkerOptions_MSVC141_Win32_Debug
+//.googletest_LinkerOptions_Clang_Win32_Release     = .googletest_LinkerOptions_MSVC141_Win32_Release
+//.googletest_LinkerOptions_Clang_Win32XP_Debug     = .googletest_LinkerOptions_Clang_Win32_Debug
+//.googletest_LinkerOptions_Clang_Win32XP_Release   = .googletest_LinkerOptions_Clang_Win32_Release
+//.googletest_LinkerOptions_Clang_Win64_Debug       = .googletest_LinkerOptions_MSVC141_Win64_Debug
+//.googletest_LinkerOptions_Clang_Win64_Release     = .googletest_LinkerOptions_MSVC141_Win64_Release
+//.googletest_LinkerOptions_Clang_Win64_ASan        = .googletest_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_CURL
+//.curl_Includes = ''
+//.curl_LinkerOptions_MSVC141_Win32_Debug     = ''
+//.curl_LinkerOptions_MSVC141_Win32_Release   = ''
+//.curl_LinkerOptions_MSVC141_Win32XP_Debug   = .curl_LinkerOptions_MSVC141_Win32_Debug
+//.curl_LinkerOptions_MSVC141_Win32XP_Release = .curl_LinkerOptions_MSVC141_Win32_Release
+//.curl_LinkerOptions_MSVC141_Win64_Debug     = ''
+//.curl_LinkerOptions_MSVC141_Win64_Release   = ''
+
+//.curl_LinkerOptions_MSVC141_Win32_VLD       = .curl_LinkerOptions_MSVC141_Win32_Debug
+//.curl_LinkerOptions_MSVC141_Win32XP_VLD     = .curl_LinkerOptions_MSVC141_Win32XP_Debug
+//.curl_LinkerOptions_MSVC141_Win64_VLD       = .curl_LinkerOptions_MSVC141_Win64_Debug
+
+//.curl_LinkerOptions_Clang_Win32_Debug       = .curl_LinkerOptions_MSVC141_Win32_Debug
+//.curl_LinkerOptions_Clang_Win32_Release     = .curl_LinkerOptions_MSVC141_Win32_Release
+//.curl_LinkerOptions_Clang_Win32XP_Debug     = .curl_LinkerOptions_Clang_Win32_Debug
+//.curl_LinkerOptions_Clang_Win32XP_Release   = .curl_LinkerOptions_Clang_Win32_Release
+//.curl_LinkerOptions_Clang_Win64_Debug       = .curl_LinkerOptions_MSVC141_Win64_Debug
+//.curl_LinkerOptions_Clang_Win64_Release     = .curl_LinkerOptions_MSVC141_Win64_Release
+//.curl_LinkerOptions_Clang_Win64_ASan        = .curl_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_CPPDB
+//.cppdb_Includes = 'C:/cppdb'
+//.cppdb_LinkerOptions_MSVC141_Win32_Debug     = ' C:/cppdb/build-win32-vc140/Debug/libcppdb.lib   C:/postgresql/src/interfaces/libpq/i386/Debug/libpqddll.lib'
+//.cppdb_LinkerOptions_MSVC141_Win32_Release   = ' C:/cppdb/build-win32-vc140/Release/libcppdb.lib C:/postgresql/src/interfaces/libpq/i386/Release/libpqdll.lib'
+//.cppdb_LinkerOptions_MSVC141_Win64_Debug     = ' C:/cppdb/build-win64-vc140/Debug/libcppdb.lib   C:/postgresql/src/interfaces/libpq/AMD64/Debug/libpqddll.lib'
+//.cppdb_LinkerOptions_MSVC141_Win64_Release   = ' C:/cppdb/build-win64-vc140/Release/libcppdb.lib C:/postgresql/src/interfaces/libpq/AMD64/Release/libpqdll.lib'
+
+//.cppdb_LinkerOptions_MSVC141_Win32XP_Debug   = .cppdb_LinkerOptions_MSVC141_Win32_Debug
+//.cppdb_LinkerOptions_MSVC141_Win32XP_Release = .cppdb_LinkerOptions_MSVC141_Win32_Release
+
+//.cppdb_LinkerOptions_MSVC141_Win32_VLD       = .cppdb_LinkerOptions_MSVC141_Win32_Debug
+//.cppdb_LinkerOptions_MSVC141_Win32XP_VLD     = .cppdb_LinkerOptions_MSVC141_Win32XP_Debug
+//.cppdb_LinkerOptions_MSVC141_Win64_VLD       = .cppdb_LinkerOptions_MSVC141_Win64_Debug
+
+//.cppdb_LinkerOptions_Clang_Win32_Debug       = .cppdb_LinkerOptions_MSVC141_Win32_Debug
+//.cppdb_LinkerOptions_Clang_Win32_Release     = .cppdb_LinkerOptions_MSVC141_Win32_Release
+//.cppdb_LinkerOptions_Clang_Win32XP_Debug     = .cppdb_LinkerOptions_Clang_Win32_Debug
+//.cppdb_LinkerOptions_Clang_Win32XP_Release   = .cppdb_LinkerOptions_Clang_Win32_Release
+//.cppdb_LinkerOptions_Clang_Win64_Debug       = .cppdb_LinkerOptions_MSVC141_Win64_Debug
+//.cppdb_LinkerOptions_Clang_Win64_Release     = .cppdb_LinkerOptions_MSVC141_Win64_Release
+//.cppdb_LinkerOptions_Clang_Win64_ASan        = .cppdb_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_CARES
+//.cares_Includes = 'C:/c-ares/include'
+//.cares_LinkerOptions_MSVC141_Win32_Debug     = ' C:/c-ares/msvc140/lib32/libcaresd.lib'
+//.cares_LinkerOptions_MSVC141_Win32_Release   = ' C:/c-ares/msvc140/lib32/libcares.lib'
+//.cares_LinkerOptions_MSVC141_Win64_Debug     = ' C:/c-ares/msvc140/lib64/libcaresd.lib'
+//.cares_LinkerOptions_MSVC141_Win64_Release   = ' C:/c-ares/msvc140/lib64/libcares.lib'
+
+//.cares_LinkerOptions_MSVC141_Win32XP_Debug   = .cares_LinkerOptions_MSVC141_Win32_Debug
+//.cares_LinkerOptions_MSVC141_Win32XP_Release = .cares_LinkerOptions_MSVC141_Win32_Release
+
+//.cares_LinkerOptions_MSVC141_Win32_VLD       = .cares_LinkerOptions_MSVC141_Win32_Debug
+//.cares_LinkerOptions_MSVC141_Win32XP_VLD     = .cares_LinkerOptions_MSVC141_Win32XP_Debug
+//.cares_LinkerOptions_MSVC141_Win64_VLD       = .cares_LinkerOptions_MSVC141_Win64_Debug
+
+//.cares_LinkerOptions_Clang_Win32_Debug       = .cares_LinkerOptions_MSVC141_Win32_Debug
+//.cares_LinkerOptions_Clang_Win32_Release     = .cares_LinkerOptions_MSVC141_Win32_Release
+//.cares_LinkerOptions_Clang_Win32XP_Debug     = .cares_LinkerOptions_Clang_Win32_Debug
+//.cares_LinkerOptions_Clang_Win32XP_Release   = .cares_LinkerOptions_Clang_Win32_Release
+//.cares_LinkerOptions_Clang_Win64_Debug       = .cares_LinkerOptions_MSVC141_Win64_Debug
+//.cares_LinkerOptions_Clang_Win64_Release     = .cares_LinkerOptions_MSVC141_Win64_Release
+//.cares_LinkerOptions_Clang_Win64_ASan        = .cares_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_MYSQLCLIENT
+//.mysqlclient_Includes = 'C:/mysql-connector-c/include'
+//.mysqlclient_LinkerOptions_MSVC141_Win32_Debug     = ' C:/mysql-connector-c/build-win32-vc140/libmysql/Debug/mysqlclient.lib'
+//.mysqlclient_LinkerOptions_MSVC141_Win32_Release   = ' C:/mysql-connector-c/build-win32-vc140/libmysql/RelWithDebInfo/mysqlclient.lib'
+//.mysqlclient_LinkerOptions_MSVC141_Win64_Debug     = ' C:/mysql-connector-c/build-win64-vc140/libmysql/Debug/mysqlclient.lib'
+//.mysqlclient_LinkerOptions_MSVC141_Win64_Release   = ' C:/mysql-connector-c/build-win64-vc140/libmysql/RelWithDebInfo/mysqlclient.lib'
+
+//.mysqlclient_LinkerOptions_MSVC141_Win32XP_Debug   = .mysqlclient_LinkerOptions_MSVC141_Win32_Debug
+//.mysqlclient_LinkerOptions_MSVC141_Win32XP_Release = .mysqlclient_LinkerOptions_MSVC141_Win32_Release
+
+//.mysqlclient_LinkerOptions_MSVC141_Win32_VLD       = .mysqlclient_LinkerOptions_MSVC141_Win32_Debug
+//.mysqlclient_LinkerOptions_MSVC141_Win32XP_VLD     = .mysqlclient_LinkerOptions_MSVC141_Win32XP_Debug
+//.mysqlclient_LinkerOptions_MSVC141_Win64_VLD       = .mysqlclient_LinkerOptions_MSVC141_Win64_Debug
+
+//.mysqlclient_LinkerOptions_Clang_Win32_Debug       = .mysqlclient_LinkerOptions_MSVC141_Win32_Debug
+//.mysqlclient_LinkerOptions_Clang_Win32_Release     = .mysqlclient_LinkerOptions_MSVC141_Win32_Release
+//.mysqlclient_LinkerOptions_Clang_Win32XP_Debug     = .mysqlclient_LinkerOptions_Clang_Win32_Debug
+//.mysqlclient_LinkerOptions_Clang_Win32XP_Release   = .mysqlclient_LinkerOptions_Clang_Win32_Release
+//.mysqlclient_LinkerOptions_Clang_Win64_Debug       = .mysqlclient_LinkerOptions_MSVC141_Win64_Debug
+//.mysqlclient_LinkerOptions_Clang_Win64_Release     = .mysqlclient_LinkerOptions_MSVC141_Win64_Release
+//.mysqlclient_LinkerOptions_Clang_Win64_ASan        = .mysqlclient_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_IPP
+//.ipp_Includes = 'C:/ipp/include'
+//.ipp_Libraries = ''
+//	+ ' ippac90lgcmt.lib'
+//	+ ' ippcc90lgcmt.lib'
+//	+ ' ippccmt.lib'
+//	+ ' ippch90lgcmt.lib'
+//	+ ' ippchmt.lib'
+//	+ ' ippcoremt.lib'
+//	+ ' ippcv90lgcmt.lib'
+//	+ ' ippcvmt.lib'
+//	+ ' ippdc90lgcmt.lib'
+//	+ ' ippdcmt.lib'
+//	+ ' ippdi90lgcmt.lib'
+//	+ ' ippgen90lgcmt.lib'
+//	+ ' ippi90lgcmt.lib'
+//	+ ' ippimt.lib'
+//	+ ' ippj90lgcmt.lib'
+//	+ ' ippm90lgcmt.lib'
+//	+ ' ippr90lgcmt.lib'
+//	+ ' ipps90lgcmt.lib'
+//	+ ' ippsc90lgcmt.lib'
+//	+ ' ippsmt.lib'
+//	+ ' ippvc90lgcmt.lib'
+//	+ ' ippvmmt.lib'
+//.ipp_LinkerOptions_MSVC141_Win32_Debug     = ' /LIBPATH:C:/ipp/win32' + .ipp_Libraries
+//.ipp_LinkerOptions_MSVC141_Win32_Release   = ' /LIBPATH:C:/ipp/win32' + .ipp_Libraries
+//.ipp_LinkerOptions_MSVC141_Win64_Debug     = ' /LIBPATH:C:/ipp/win64' + .ipp_Libraries
+//.ipp_LinkerOptions_MSVC141_Win64_Release   = ' /LIBPATH:C:/ipp/win64' + .ipp_Libraries
+
+//.ipp_LinkerOptions_MSVC141_Win32XP_Debug   = .ipp_LinkerOptions_MSVC141_Win32_Debug
+//.ipp_LinkerOptions_MSVC141_Win32XP_Release = .ipp_LinkerOptions_MSVC141_Win32_Release
+
+//.ipp_LinkerOptions_MSVC141_Win32_VLD       = .ipp_LinkerOptions_MSVC141_Win32_Debug
+//.ipp_LinkerOptions_MSVC141_Win32XP_VLD     = .ipp_LinkerOptions_MSVC141_Win32XP_Debug
+//.ipp_LinkerOptions_MSVC141_Win64_VLD       = .ipp_LinkerOptions_MSVC141_Win64_Debug
+
+//.ipp_LinkerOptions_Clang_Win32_Debug       = .ipp_LinkerOptions_MSVC141_Win32_Debug
+//.ipp_LinkerOptions_Clang_Win32_Release     = .ipp_LinkerOptions_MSVC141_Win32_Release
+//.ipp_LinkerOptions_Clang_Win32XP_Debug     = .ipp_LinkerOptions_Clang_Win32_Debug
+//.ipp_LinkerOptions_Clang_Win32XP_Release   = .ipp_LinkerOptions_Clang_Win32_Release
+//.ipp_LinkerOptions_Clang_Win64_Debug       = .ipp_LinkerOptions_MSVC141_Win64_Debug
+//.ipp_LinkerOptions_Clang_Win64_Release     = .ipp_LinkerOptions_MSVC141_Win64_Release
+//.ipp_LinkerOptions_Clang_Win64_ASan        = .ipp_LinkerOptions_Clang_Win64_Release
+
+//#define HAVE_WEBSOCKETPP
+//.websocketpp_Includes = .websocketpp_dir
+
+//#define HAVE_WEBRTC
+//.webrtc_Includes = {}
+//	+ 'D:/webrtc'
+//	+ 'D:/webrtc/third_party'
+//	+ 'D:/webrtc/third_party/libsrtp/srtp/crypto/include'
+//.webrtc_LinkerOptions_MSVC141_Win32_Debug     = ' D:/webrtc/out-win32/Debug/obj/examples/peerconnection_client.lib'
+//.webrtc_LinkerOptions_MSVC141_Win32_Release   = ' D:/webrtc/out-win32/Release/obj/examples/peerconnection_client.lib'
+//.webrtc_LinkerOptions_MSVC141_Win64_Debug     = ' D:/webrtc/out-win64/Debug/obj/examples/peerconnection_client.lib'
+//.webrtc_LinkerOptions_MSVC141_Win64_Release   = ' D:/webrtc/out-win64/Release/obj/examples/peerconnection_client.lib'
+//
+//.webrtc_LinkerOptions_MSVC141_Win32XP_Debug   = .webrtc_LinkerOptions_MSVC141_Win32_Debug
+//.webrtc_LinkerOptions_MSVC141_Win32XP_Release = .webrtc_LinkerOptions_MSVC141_Win32_Release
+//
+//.webrtc_LinkerOptions_MSVC141_Win32_VLD       = .webrtc_LinkerOptions_MSVC141_Win32_Debug
+//.webrtc_LinkerOptions_MSVC141_Win32XP_VLD     = .webrtc_LinkerOptions_MSVC141_Win32XP_Debug
+//.webrtc_LinkerOptions_MSVC141_Win64_VLD       = .webrtc_LinkerOptions_MSVC141_Win64_Debug
+//
+//.webrtc_LinkerOptions_Clang_Win32_Debug       = .webrtc_LinkerOptions_MSVC141_Win32_Debug
+//.webrtc_LinkerOptions_Clang_Win32_Release     = .webrtc_LinkerOptions_MSVC141_Win32_Release
+//.webrtc_LinkerOptions_Clang_Win32XP_Debug     = .webrtc_LinkerOptions_Clang_Win32_Debug
+//.webrtc_LinkerOptions_Clang_Win32XP_Release   = .webrtc_LinkerOptions_Clang_Win32_Release
+//.webrtc_LinkerOptions_Clang_Win64_Debug       = .webrtc_LinkerOptions_MSVC141_Win64_Debug
+//.webrtc_LinkerOptions_Clang_Win64_Release     = .webrtc_LinkerOptions_MSVC141_Win64_Release
+//.webrtc_LinkerOptions_Clang_Win64_ASan        = .webrtc_LinkerOptions_Clang_Win64_Release
+
+#endif
+
+#if __LINUX__
+
+; If some toolchain is missing then corresponding #define must be removed/commented.
+#define HAVE_GCC
+; .gcc_bin should be a full path to gcc binary.
+; Can be obtained by running:  readlink -f $(which gcc)
+.gcc_bin = '/usr/bin/x86_64-linux-gnu-gcc-6'
+; .gcc_libexecdir should be a full path to the directory that contains internal compiler binaries (cc1 cc1plus).
+; Can be obtained by running:  dirname $(readlink -f $(which $(gcc -print-prog-name=cc1)))
+.gcc_libexecdir = '/usr/lib/gcc/x86_64-linux-gnu/6'
+; Uncomment to enable checks for missing break in switch statements (GCC 7 or later is required):
+; .gcc_ExtraCompilerOptions + ' -Werror=implicit-fallthrough'
+; Uncomment if you want to build with Clang:
+; #define HAVE_CLANG
+; .clang_bin = '/usr/bin/x86_64-pc-linux-gnu-clang-3.8'
+
+; .gcc_libexecdir should be a full path to the directory that contains the assebmler (as).
+; Can be obtained by running:  dirname $(readlink -f $(which $(gcc -print-prog-name=as)))
+.binutils_bindir = '/usr/bin'
+
+; These lists can edited to remove unwanted configurations.
+.Enabled_Platforms = { 'Linux32' 'Linux64' }
+.Enabled_Configs = { 'Debug' 'Release' }
+; Uncomment if you want to use sanitizers:
+; .Enabled_Configs + { 'ASan' 'MSan' 'TSan' 'UBSan' }
+.Enabled_Traits = { 'Default' }
+; Uncomment if you need to build TCS rebranded to SVKS-M:
+; .Enabled_Traits + { 'SVKSM' }
+; Uncomment if you need to build Visicron.dll for Conferendo client:
+; .Enabled_Traits = { 'Conferendo' }
+
+; Uncomment and edit if you want to store intermediate build results (.o .a) in a different directory (eg. on tmpfs).
+; .build_dir = '/tmp/build'
+
+#define HAVE_BOOST
+.boost_Includes = {}
+.boost_LinkerOptions_GCC_Linux32_Debug     = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_GCC_Linux32_Release   = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_Clang_Linux32_Debug   = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_Clang_Linux32_Release = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_GCC_Linux64_Debug     = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_GCC_Linux64_Release   = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_Clang_Linux64_Debug   = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_Clang_Linux64_Release = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+
+.boost_LinkerOptions_GCC_Linux32_ASan      = .boost_LinkerOptions_GCC_Linux32_Release
+.boost_LinkerOptions_GCC_Linux32_UBSan     = .boost_LinkerOptions_GCC_Linux32_Release
+.boost_LinkerOptions_GCC_Linux64_ASan      = .boost_LinkerOptions_GCC_Linux64_Release
+.boost_LinkerOptions_GCC_Linux64_TSan      = .boost_LinkerOptions_GCC_Linux64_Release
+.boost_LinkerOptions_GCC_Linux64_UBSan     = .boost_LinkerOptions_GCC_Linux64_Release
+.boost_LinkerOptions_Clang_Linux32_ASan    = .boost_LinkerOptions_Clang_Linux32_Release
+.boost_LinkerOptions_Clang_Linux32_UBSan   = .boost_LinkerOptions_Clang_Linux32_Release
+.boost_LinkerOptions_Clang_Linux64_ASan    = .boost_LinkerOptions_Clang_Linux64_Release
+.boost_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.boost_LinkerOptions_Clang_Linux64_TSan    = .boost_LinkerOptions_Clang_Linux64_Release
+.boost_LinkerOptions_Clang_Linux64_UBSan   = .boost_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_OPENSSL
+.openssl_Includes = {}
+.openssl_LinkerOptions_GCC_Linux32_Debug     = ' -lssl -lcrypto'
+.openssl_LinkerOptions_GCC_Linux32_Release   = ' -lssl -lcrypto'
+.openssl_LinkerOptions_Clang_Linux32_Debug   = ' -lssl -lcrypto'
+.openssl_LinkerOptions_Clang_Linux32_Release = ' -lssl -lcrypto'
+.openssl_LinkerOptions_GCC_Linux64_Debug     = ' -lssl -lcrypto'
+.openssl_LinkerOptions_GCC_Linux64_Release   = ' -lssl -lcrypto'
+.openssl_LinkerOptions_Clang_Linux64_Debug   = ' -lssl -lcrypto'
+.openssl_LinkerOptions_Clang_Linux64_Release = ' -lssl -lcrypto'
+
+.openssl_LinkerOptions_GCC_Linux32_ASan      = .openssl_LinkerOptions_GCC_Linux32_Release
+.openssl_LinkerOptions_GCC_Linux32_UBSan     = .openssl_LinkerOptions_GCC_Linux32_Release
+.openssl_LinkerOptions_GCC_Linux64_ASan      = .openssl_LinkerOptions_GCC_Linux64_Release
+.openssl_LinkerOptions_GCC_Linux64_TSan      = .openssl_LinkerOptions_GCC_Linux64_Release
+.openssl_LinkerOptions_GCC_Linux64_UBSan     = .openssl_LinkerOptions_GCC_Linux64_Release
+.openssl_LinkerOptions_Clang_Linux32_ASan    = .openssl_LinkerOptions_Clang_Linux32_Release
+.openssl_LinkerOptions_Clang_Linux32_UBSan   = .openssl_LinkerOptions_Clang_Linux32_Release
+.openssl_LinkerOptions_Clang_Linux64_ASan    = .openssl_LinkerOptions_Clang_Linux64_Release
+.openssl_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.openssl_LinkerOptions_Clang_Linux64_TSan    = .openssl_LinkerOptions_Clang_Linux64_Release
+.openssl_LinkerOptions_Clang_Linux64_UBSan   = .openssl_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_SQLITE
+.sqlite_Includes = {}
+.sqlite_LinkerOptions_GCC_Linux32_Debug     = ' -lsqlite3'
+.sqlite_LinkerOptions_GCC_Linux32_Release   = ' -lsqlite3'
+.sqlite_LinkerOptions_Clang_Linux32_Debug   = ' -lsqlite3'
+.sqlite_LinkerOptions_Clang_Linux32_Release = ' -lsqlite3'
+.sqlite_LinkerOptions_GCC_Linux64_Debug     = ' -lsqlite3'
+.sqlite_LinkerOptions_GCC_Linux64_Release   = ' -lsqlite3'
+.sqlite_LinkerOptions_Clang_Linux64_Debug   = ' -lsqlite3'
+.sqlite_LinkerOptions_Clang_Linux64_Release = ' -lsqlite3'
+
+.sqlite_LinkerOptions_GCC_Linux32_ASan      = .sqlite_LinkerOptions_GCC_Linux32_Release
+.sqlite_LinkerOptions_GCC_Linux32_UBSan     = .sqlite_LinkerOptions_GCC_Linux32_Release
+.sqlite_LinkerOptions_GCC_Linux64_ASan      = .sqlite_LinkerOptions_GCC_Linux64_Release
+.sqlite_LinkerOptions_GCC_Linux64_TSan      = .sqlite_LinkerOptions_GCC_Linux64_Release
+.sqlite_LinkerOptions_GCC_Linux64_UBSan     = .sqlite_LinkerOptions_GCC_Linux64_Release
+.sqlite_LinkerOptions_Clang_Linux32_ASan    = .sqlite_LinkerOptions_Clang_Linux32_Release
+.sqlite_LinkerOptions_Clang_Linux32_UBSan   = .sqlite_LinkerOptions_Clang_Linux32_Release
+.sqlite_LinkerOptions_Clang_Linux64_ASan    = .sqlite_LinkerOptions_Clang_Linux64_Release
+.sqlite_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.sqlite_LinkerOptions_Clang_Linux64_TSan    = .sqlite_LinkerOptions_Clang_Linux64_Release
+.sqlite_LinkerOptions_Clang_Linux64_UBSan   = .sqlite_LinkerOptions_Clang_Linux64_Release
+
+//#define HAVE_GOOGLETEST
+//.googletest_Includes = {}
+//.googletest_LinkerOptions_GCC_Linux32_Debug     = ' -lgtest -lgmock'
+//.googletest_LinkerOptions_GCC_Linux32_Release   = ' -lgtest -lgmock'
+//.googletest_LinkerOptions_Clang_Linux32_Debug   = ' -L/home/user/lib32/clang/ -lgtest -lgmock'
+//.googletest_LinkerOptions_Clang_Linux32_Release = ' -L/home/user/lib32/clang/ -lgtest -lgmock'
+//.googletest_LinkerOptions_GCC_Linux64_Debug     = ' -lgtest -lgmock'
+//.googletest_LinkerOptions_GCC_Linux64_Release   = ' -lgtest -lgmock'
+//.googletest_LinkerOptions_Clang_Linux64_Debug   = ' -L/home/user/lib64/clang/ -lgtest -lgmock'
+//.googletest_LinkerOptions_Clang_Linux64_Release = ' -L/home/user/lib64/clang/ -lgtest -lgmock'
+//
+//.googletest_LinkerOptions_GCC_Linux32_ASan      = .googletest_LinkerOptions_GCC_Linux32_Release
+//.googletest_LinkerOptions_GCC_Linux32_UBSan     = .googletest_LinkerOptions_GCC_Linux32_Release
+//.googletest_LinkerOptions_GCC_Linux64_ASan      = .googletest_LinkerOptions_GCC_Linux64_Release
+//.googletest_LinkerOptions_GCC_Linux64_TSan      = .googletest_LinkerOptions_GCC_Linux64_Release
+//.googletest_LinkerOptions_GCC_Linux64_UBSan     = .googletest_LinkerOptions_GCC_Linux64_Release
+//.googletest_LinkerOptions_Clang_Linux32_ASan    = .googletest_LinkerOptions_Clang_Linux32_Release
+//.googletest_LinkerOptions_Clang_Linux32_UBSan   = .googletest_LinkerOptions_Clang_Linux32_Release
+//.googletest_LinkerOptions_Clang_Linux64_ASan    = .googletest_LinkerOptions_Clang_Linux64_Release
+//.googletest_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+//.googletest_LinkerOptions_Clang_Linux64_TSan    = .googletest_LinkerOptions_Clang_Linux64_Release
+//.googletest_LinkerOptions_Clang_Linux64_UBSan   = .googletest_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_CURL
+.curl_Includes = {}
+.curl_LinkerOptions_GCC_Linux32_Debug     = ' -lcurl'
+.curl_LinkerOptions_GCC_Linux32_Release   = ' -lcurl'
+.curl_LinkerOptions_Clang_Linux32_Debug   = ' -lcurl'
+.curl_LinkerOptions_Clang_Linux32_Release = ' -lcurl'
+.curl_LinkerOptions_GCC_Linux64_Debug     = ' -lcurl'
+.curl_LinkerOptions_GCC_Linux64_Release   = ' -lcurl'
+.curl_LinkerOptions_Clang_Linux64_Debug   = ' -lcurl'
+.curl_LinkerOptions_Clang_Linux64_Release = ' -lcurl'
+
+.curl_LinkerOptions_GCC_Linux32_ASan      = .curl_LinkerOptions_GCC_Linux32_Release
+.curl_LinkerOptions_GCC_Linux32_UBSan     = .curl_LinkerOptions_GCC_Linux32_Release
+.curl_LinkerOptions_GCC_Linux64_ASan      = .curl_LinkerOptions_GCC_Linux64_Release
+.curl_LinkerOptions_GCC_Linux64_TSan      = .curl_LinkerOptions_GCC_Linux64_Release
+.curl_LinkerOptions_GCC_Linux64_UBSan     = .curl_LinkerOptions_GCC_Linux64_Release
+.curl_LinkerOptions_Clang_Linux32_ASan    = .curl_LinkerOptions_Clang_Linux32_Release
+.curl_LinkerOptions_Clang_Linux32_UBSan   = .curl_LinkerOptions_Clang_Linux32_Release
+.curl_LinkerOptions_Clang_Linux64_ASan    = .curl_LinkerOptions_Clang_Linux64_Release
+.curl_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.curl_LinkerOptions_Clang_Linux64_TSan    = .curl_LinkerOptions_Clang_Linux64_Release
+.curl_LinkerOptions_Clang_Linux64_UBSan   = .curl_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_CARES
+.cares_Includes = {}
+.cares_LinkerOptions_GCC_Linux32_Debug     = ' -lcares'
+.cares_LinkerOptions_GCC_Linux32_Release   = ' -lcares'
+.cares_LinkerOptions_Clang_Linux32_Debug   = ' -lcares'
+.cares_LinkerOptions_Clang_Linux32_Release = ' -lcares'
+.cares_LinkerOptions_GCC_Linux64_Debug     = ' -lcares'
+.cares_LinkerOptions_GCC_Linux64_Release   = ' -lcares'
+.cares_LinkerOptions_Clang_Linux64_Debug   = ' -lcares'
+.cares_LinkerOptions_Clang_Linux64_Release = ' -lcares'
+
+.cares_LinkerOptions_GCC_Linux32_ASan      = .cares_LinkerOptions_GCC_Linux32_Release
+.cares_LinkerOptions_GCC_Linux32_UBSan     = .cares_LinkerOptions_GCC_Linux32_Release
+.cares_LinkerOptions_GCC_Linux64_ASan      = .cares_LinkerOptions_GCC_Linux64_Release
+.cares_LinkerOptions_GCC_Linux64_TSan      = .cares_LinkerOptions_GCC_Linux64_Release
+.cares_LinkerOptions_GCC_Linux64_UBSan     = .cares_LinkerOptions_GCC_Linux64_Release
+.cares_LinkerOptions_Clang_Linux32_ASan    = .cares_LinkerOptions_Clang_Linux32_Release
+.cares_LinkerOptions_Clang_Linux32_UBSan   = .cares_LinkerOptions_Clang_Linux32_Release
+.cares_LinkerOptions_Clang_Linux64_ASan    = .cares_LinkerOptions_Clang_Linux64_Release
+.cares_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.cares_LinkerOptions_Clang_Linux64_TSan    = .cares_LinkerOptions_Clang_Linux64_Release
+.cares_LinkerOptions_Clang_Linux64_UBSan   = .cares_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_LIBPQ
+.libpq_Includes = { '/usr/include/postgresql' }
+.libpq_LinkerOptions_GCC_Linux32_Debug     = ' -lpq'
+.libpq_LinkerOptions_GCC_Linux32_Release   = ' -lpq'
+.libpq_LinkerOptions_Clang_Linux32_Debug   = ' -lpq'
+.libpq_LinkerOptions_Clang_Linux32_Release = ' -lpq'
+.libpq_LinkerOptions_GCC_Linux64_Debug     = ' -lpq'
+.libpq_LinkerOptions_GCC_Linux64_Release   = ' -lpq'
+.libpq_LinkerOptions_Clang_Linux64_Debug   = ' -lpq'
+.libpq_LinkerOptions_Clang_Linux64_Release = ' -lpq'
+
+.libpq_LinkerOptions_GCC_Linux32_ASan      = .libpq_LinkerOptions_GCC_Linux32_Release
+.libpq_LinkerOptions_GCC_Linux32_UBSan     = .libpq_LinkerOptions_GCC_Linux32_Release
+.libpq_LinkerOptions_GCC_Linux64_ASan      = .libpq_LinkerOptions_GCC_Linux64_Release
+.libpq_LinkerOptions_GCC_Linux64_TSan      = .libpq_LinkerOptions_GCC_Linux64_Release
+.libpq_LinkerOptions_GCC_Linux64_UBSan     = .libpq_LinkerOptions_GCC_Linux64_Release
+.libpq_LinkerOptions_Clang_Linux32_ASan    = .libpq_LinkerOptions_Clang_Linux32_Release
+.libpq_LinkerOptions_Clang_Linux32_UBSan   = .libpq_LinkerOptions_Clang_Linux32_Release
+.libpq_LinkerOptions_Clang_Linux64_ASan    = .libpq_LinkerOptions_Clang_Linux64_Release
+.libpq_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.libpq_LinkerOptions_Clang_Linux64_TSan    = .libpq_LinkerOptions_Clang_Linux64_Release
+.libpq_LinkerOptions_Clang_Linux64_UBSan   = .libpq_LinkerOptions_Clang_Linux64_Release
+
+//#define HAVE_CPPDB
+//.cppdb_Includes = {}
+//.cppdb_LinkerOptions_GCC_Linux32_Debug     = ' -L/home/user/lib32/ -lcppdb'
+//.cppdb_LinkerOptions_GCC_Linux32_Release   = ' -L/home/user/lib32/ -lcppdb'
+//.cppdb_LinkerOptions_Clang_Linux32_Debug   = ' -L/home/user/lib32/clang/ -lcppdb'
+//.cppdb_LinkerOptions_Clang_Linux32_Release = ' -L/home/user/lib32/clang/ -lcppdb'
+//.cppdb_LinkerOptions_GCC_Linux64_Debug     = ' -lcppdb'
+//.cppdb_LinkerOptions_GCC_Linux64_Release   = ' -lcppdb'
+//.cppdb_LinkerOptions_Clang_Linux64_Debug   = ' -L/home/user/lib64/clang/ -lcppdb'
+//.cppdb_LinkerOptions_Clang_Linux64_Release = ' -L/home/user/lib64/clang/ -lcppdb'
+//
+//.cppdb_LinkerOptions_GCC_Linux32_ASan      = .cppdb_LinkerOptions_GCC_Linux32_Release
+//.cppdb_LinkerOptions_GCC_Linux32_UBSan     = .cppdb_LinkerOptions_GCC_Linux32_Release
+//.cppdb_LinkerOptions_GCC_Linux64_ASan      = .cppdb_LinkerOptions_GCC_Linux64_Release
+//.cppdb_LinkerOptions_GCC_Linux64_TSan      = .cppdb_LinkerOptions_GCC_Linux64_Release
+//.cppdb_LinkerOptions_GCC_Linux64_UBSan     = .cppdb_LinkerOptions_GCC_Linux64_Release
+//.cppdb_LinkerOptions_Clang_Linux32_ASan    = .cppdb_LinkerOptions_Clang_Linux32_Release
+//.cppdb_LinkerOptions_Clang_Linux32_UBSan   = .cppdb_LinkerOptions_Clang_Linux32_Release
+//.cppdb_LinkerOptions_Clang_Linux64_ASan    = .cppdb_LinkerOptions_Clang_Linux64_Release
+//.cppdb_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+//.cppdb_LinkerOptions_Clang_Linux64_TSan    = .cppdb_LinkerOptions_Clang_Linux64_Release
+//.cppdb_LinkerOptions_Clang_Linux64_UBSan   = .cppdb_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_SASL
+.sasl_Includes = '/usr/include/sasl'
+.sasl_LinkerOptions_GCC_Linux32_Debug     = ' -lsasl2'
+.sasl_LinkerOptions_GCC_Linux32_Release   = ' -lsasl2'
+.sasl_LinkerOptions_Clang_Linux32_Debug   = ' -lsasl2'
+.sasl_LinkerOptions_Clang_Linux32_Release = ' -lsasl2'
+.sasl_LinkerOptions_GCC_Linux64_Debug     = ' -lsasl2'
+.sasl_LinkerOptions_GCC_Linux64_Release   = ' -lsasl2'
+.sasl_LinkerOptions_Clang_Linux64_Debug   = ' -lsasl2'
+.sasl_LinkerOptions_Clang_Linux64_Release = ' -lsasl2'
+
+.sasl_LinkerOptions_GCC_Linux32_ASan      = .sasl_LinkerOptions_GCC_Linux32_Release
+.sasl_LinkerOptions_GCC_Linux32_UBSan     = .sasl_LinkerOptions_GCC_Linux32_Release
+.sasl_LinkerOptions_GCC_Linux64_ASan      = .sasl_LinkerOptions_GCC_Linux64_Release
+.sasl_LinkerOptions_GCC_Linux64_TSan      = .sasl_LinkerOptions_GCC_Linux64_Release
+.sasl_LinkerOptions_GCC_Linux64_UBSan     = .sasl_LinkerOptions_GCC_Linux64_Release
+.sasl_LinkerOptions_Clang_Linux32_ASan    = .sasl_LinkerOptions_Clang_Linux32_Release
+.sasl_LinkerOptions_Clang_Linux32_UBSan   = .sasl_LinkerOptions_Clang_Linux32_Release
+.sasl_LinkerOptions_Clang_Linux64_ASan    = .sasl_LinkerOptions_Clang_Linux64_Release
+.sasl_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.sasl_LinkerOptions_Clang_Linux64_TSan    = .sasl_LinkerOptions_Clang_Linux64_Release
+.sasl_LinkerOptions_Clang_Linux64_UBSan   = .sasl_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_PHP
+.php_Includes = {}
+	+ '/usr/lib64/php7.2/include/php'
+	+ '/usr/lib64/php7.2/include/php/main'
+	+ '/usr/lib64/php7.2/include/php/TSRM'
+	+ '/usr/lib64/php7.2/include/php/Zend'
+	+ '/usr/lib64/php7.2/include/php/ext'
+	+ '/usr/lib64/php7.2/include/php/ext/date/lib'
+
+//#define HAVE_IPP
+//.ipp_Includes = '/mnt/ipp/include'
+//.ipp_Libraries = ''
+//	+ ' -l:libippac90lgc.a'
+//	+ ' -l:libippcc.a'
+//	+ ' -l:libippcc90lgc.a'
+//	+ ' -l:libippch.a'
+//	+ ' -l:libippch90lgc.a'
+//	+ ' -l:libippcv.a'
+//	+ ' -l:libippcv90lgc.a'
+//	+ ' -l:libippdc.a'
+//	+ ' -l:libippdc90lgc.a'
+//	+ ' -l:libippdi90lgc.a'
+//	+ ' -l:libippe.a'
+//	+ ' -l:libippgen90lgc.a'
+//	+ ' -l:libippi.a'
+//	+ ' -l:libippi90lgc.a'
+//	+ ' -l:libippj90lgc.a'
+//	+ ' -l:libippm90lgc.a'
+//	+ ' -l:libippr90lgc.a'
+//	+ ' -l:libipps.a'
+//	+ ' -l:libipps90lgc.a'
+//	+ ' -l:libippsc90lgc.a'
+//	+ ' -l:libippvc90lgc.a'
+//	+ ' -l:libippvm.a'
+//	+ ' -l:libippcore.a' ; "libippcore" must be the last among the IPP libs in the linker command line
+
+//.ipp_LinkerOptions_GCC_Linux32_Debug     = ' -L /mnt/ipp/linux32' + .ipp_Libraries
+//.ipp_LinkerOptions_GCC_Linux32_Release   = ' -L /mnt/ipp/linux32' + .ipp_Libraries
+//.ipp_LinkerOptions_Clang_Linux32_Debug   = ' -L /mnt/ipp/linux32' + .ipp_Libraries
+//.ipp_LinkerOptions_Clang_Linux32_Release = ' -L /mnt/ipp/linux32' + .ipp_Libraries
+//.ipp_LinkerOptions_GCC_Linux64_Debug     = ' -L /mnt/ipp/linux64' + .ipp_Libraries
+//.ipp_LinkerOptions_GCC_Linux64_Release   = ' -L /mnt/ipp/linux64' + .ipp_Libraries
+//.ipp_LinkerOptions_Clang_Linux64_Debug   = ' -L /mnt/ipp/linux64' + .ipp_Libraries
+//.ipp_LinkerOptions_Clang_Linux64_Release = ' -L /mnt/ipp/linux64' + .ipp_Libraries
+
+//.ipp_LinkerOptions_GCC_Linux32_ASan      = .ipp_LinkerOptions_GCC_Linux32_Release
+//.ipp_LinkerOptions_GCC_Linux32_UBSan     = .ipp_LinkerOptions_GCC_Linux32_Release
+//.ipp_LinkerOptions_GCC_Linux64_ASan      = .ipp_LinkerOptions_GCC_Linux64_Release
+//.ipp_LinkerOptions_GCC_Linux64_TSan      = .ipp_LinkerOptions_GCC_Linux64_Release
+//.ipp_LinkerOptions_GCC_Linux64_UBSan     = .ipp_LinkerOptions_GCC_Linux64_Release
+//.ipp_LinkerOptions_Clang_Linux32_ASan    = .ipp_LinkerOptions_Clang_Linux32_Release
+//.ipp_LinkerOptions_Clang_Linux32_UBSan   = .ipp_LinkerOptions_Clang_Linux32_Release
+//.ipp_LinkerOptions_Clang_Linux64_ASan    = .ipp_LinkerOptions_Clang_Linux64_Release
+//.ipp_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+//.ipp_LinkerOptions_Clang_Linux64_TSan    = .ipp_LinkerOptions_Clang_Linux64_Release
+//.ipp_LinkerOptions_Clang_Linux64_UBSan   = .ipp_LinkerOptions_Clang_Linux64_Release
+
+//#define HAVE_WEBSOCKETPP
+//.websocketpp_Includes = '/mnt/websocketpp'
+
+//#define HAVE_WEBRTC
+//.webrtc_Includes = {}
+//	+ '/mnt/webrtc'
+//	+ '/mnt/webrtc/third_party'
+//	+ '/mnt/webrtc/third_party/libsrtp/srtp/crypto/include'
+//.webrtc_LinkerOptions_GCC_Linux32_Debug     = ' /mnt/webrtc/out-linux32/Debug/obj/libwebrtc.a'
+//.webrtc_LinkerOptions_GCC_Linux32_Release   = ' /mnt/webrtc/out-linux32/Release/obj/libwebrtc.a'
+//.webrtc_LinkerOptions_Clang_Linux32_Debug   = .webrtc_LinkerOptions_GCC_Linux32_Debug
+//.webrtc_LinkerOptions_Clang_Linux32_Release = .webrtc_LinkerOptions_GCC_Linux32_Release
+//.webrtc_LinkerOptions_GCC_Linux64_Debug     = ' /mnt/webrtc/out-linux64/Debug/obj/libwebrtc.a'
+//.webrtc_LinkerOptions_GCC_Linux64_Release   = ' /mnt/webrtc/out-linux64/Release/obj/libwebrtc.a'
+//.webrtc_LinkerOptions_Clang_Linux64_Debug   = .webrtc_LinkerOptions_GCC_Linux64_Debug
+//.webrtc_LinkerOptions_Clang_Linux64_Release = .webrtc_LinkerOptions_GCC_Linux64_Release
+//
+//.webrtc_LinkerOptions_GCC_Linux32_ASan      = .webrtc_LinkerOptions_GCC_Linux32_Release
+//.webrtc_LinkerOptions_GCC_Linux32_UBSan     = .webrtc_LinkerOptions_GCC_Linux32_Release
+//.webrtc_LinkerOptions_GCC_Linux64_ASan      = .webrtc_LinkerOptions_GCC_Linux64_Release
+//.webrtc_LinkerOptions_GCC_Linux64_TSan      = .webrtc_LinkerOptions_GCC_Linux64_Release
+//.webrtc_LinkerOptions_GCC_Linux64_UBSan     = .webrtc_LinkerOptions_GCC_Linux64_Release
+//.webrtc_LinkerOptions_Clang_Linux32_ASan    = .webrtc_LinkerOptions_Clang_Linux32_Release
+//.webrtc_LinkerOptions_Clang_Linux32_UBSan   = .webrtc_LinkerOptions_Clang_Linux32_Release
+//.webrtc_LinkerOptions_Clang_Linux64_ASan    = .webrtc_LinkerOptions_Clang_Linux64_Release
+//.webrtc_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+//.webrtc_LinkerOptions_Clang_Linux64_TSan    = .webrtc_LinkerOptions_Clang_Linux64_Release
+//.webrtc_LinkerOptions_Clang_Linux64_UBSan   = .webrtc_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_SPEEX
+.speex_Includes = {}
+.speex_LinkerOptions_GCC_Linux32_Debug     = ' -lspeex'
+.speex_LinkerOptions_GCC_Linux32_Release   = ' -lspeex'
+.speex_LinkerOptions_Clang_Linux32_Debug   = ' -lspeex'
+.speex_LinkerOptions_Clang_Linux32_Release = ' -lspeex'
+.speex_LinkerOptions_GCC_Linux64_Debug     = ' -lspeex'
+.speex_LinkerOptions_GCC_Linux64_Release   = ' -lspeex'
+.speex_LinkerOptions_Clang_Linux64_Debug   = ' -lspeex'
+.speex_LinkerOptions_Clang_Linux64_Release = ' -lspeex'
+
+.speex_LinkerOptions_GCC_Linux32_ASan      = .speex_LinkerOptions_GCC_Linux32_Release
+.speex_LinkerOptions_GCC_Linux32_UBSan     = .speex_LinkerOptions_GCC_Linux32_Release
+.speex_LinkerOptions_GCC_Linux64_ASan      = .speex_LinkerOptions_GCC_Linux64_Release
+.speex_LinkerOptions_GCC_Linux64_TSan      = .speex_LinkerOptions_GCC_Linux64_Release
+.speex_LinkerOptions_GCC_Linux64_UBSan     = .speex_LinkerOptions_GCC_Linux64_Release
+.speex_LinkerOptions_Clang_Linux32_ASan    = .speex_LinkerOptions_Clang_Linux32_Release
+.speex_LinkerOptions_Clang_Linux32_UBSan   = .speex_LinkerOptions_Clang_Linux32_Release
+.speex_LinkerOptions_Clang_Linux64_ASan    = .speex_LinkerOptions_Clang_Linux64_Release
+.speex_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.speex_LinkerOptions_Clang_Linux64_TSan    = .speex_LinkerOptions_Clang_Linux64_Release
+.speex_LinkerOptions_Clang_Linux64_UBSan   = .speex_LinkerOptions_Clang_Linux64_Release
+
+#define HAVE_LAME
+.lame_Includes = {}
+.lame_LinkerOptions_GCC_Linux32_Debug     = ' -lmp3lame'
+.lame_LinkerOptions_GCC_Linux32_Release   = ' -lmp3lame'
+.lame_LinkerOptions_Clang_Linux32_Debug   = ' -lmp3lame'
+.lame_LinkerOptions_Clang_Linux32_Release = ' -lmp3lame'
+.lame_LinkerOptions_GCC_Linux64_Debug     = ' -lmp3lame'
+.lame_LinkerOptions_GCC_Linux64_Release   = ' -lmp3lame'
+.lame_LinkerOptions_Clang_Linux64_Debug   = ' -lmp3lame'
+.lame_LinkerOptions_Clang_Linux64_Release = ' -lmp3lame'
+
+.lame_LinkerOptions_GCC_Linux32_ASan      = .lame_LinkerOptions_GCC_Linux32_Release
+.lame_LinkerOptions_GCC_Linux32_UBSan     = .lame_LinkerOptions_GCC_Linux32_Release
+.lame_LinkerOptions_GCC_Linux64_ASan      = .lame_LinkerOptions_GCC_Linux64_Release
+.lame_LinkerOptions_GCC_Linux64_TSan      = .lame_LinkerOptions_GCC_Linux64_Release
+.lame_LinkerOptions_GCC_Linux64_UBSan     = .lame_LinkerOptions_GCC_Linux64_Release
+.lame_LinkerOptions_Clang_Linux32_ASan    = .lame_LinkerOptions_Clang_Linux32_Release
+.lame_LinkerOptions_Clang_Linux32_UBSan   = .lame_LinkerOptions_Clang_Linux32_Release
+.lame_LinkerOptions_Clang_Linux64_ASan    = .lame_LinkerOptions_Clang_Linux64_Release
+.lame_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.lame_LinkerOptions_Clang_Linux64_TSan    = .lame_LinkerOptions_Clang_Linux64_Release
+.lame_LinkerOptions_Clang_Linux64_UBSan   = .lame_LinkerOptions_Clang_Linux64_Release
+#endif
+
+; vim: ft=fastbuild

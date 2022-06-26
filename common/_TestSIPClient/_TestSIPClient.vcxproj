@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B44B1972-10E6-4E58-BB2A-A2E16C73B13B}</ProjectGuid>
+    <RootNamespace>_TestSIPClient</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+    <Import Project="..\InheritPath.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+    <Import Project="..\InheritPath.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(webrtc_dir_2013);$(webrtc_dir_2013)\third_party;$(webrtc_dir_2013)\webrtc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/NODEFAULTLIB:library %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>Ws2_32.lib;Mswsock.lib;Wininet.lib;oldnames.lib;vfw32.lib;winmm.lib;ddraw.lib;msacm32.lib;dxguid.lib;Version.lib;ShLwApi.lib;../lib/ippcore_l.lib;../lib/ippac_l.lib;../lib/ippcc_l.lib;../lib/ippi_l.lib;../lib/ipps_l.lib;../lib/ippsc_l.lib;../lib/ippvc_l.lib;../lib/ippdc_l.lib;../lib/ippch_l.lib;../lib/ippcv_l.lib;../lib/ippj_l.lib;../lib/ippm_l.lib;../lib/ippvm_l.lib;../lib/ippr_l.lib;../lib/ippdi_l.lib;../lib/libmfx.lib;../lib/libavcodec.lib;comsuppw.lib;comsupp.lib;Secur32.lib;../lib/speex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)_TestSIPClient.exe</OutputFile>
+      <AdditionalLibraryDirectories>$(webrtc_dir_2013)\build\Debug\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC.lib;LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)_TestSIPClient.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(webrtc_dir_2013);$(webrtc_dir_2013)\third_party;$(webrtc_dir_2013)\webrtc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;Mswsock.lib;Wininet.lib;oldnames.lib;vfw32.lib;winmm.lib;ddraw.lib;msacm32.lib;dxguid.lib;Version.lib;ShLwApi.lib;../lib/ippcore_l.lib;../lib/ippac_l.lib;../lib/ippcc_l.lib;../lib/ippi_l.lib;../lib/ipps_l.lib;../lib/ippsc_l.lib;../lib/ippvc_l.lib;../lib/ippdc_l.lib;../lib/ippch_l.lib;../lib/ippcv_l.lib;../lib/ippj_l.lib;../lib/ippm_l.lib;../lib/ippvm_l.lib;../lib/ippr_l.lib;../lib/ippdi_l.lib;../lib/libmfx.lib;../lib/libavcodec.lib;comsuppw.lib;comsupp.lib;Secur32.lib;../lib/speex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)_TestSIPClient.exe</OutputFile>
+      <AdditionalLibraryDirectories>$(webrtc_dir_2013)\build\Release\lib\;D:\dev\boost\bin.v2\libs\regex\build\msvc-9.0\release\link-static\runtime-link-static\threading-multi;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Transcoder\AppDependedImp.cpp" />
+    <ClCompile Include="SIPmain.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test_parser.cpp" />
+    <ClCompile Include="test_transcoder.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="VS_EtherealDumpParser.cpp" />
+    <ClCompile Include="VS_NetConnection.cpp" />
+    <ClCompile Include="VS_NetEventHandler.cpp" />
+    <ClCompile Include="VS_NetEventHandlerEvents.cpp" />
+    <ClCompile Include="VS_NetEventType.cpp" />
+    <ClCompile Include="VS_NetHandlerFactory.cpp" />
+    <ClCompile Include="VS_NetHandlerFactoryEvents.cpp" />
+    <ClCompile Include="VS_NetMessageQuery.cpp" />
+    <ClCompile Include="VS_NetOperation.cpp" />
+    <ClCompile Include="VS_NetOperationEvents.cpp" />
+    <ClCompile Include="VS_NetReactor.cpp" />
+    <ClCompile Include="VS_NetRouter.cpp" />
+    <ClCompile Include="VS_NetRouterEvents.cpp" />
+    <ClCompile Include="VS_NetRouterSelect.cpp" />
+    <ClCompile Include="VS_SlotNetworkLayer.cpp" />
+    <ClCompile Include="VS_SlotRouter.cpp" />
+    <ClCompile Include="VS_SlotRouterInterface.cpp" />
+    <ClCompile Include="VS_SlotServiceBase.cpp" />
+    <ClCompile Include="VS_SlotServiceContainer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="VS_NetConnection.h" />
+    <ClInclude Include="VS_NetEventHandler.h" />
+    <ClInclude Include="VS_NetEventHandlerEvents.h" />
+    <ClInclude Include="VS_NetEventType.h" />
+    <ClInclude Include="VS_NetHandlerFactory.h" />
+    <ClInclude Include="VS_NetHandlerFactoryEvents.h" />
+    <ClInclude Include="VS_NetMessageQuery.h" />
+    <ClInclude Include="VS_NetOperation.h" />
+    <ClInclude Include="VS_NetOperationEvents.h" />
+    <ClInclude Include="VS_NetReactor.h" />
+    <ClInclude Include="VS_NetRouter.h" />
+    <ClInclude Include="VS_NetRouterEvents.h" />
+    <ClInclude Include="VS_NetRouterSelect.h" />
+    <ClInclude Include="VS_SlotNetworkLayer.h" />
+    <ClInclude Include="VS_SlotRouter.h" />
+    <ClInclude Include="VS_SlotRouterInterface.h" />
+    <ClInclude Include="VS_SlotServiceBase.h" />
+    <ClInclude Include="VS_SlotServiceContainer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\acs\acs.vcxproj">
+      <Project>{83ca88de-2e3e-40af-88c8-91b8f850740c}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\Audio\VoiceActivity\vad.vcxproj">
+      <Project>{bc9b42ab-f42d-47be-9997-7fc904895c94}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\CheckSrv\CheckSrv\CheckSrv.vcxproj">
+      <Project>{536672fd-ecb7-40d1-b212-e39821092126}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\DirectShowSamples\baseclasses.vcxproj">
+      <Project>{c14d9535-35e5-4b7f-8614-b772a214eb0b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\IppLib2\IppLib2.vcxproj">
+      <Project>{290acf6e-ef1e-4dc9-9d3a-b238e4ca31e7}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\SIPParserLib\^SIPParserLib.vcxproj">
+      <Project>{98a75acf-e510-49a7-a31f-02a2f08a68e1}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\std\std.vcxproj">
+      <Project>{4fcac148-1700-4aa6-8391-c5a8cd5c7cd0}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\STUNClientLib\^STUNClientLib.vcxproj">
+      <Project>{f1ea8a87-b444-4354-b849-95f47c181469}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\STUNParserLib\^STUNParserLib.vcxproj">
+      <Project>{7a1ec0f0-26ee-4219-a4d5-67733f3b6327}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\tools\H323Gateway\H323SlotClient\H323SlotClient.vcxproj">
+      <Project>{10e8ba3c-1767-41cb-99cb-5b35fa395010}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tools\H323Gateway\Lib\H323Lib.vcxproj">
+      <Project>{aa953f2f-d721-4038-90cf-d8a9e3331c6c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tools\SingleGatewayLib\SingleGatewayLib.vcxproj">
+      <Project>{bf6721a7-9ed9-4c81-b3ca-30db1c191f9e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Transcoder\Transcoder.vcxproj">
+      <Project>{48053d0c-f727-4f4d-b660-2b0386fd1b1e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\Video\Video.vcxproj">
+      <Project>{56c93638-e786-4f1f-b625-9ea5dfcbdbc9}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\VSClient\VSClient.vcxproj">
+      <Project>{04555219-f4b7-4c56-a00e-7989dac55f7a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

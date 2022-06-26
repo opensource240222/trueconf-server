@@ -1,0 +1,7 @@
+#if HAVE_SQLITE
+^LinkerOptions
+	+ ."sqlite_LinkerOptions_$Toolchain$_$Platform$_$Config$"
+#else
+^Libraries
+	+ 'sqlite-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif

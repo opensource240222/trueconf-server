@@ -1,0 +1,12 @@
+--- check_parameters.php	2018-09-11 11:27:02.000000000 +0500
++++ check_parameters_new.php	2019-01-28 21:29:39.606872555 +0500
+@@ -308,7 +308,8 @@
+ 		}
+ 
+ 		// parse only .c and .cpp files
+-		if (substr_compare($file, '.c', -2) && substr_compare($file, '.cpp', -4)) continue;
++        if (substr_compare($file, '.c', -2) && substr_compare($file, '.cpp', -4)
++            && substr_compare($file, '.cc', -3)) continue;
+ 
+ 		$txt = file_get_contents($file);
+ 		// remove comments (but preserve the number of lines)

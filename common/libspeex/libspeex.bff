@@ -1,0 +1,33 @@
+#once
+
+{
+	.ProjectName = 'libspeex'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ .ProjectPath
+	.ExtraDefinitions
+		+ 'HAVE_CONFIG_H'
+	.SourcePath = .ProjectPath
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist_c.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{F8F0871C-6C94-4F93-BC2A-7F5284B7D434}'
+#include "../fbuild/gen_ide_project.bff"
+}

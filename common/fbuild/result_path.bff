@@ -1,0 +1,1 @@
+.ResultPath = '$Toolchain$-$Platform$-$Config$-$Trait$' // Keep in sync with path in update_config.bff

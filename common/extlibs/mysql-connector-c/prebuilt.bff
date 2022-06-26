@@ -1,0 +1,25 @@
+#if __WINDOWS__
+
+#define HAVE_MYSQLCLIENT
+.mysqlclient_Includes = '$RepoPath_TCCommon$/extlibs/mysql-connector-c/include'
+.mysqlclient_LinkerOptions_MSVC141_Win32_Debug     = ' $RepoPath_TCCommon$/extlibs/mysql-connector-c/build-win32-vc140/libmysql/Debug/mysqlclient.lib'
+.mysqlclient_LinkerOptions_MSVC141_Win32_Release   = ' $RepoPath_TCCommon$/extlibs/mysql-connector-c/build-win32-vc140/libmysql/RelWithDebInfo/mysqlclient.lib'
+.mysqlclient_LinkerOptions_MSVC141_Win64_Debug     = ' $RepoPath_TCCommon$/extlibs/mysql-connector-c/build-win64-vc140/libmysql/Debug/mysqlclient.lib'
+.mysqlclient_LinkerOptions_MSVC141_Win64_Release   = ' $RepoPath_TCCommon$/extlibs/mysql-connector-c/build-win64-vc140/libmysql/RelWithDebInfo/mysqlclient.lib'
+
+.mysqlclient_LinkerOptions_MSVC141_Win32XP_Debug   = .mysqlclient_LinkerOptions_MSVC141_Win32_Debug
+.mysqlclient_LinkerOptions_MSVC141_Win32XP_Release = .mysqlclient_LinkerOptions_MSVC141_Win32_Release
+
+.mysqlclient_LinkerOptions_MSVC141_Win32_VLD       = .mysqlclient_LinkerOptions_MSVC141_Win32_Debug
+.mysqlclient_LinkerOptions_MSVC141_Win32XP_VLD     = .mysqlclient_LinkerOptions_MSVC141_Win32XP_Debug
+.mysqlclient_LinkerOptions_MSVC141_Win64_VLD       = .mysqlclient_LinkerOptions_MSVC141_Win64_Debug
+
+.mysqlclient_LinkerOptions_Clang_Win32_Debug       = .mysqlclient_LinkerOptions_MSVC141_Win32_Debug
+.mysqlclient_LinkerOptions_Clang_Win32_Release     = .mysqlclient_LinkerOptions_MSVC141_Win32_Release
+.mysqlclient_LinkerOptions_Clang_Win32XP_Debug     = .mysqlclient_LinkerOptions_Clang_Win32_Debug
+.mysqlclient_LinkerOptions_Clang_Win32XP_Release   = .mysqlclient_LinkerOptions_Clang_Win32_Release
+.mysqlclient_LinkerOptions_Clang_Win64_Debug       = .mysqlclient_LinkerOptions_MSVC141_Win64_Debug
+.mysqlclient_LinkerOptions_Clang_Win64_Release     = .mysqlclient_LinkerOptions_MSVC141_Win64_Release
+.mysqlclient_LinkerOptions_Clang_Win64_ASan        = .mysqlclient_LinkerOptions_Clang_Win64_Release
+
+#endif

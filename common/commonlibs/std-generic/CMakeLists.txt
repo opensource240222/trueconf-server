@@ -1,0 +1,80 @@
+SET(UNIT_NAME "std-generic")
+
+SET( INCLUDEDIRS
+${CMAKE_CURRENT_SOURCE_DIR}/..
+${CLIENTLIB_EXTLIBS_DIR}/include
+${CLIENTLIB_EXTLIBS_DIR}/sqlite3/Include
+${BOOST_DIR}
+)
+
+SET(${UNIT_NAME}_SRCS
+../vs.natvis
+clib/rangecd.c
+clib/sha1.cpp
+compat/condition_variable.cpp
+compat/iomanip.cpp
+cpplib/ASIOThreadPool.cpp
+cpplib/TimeUtils.cpp
+cpplib/ThreadUtils.cpp
+cpplib/utf8.cpp
+cpplib/VS_Container.cpp
+cpplib/VS_RemoveTranscoderID.cpp
+cpplib/ThreadUtils.cpp
+sqlite/CppSQLite3.cpp
+)
+SET(${UNIT_NAME}_HDRS
+attributes.h
+clang_version.h
+clib/rangecd.h
+clib/sha1.h
+clib/vs_time.h
+compat/algorithm.h
+compat/chrono.h
+compat/condition_variable.h
+compat/functional.h
+compat/iomanip.h
+compat/iterator.h
+compat/map.h
+compat/memory.h
+compat/set.h
+compat/type_traits.h
+cpplib/ASIOThreadPool.h
+cpplib/atomic_shared_ptr.h
+cpplib/AtomicCache.h
+cpplib/Box.h
+cpplib/deleters.h
+cpplib/hton.h
+cpplib/IntConv.h
+cpplib/macro_utils.h
+cpplib/move_handler.h
+cpplib/nod.hpp
+cpplib/ptr_arg.h
+cpplib/scope_exit.h
+cpplib/string_view.h
+cpplib/synchronized.h
+cpplib/TimeUtils.h
+cpplib/ThreadUtils.h
+cpplib/utf8.h
+cpplib/VS_Container.h
+cpplib/VS_Container_io.h
+cpplib/VS_CppDBIncludes.h
+cpplib/VS_CppDBLibs.h
+cpplib/VS_RemoveTranscoderID.h
+cpplib/SharedBuffer.h
+cpplib/VS_ClockWrapper.h
+debuglog/VS_Debug.h
+gcc_version.h
+libstdcxx_version.h
+sanitizers.h
+sqlite/CppSQLite3.h
+undef_windows.h
+)
+ADD_LIBRARY(
+    ${UNIT_NAME}
+    STATIC
+    ${${UNIT_NAME}_SRCS}
+    ${${UNIT_NAME}_HDRS}
+)
+
+target_include_directories(${UNIT_NAME} PRIVATE ${INCLUDEDIRS})
+target_compile_definitions(${UNIT_NAME} PRIVATE BOOST_ASIO_SEPARATE_COMPILATION)

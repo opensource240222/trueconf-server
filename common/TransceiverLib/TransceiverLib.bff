@@ -1,0 +1,34 @@
+#once
+
+{
+	.ProjectName = 'TransceiverLib'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'boost'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#include "../fbuild/gen_def_unity.bff"
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objunity.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{11F6ADB6-DCBB-479E-846A-FC3879D50204}'
+#include "../fbuild/gen_ide_project.bff"
+}

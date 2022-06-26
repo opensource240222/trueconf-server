@@ -1,0 +1,2 @@
+^LinkerOptions
+	+ ."ipp_LinkerOptions_$Toolchain$_$Platform$_$Config$"

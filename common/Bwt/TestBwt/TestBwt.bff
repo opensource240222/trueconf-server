@@ -1,0 +1,65 @@
+#once
+
+{
+	.ProjectName = 'TestBwt'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/Bwt/$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ExternalLibraries_Link
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /NODEFAULTLIB:"libmmt.lib"'
+		+ ' /LIBPATH:"$ProjectPath$"'
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ '	Gdi32.lib'
+		+ ' Mswsock.lib'
+		+ ' User32.lib'
+		+ ' Wininet.lib'
+		+ ' Ws2_32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../fbuild/update_config.bff"
+
+#include "../../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'streams-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{03C52563-CEB4-4539-83A5-6AF47A932857}'
+#include "../../fbuild/gen_ide_project.bff"
+}

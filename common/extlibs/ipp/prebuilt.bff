@@ -1,0 +1,94 @@
+#if __WINDOWS__
+.ipp_Libraries = ''
+	+ ' ippac90lgcmt.lib'
+	+ ' ippcc90lgcmt.lib'
+	+ ' ippccmt.lib'
+	+ ' ippch90lgcmt.lib'
+	+ ' ippchmt.lib'
+	+ ' ippcoremt.lib'
+	+ ' ippcv90lgcmt.lib'
+	+ ' ippcvmt.lib'
+	+ ' ippdc90lgcmt.lib'
+	+ ' ippdcmt.lib'
+	+ ' ippdi90lgcmt.lib'
+	+ ' ippgen90lgcmt.lib'
+	+ ' ippi90lgcmt.lib'
+	+ ' ippimt.lib'
+	+ ' ippj90lgcmt.lib'
+	+ ' ippm90lgcmt.lib'
+	+ ' ippr90lgcmt.lib'
+	+ ' ipps90lgcmt.lib'
+	+ ' ippsc90lgcmt.lib'
+	+ ' ippsmt.lib'
+	+ ' ippvc90lgcmt.lib'
+	+ ' ippvmmt.lib'
+#endif
+#if __LINUX__
+.ipp_Libraries = ''
+	+ ' -l:libippac90lgc.a'
+	+ ' -l:libippcc.a'
+	+ ' -l:libippcc90lgc.a'
+	+ ' -l:libippch.a'
+	+ ' -l:libippch90lgc.a'
+	+ ' -l:libippcv.a'
+	+ ' -l:libippcv90lgc.a'
+	+ ' -l:libippdc.a'
+	+ ' -l:libippdc90lgc.a'
+	+ ' -l:libippdi90lgc.a'
+	+ ' -l:libippe.a'
+	+ ' -l:libippgen90lgc.a'
+	+ ' -l:libippi.a'
+	+ ' -l:libippi90lgc.a'
+	+ ' -l:libippj90lgc.a'
+	+ ' -l:libippm90lgc.a'
+	+ ' -l:libippr90lgc.a'
+	+ ' -l:libipps.a'
+	+ ' -l:libipps90lgc.a'
+	+ ' -l:libippsc90lgc.a'
+	+ ' -l:libippvc90lgc.a'
+	+ ' -l:libippvm.a'
+	+ ' -l:libippcore.a' ; "libippcore" must be the last among the IPP libs in the linker command line
+#endif
+
+#define HAVE_IPP
+.ipp_Includes = '$RepoPath_TCCommon$/extlibs/ipp/include'
+.ipp_LinkerOptions_MSVC141_Win32_Debug     = ' /LIBPATH:$RepoPath_TCCommon$/extlibs/ipp/win32' + .ipp_Libraries
+.ipp_LinkerOptions_MSVC141_Win32_Release   = ' /LIBPATH:$RepoPath_TCCommon$/extlibs/ipp/win32' + .ipp_Libraries
+.ipp_LinkerOptions_MSVC141_Win64_Debug     = ' /LIBPATH:$RepoPath_TCCommon$/extlibs/ipp/win64' + .ipp_Libraries
+.ipp_LinkerOptions_MSVC141_Win64_Release   = ' /LIBPATH:$RepoPath_TCCommon$/extlibs/ipp/win64' + .ipp_Libraries
+
+.ipp_LinkerOptions_MSVC141_Win32XP_Debug   = .ipp_LinkerOptions_MSVC141_Win32_Debug
+.ipp_LinkerOptions_MSVC141_Win32XP_Release = .ipp_LinkerOptions_MSVC141_Win32_Release
+
+.ipp_LinkerOptions_MSVC141_Win32_VLD       = .ipp_LinkerOptions_MSVC141_Win32_Debug
+.ipp_LinkerOptions_MSVC141_Win32XP_VLD     = .ipp_LinkerOptions_MSVC141_Win32XP_Debug
+.ipp_LinkerOptions_MSVC141_Win64_VLD       = .ipp_LinkerOptions_MSVC141_Win64_Debug
+
+.ipp_LinkerOptions_Clang_Win32_Debug       = .ipp_LinkerOptions_MSVC141_Win32_Debug
+.ipp_LinkerOptions_Clang_Win32_Release     = .ipp_LinkerOptions_MSVC141_Win32_Release
+.ipp_LinkerOptions_Clang_Win32XP_Debug     = .ipp_LinkerOptions_Clang_Win32_Debug
+.ipp_LinkerOptions_Clang_Win32XP_Release   = .ipp_LinkerOptions_Clang_Win32_Release
+.ipp_LinkerOptions_Clang_Win64_Debug       = .ipp_LinkerOptions_MSVC141_Win64_Debug
+.ipp_LinkerOptions_Clang_Win64_Release     = .ipp_LinkerOptions_MSVC141_Win64_Release
+.ipp_LinkerOptions_Clang_Win64_ASan        = .ipp_LinkerOptions_Clang_Win64_Release
+
+.ipp_LinkerOptions_GCC_Linux32_Debug     = ' -L $RepoPath_TCCommon$/extlibs/ipp/linux32' + .ipp_Libraries
+.ipp_LinkerOptions_GCC_Linux32_Release   = ' -L $RepoPath_TCCommon$/extlibs/ipp/linux32' + .ipp_Libraries
+.ipp_LinkerOptions_Clang_Linux32_Debug   = ' -L $RepoPath_TCCommon$/extlibs/ipp/linux32' + .ipp_Libraries
+.ipp_LinkerOptions_Clang_Linux32_Release = ' -L $RepoPath_TCCommon$/extlibs/ipp/linux32' + .ipp_Libraries
+.ipp_LinkerOptions_GCC_Linux64_Debug     = ' -L $RepoPath_TCCommon$/extlibs/ipp/linux64' + .ipp_Libraries
+.ipp_LinkerOptions_GCC_Linux64_Release   = ' -L $RepoPath_TCCommon$/extlibs/ipp/linux64' + .ipp_Libraries
+.ipp_LinkerOptions_Clang_Linux64_Debug   = ' -L $RepoPath_TCCommon$/extlibs/ipp/linux64' + .ipp_Libraries
+.ipp_LinkerOptions_Clang_Linux64_Release = ' -L $RepoPath_TCCommon$/extlibs/ipp/linux64' + .ipp_Libraries
+
+.ipp_LinkerOptions_GCC_Linux32_ASan      = .ipp_LinkerOptions_GCC_Linux32_Release
+.ipp_LinkerOptions_GCC_Linux32_UBSan     = .ipp_LinkerOptions_GCC_Linux32_Release
+.ipp_LinkerOptions_GCC_Linux64_ASan      = .ipp_LinkerOptions_GCC_Linux64_Release
+.ipp_LinkerOptions_GCC_Linux64_TSan      = .ipp_LinkerOptions_GCC_Linux64_Release
+.ipp_LinkerOptions_GCC_Linux64_UBSan     = .ipp_LinkerOptions_GCC_Linux64_Release
+.ipp_LinkerOptions_Clang_Linux32_ASan    = .ipp_LinkerOptions_Clang_Linux32_Release
+.ipp_LinkerOptions_Clang_Linux32_UBSan   = .ipp_LinkerOptions_Clang_Linux32_Release
+.ipp_LinkerOptions_Clang_Linux64_ASan    = .ipp_LinkerOptions_Clang_Linux64_Release
+.ipp_LinkerOptions_Clang_Linux64_MSan    = '' // FIXME
+.ipp_LinkerOptions_Clang_Linux64_TSan    = .ipp_LinkerOptions_Clang_Linux64_Release
+.ipp_LinkerOptions_Clang_Linux64_UBSan   = .ipp_LinkerOptions_Clang_Linux64_Release

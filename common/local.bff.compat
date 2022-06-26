@@ -1,0 +1,48 @@
+#if !__WINDOWS__
+#error This will only work on Windows
+#endif
+
+#import vs_dir
+#import winsdk_dir
+#import winxpsdk_dir
+#import dxsdk_dir
+#import boost_dir
+#import open_ssl_dir
+#import websocketpp_dir
+#import webrtc_dir_2013
+
+#define HAVE_MSVC120
+.msvc120_dir   = .vs_dir
+.winsdk81_dir  = .winsdk_dir
+.winsdk71a_dir = .winxpsdk_dir
+
+#define HAVE_BOOST
+.boost_Includes = '$boost_dir$'
+.boost_LinkerOptions_MSVC120_Win32_Debug     = ' /LIBPATH:$boost_dir$/lib'
+.boost_LinkerOptions_MSVC120_Win32_Release   = ' /LIBPATH:$boost_dir$/lib'
+.boost_LinkerOptions_MSVC140_Win32_Debug     = ' /LIBPATH:$boost_dir$/lib'
+.boost_LinkerOptions_MSVC140_Win32_Release   = ' /LIBPATH:$boost_dir$/lib'
+.boost_LinkerOptions_MSVC120_Win32XP_Debug   = ' /LIBPATH:$boost_dir$/lib'
+.boost_LinkerOptions_MSVC120_Win32XP_Release = ' /LIBPATH:$boost_dir$/lib'
+.boost_LinkerOptions_MSVC140_Win32XP_Debug   = ' /LIBPATH:$boost_dir$/lib'
+.boost_LinkerOptions_MSVC140_Win32XP_Release = ' /LIBPATH:$boost_dir$/lib'
+
+#define HAVE_OPENSSL
+.openssl_Includes = '$open_ssl_dir$/include'
+.openssl_LinkerOptions_MSVC120_Win32_Debug     = ' /LIBPATH:$open_ssl_dir$/lib/VC/static libeay32MTd.lib ssleay32MTd.lib'
+.openssl_LinkerOptions_MSVC120_Win32_Release   = ' /LIBPATH:$open_ssl_dir$/lib/VC/static libeay32MT.lib  ssleay32MT.lib'
+.openssl_LinkerOptions_MSVC140_Win32_Debug     = ' /LIBPATH:$open_ssl_dir$/lib/VC/static libeay32MTd.lib ssleay32MTd.lib'
+.openssl_LinkerOptions_MSVC140_Win32_Release   = ' /LIBPATH:$open_ssl_dir$/lib/VC/static libeay32MT.lib  ssleay32MT.lib'
+.openssl_LinkerOptions_MSVC120_Win32XP_Debug   = ' /LIBPATH:$open_ssl_dir$/lib/VC/static libeay32MTd.lib ssleay32MTd.lib'
+.openssl_LinkerOptions_MSVC120_Win32XP_Release = ' /LIBPATH:$open_ssl_dir$/lib/VC/static libeay32MT.lib  ssleay32MT.lib'
+.openssl_LinkerOptions_MSVC140_Win32XP_Debug   = ' /LIBPATH:$open_ssl_dir$/lib/VC/static libeay32MTd.lib ssleay32MTd.lib'
+.openssl_LinkerOptions_MSVC140_Win32XP_Release = ' /LIBPATH:$open_ssl_dir$/lib/VC/static libeay32MT.lib  ssleay32MT.lib'
+
+#define HAVE_WEBSOCKETPP
+.websocketpp_Includes = '$websocketpp_dir$'
+
+.webrtc_dir_MSVC120 = .webrtc_dir_2013
+
+.Enabled_Platforms = { 'Win32' 'Win32XP' }
+.Enabled_Traits    = { 'Default' 'SVKSM' 'Conferendo' }
+.Enabled_Configs   = { 'Debug' 'Release' }

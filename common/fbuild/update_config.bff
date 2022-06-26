@@ -1,0 +1,128 @@
+// Macro that updates build config using project specific info and compiles includes and definitions
+// These variables are expected to be defined:
+//   .ProjectName
+//   .ProjectPath
+//   .TargetName
+//   .Includes
+//   .ExtraIncludes
+//   .IncludesLocal
+//   .ExtraIncludesLocal
+//   .Definitions
+//   .ExtraDefinitions
+//   .ExtraDefinitions_*
+//   .ProjectConfigs
+
+.OutputPath = '$build_dir$/$Toolchain$-$Platform$-$Config$-$Trait$/$ProjectPath$'
+.ResultPath = '$Toolchain$-$Platform$-$Config$-$Trait$' // Keep in sync with path in result_path.bff
+.CompilerOutputPath = .OutputPath
+.LibrarianOutput = '$OutputPath$/$TargetName$'
+.LinkerOutput = '$ResultPath$/$TargetName$'
+.Libraries = {}
+.LibrarianAdditionalInputs = {}
+
+.CompilerOptions
+	+ .ExtraCompilerOptions
+	+ ."ExtraCompilerOptions_$Toolchain$"
+	+ ."ExtraCompilerOptions_$Platform$"
+	+ ."ExtraCompilerOptions_$Config$"
+
+.LinkerOptions
+	+ .ExtraLinkerOptions
+	+ ."ExtraLinkerOptions_$Toolchain$"
+	+ ."ExtraLinkerOptions_$Platform$"
+	+ ."ExtraLinkerOptions_$Config$"
+
+ForEach(.X in .ExternalLibraries_Use)
+{
+#include "config/use_$X$.bff"
+}
+ForEach(.X in .ExternalLibraries_Link)
+{
+#include "config/link_$X$.bff"
+}
+
+RemoveDir('Clean-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$')
+{
+	.RemovePaths = .OutputPath
+}
+
+#if __WINDOWS__
+.VCXProjectConfig =
+[
+	.ProjectBuildCommand   = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ $ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+	.ProjectRebuildCommand = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ -clean $ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$' - '-cache ' - '-cacheread '
+	.ProjectCleanCommand   = 'cd ^$(SolutionDir) &amp; fbuild -config $RootBFF$ -vs $FBuildExtraArgs$ Clean-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+
+	.OutputDirectory = '^$(SolutionDir)$ResultPath$'
+	.Output = '$OutputDirectory$/$TargetName$'
+
+	// Set .Target to enable FASTBuild to generate .IncludeSearchPath for us
+	.Target = 'Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+
+	.PreprocessorDefinitions = ."PreprocessorDefinitions_$Platform$"
+	ForEach(.X in .Definitions ) { ^PreprocessorDefinitions + '$X$;' }
+	ForEach(.X in .ExtraDefinitions ) { ^PreprocessorDefinitions + '$X$;' }
+	ForEach(.X in ."ExtraDefinitions_$Toolchain$" ) { ^PreprocessorDefinitions + '$X$;' }
+	ForEach(.X in ."ExtraDefinitions_$Platform$" ) { ^PreprocessorDefinitions + '$X$;' }
+	ForEach(.X in ."ExtraDefinitions_$Config$" ) { ^PreprocessorDefinitions + '$X$;' }
+	.AdditionalOptions = .CompilerOptions - '"%1"' - '"%2"' - '"%3"'
+
+	// msbuild/devenv doesn't accept arbitrary platform names, only ones listed in
+	// C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Platforms are considered valid.
+	// As a workaround we include platform into configuration name, and use default platform.
+	.Config = '$Toolchain$ $Platform$ $Config$ $Trait$'
+	.Platform = 'Win32'
+	.PlatformToolset = .PlatformToolset // importing from parent scope
+]
+^ProjectConfigs + { .VCXProjectConfig }
+
+{
+	.Inc = .IncludesSystem + .Includes + .ExtraIncludes
+	ForEach(.X in .Inc)
+	{
+		^CompilerOptions + ' $Opt_ISystem$"$X$"'
+		^PCHOptions + ' $Opt_ISystem$"$X$"'
+		^ResourceCompilerOptions + ' /I"$X$/"'
+	}
+	.Inc = .IncludesLocal + .ExtraIncludesLocal
+	ForEach(.X in .Inc)
+	{
+		^CompilerOptions + ' /I"$X$"'
+		^PCHOptions + ' /I"$X$"'
+		^ResourceCompilerOptions + ' /I"$X$/"'
+	}
+	.Def = .Definitions + .ExtraDefinitions
+		+ ."ExtraDefinitions_$Toolchain$"
+		+ ."ExtraDefinitions_$Platform$"
+		+ ."ExtraDefinitions_$Config$"
+	ForEach(.X in .Def)
+	{
+		^CompilerOptions + ' /D$X$'
+		^PCHOptions + ' /D$X$'
+		^ResourceCompilerOptions + ' /d$X$'
+	}
+}
+#endif
+
+#if __LINUX__
+{
+	.Inc = .IncludesSystem + .Includes + .ExtraIncludes
+	ForEach(.X in .Inc)
+	{
+		^CompilerOptions + ' "-isystem$X$"'
+		^PCHOptions + ' "-isystem$X$"'
+	}
+	.Inc = .IncludesLocal + .ExtraIncludesLocal
+	ForEach(.X in .Inc)
+	{
+		^CompilerOptions + ' "-I$X$"'
+		^PCHOptions + ' "-I$X$"'
+	}
+	.Def = .Definitions + .ExtraDefinitions
+	ForEach(.X in .Def)
+	{
+		^CompilerOptions + ' -D$X$'
+		^PCHOptions + ' -D$X$'
+	}
+}
+#endif

@@ -1,0 +1,32 @@
+#once
+
+{
+	.ProjectName = 'RoutingServices'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/RoutingServer/Services'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../common/fbuild/update_config.bff"
+
+#include "../../common/fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../../common/fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{13D96C53-5090-4559-BA47-4F73CE11ECD1}'
+#include "../../common/fbuild/gen_ide_project.bff"
+}

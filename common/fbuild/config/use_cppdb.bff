@@ -1,0 +1,9 @@
+#if HAVE_CPPDB
+^Includes
+	+ .cppdb_Includes
+#else
+^IncludesLocal
+	+ '$RepoPath_TCCommon$/extlibs/cppdb'
+#endif
+^Definitions
+	+ 'HAVE_CPPDB'

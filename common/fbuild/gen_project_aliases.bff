@@ -1,0 +1,11 @@
+// Macro that generates action aliases (build, clean, test) for configuration groups of a project.
+// These variables are expected to be defined:
+//   .ProjectName
+{
+	.TargetName = '$ProjectName$'
+#include "gen_target_aliases.bff"
+	.TargetName = 'Clean-$ProjectName$'
+#include "gen_target_aliases.bff"
+	.TargetName = 'Compile-$ProjectName$'
+#include "gen_target_aliases.bff"
+}

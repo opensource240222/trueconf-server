@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <exclude>
+        <path name="_TestSudis/"/>
+        <path name="common/_TestACSService/"/>
+        <path name="common/_TestCameraCapture/"/>
+        <path name="common/_TestFLASHServer/"/>
+        <path name="common/_TestInterprocBenchmark/"/>
+        <path name="common/_TestIPV6/"/>
+        <path name="common/_TestMulticast/"/>
+        <path name="common/_TestNatHolePunching/"/>
+        <path name="common/_TestRTSP/"/>
+        <path name="common/_TestSIPClient/"/>
+        <path name="common/_TestStandardLibraries/"/>
+        <path name="common/_TestTLSConnection/"/>
+        <path name="common/_TestTorrent/"/>
+        <path name="common/_TestWebSocketEchoTLS/"/>
+        <path name="common/acs/Bwt/TestBwt/"/>
+        <path name="common/acs2/"/>
+        <path name="common/CheckSrv/_TestCheckSrv/"/>
+        <path name="common/commonlibs/extlibs/"/>
+        <path name="common/extlibs/"/>
+        <path name="common/FakeClient/Test/"/>
+        <path name="common/libcurl/"/>
+        <path name="common/ScreenCapture/"/>
+        <path name="common/SecureLib/_TestClientSecureHandshake/"/>
+        <path name="common/SecureLib/_TestCryptSpeed/"/>
+        <path name="common/SecureLib/_TestSecureHandshake/"/>
+        <path name="common/SecureLib/_TestServerSecureHandshake/"/>
+        <path name="common/tools/H323Gateway/H323SlotClient/"/>
+        <path name="common/tools/H323Gateway/Lib/CygwinAsnCompiler/"/>
+        <path name="common/Transcoder/H263Parser/"/>
+        <path name="common/Transcoder/ipp_speech_core/"/>
+        <path name="common/Transcoder/TestTranscoder/"/>
+        <path name="common/TrueGateway/Test/"/>
+        <path name="common/Unity/"/>
+        <path name="common/Video/libyuv/unit_test/"/>
+        <path name="common/Video/TestVideo/"/>
+        <path name="common/VSClient/TestClient/"/>
+        <path name="common/VSClient/TestEchoCancel/"/>
+        <path name="TestLDAP/"/>
+        <path name="TestLicense/"/>
+    </exclude>
+    <libraries>
+        <library>windows</library>
+    </libraries>
+    <suppressions>
+        <suppression>purgedConfiguration</suppression>
+        <suppression>noExplicitConstructor</suppression>
+        <suppression>toomanyconfigs</suppression>
+        <suppression>uninitMemberVar</suppression>
+        <suppression>variableScope</suppression>
+    </suppressions>
+</project>

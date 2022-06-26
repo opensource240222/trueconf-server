@@ -1,0 +1,10 @@
+^Definitions
+	+ 'GTEST_LANG_CXX11=1'
+	+ 'GTEST_STDLIB_CXX11=1'
+#if HAVE_GOOGLETEST
+^Includes
+	+ .googletest_Includes
+#else
+^IncludesLocal
+	+ '$RepoPath_TCCommon$/googletest'
+#endif

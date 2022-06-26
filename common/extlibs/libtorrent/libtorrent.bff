@@ -1,0 +1,49 @@
+#once
+
+{
+	.ProjectName = 'libtorrent'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/extlibs/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ '$ProjectPath$/include'
+	.ExtraDefinitions
+		+ 'TORRENT_DISABLE_GEO_IP'
+		+ 'TORRENT_DISABLE_ENCRYPTION'
+		+ 'TORRENT_DISABLE_LOGGING'
+		+ 'TORRENT_DISABLE_DHT'
+		+ 'TORRENT_NO_DEPRECATE'
+		+ 'VS_TORRENT_NO_EXCEPTIONS'
+#if __WINDOWS__
+		+ '__USE_W32_SOCKETS'
+#endif
+	.SourcePath = .ProjectPath
+	.SourceExcludedFiles
+		+ 'asio_ssl.cpp'
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ProjectConfigs = {}
+
+	.UnityNumFiles = 4
+	#include "../../fbuild/gen_def_unity.bff"
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../fbuild/update_config.bff"
+
+#include "../../fbuild/gen_def_objunity.bff"
+
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+	}
+
+#include "../../fbuild/gen_project_aliases.bff"
+
+#include "../../fbuild/gen_ide_project.bff"
+}
+

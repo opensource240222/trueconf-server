@@ -1,0 +1,3 @@
+; Currently nothing needs to be done:
+; * We don't support using external openh264 (our bundled and prebuilt version has modification specific to us).
+; * The only file that includes the headers uses path relative to the repo root.

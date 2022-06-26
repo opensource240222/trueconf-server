@@ -1,0 +1,27 @@
+#if __WINDOWS__
+
+#define HAVE_LIBPQ
+.libpq_Includes = {}
+	+ '$RepoPath_TCCommon$/extlibs/libpq/include'
+	+ '$RepoPath_TCCommon$/extlibs/libpq/src/interfaces/libpq'
+.libpq_LinkerOptions_MSVC141_Win32_Debug     = ' $RepoPath_TCCommon$/extlibs/libpq/src/interfaces/libpq/i386/Debug/libpqd.lib'
+.libpq_LinkerOptions_MSVC141_Win32_Release   = ' $RepoPath_TCCommon$/extlibs/libpq/src/interfaces/libpq/i386/Release/libpq.lib'
+.libpq_LinkerOptions_MSVC141_Win64_Debug     = ' $RepoPath_TCCommon$/extlibs/libpq/src/interfaces/libpq/AMD64/Debug/libpqd.lib'
+.libpq_LinkerOptions_MSVC141_Win64_Release   = ' $RepoPath_TCCommon$/extlibs/libpq/src/interfaces/libpq/AMD64/Release/libpq.lib'
+
+.libpq_LinkerOptions_MSVC141_Win32XP_Debug   = .libpq_LinkerOptions_MSVC141_Win32_Debug
+.libpq_LinkerOptions_MSVC141_Win32XP_Release = .libpq_LinkerOptions_MSVC141_Win32_Release
+
+.libpq_LinkerOptions_MSVC141_Win32_VLD       = .libpq_LinkerOptions_MSVC141_Win32_Debug
+.libpq_LinkerOptions_MSVC141_Win32XP_VLD     = .libpq_LinkerOptions_MSVC141_Win32XP_Debug
+.libpq_LinkerOptions_MSVC141_Win64_VLD       = .libpq_LinkerOptions_MSVC141_Win64_Debug
+
+.libpq_LinkerOptions_Clang_Win32_Debug       = .libpq_LinkerOptions_MSVC141_Win32_Debug
+.libpq_LinkerOptions_Clang_Win32_Release     = .libpq_LinkerOptions_MSVC141_Win32_Release
+.libpq_LinkerOptions_Clang_Win32XP_Debug     = .libpq_LinkerOptions_Clang_Win32_Debug
+.libpq_LinkerOptions_Clang_Win32XP_Release   = .libpq_LinkerOptions_Clang_Win32_Release
+.libpq_LinkerOptions_Clang_Win64_Debug       = .libpq_LinkerOptions_MSVC141_Win64_Debug
+.libpq_LinkerOptions_Clang_Win64_Release     = .libpq_LinkerOptions_MSVC141_Win64_Release
+.libpq_LinkerOptions_Clang_Win64_ASan        = .libpq_LinkerOptions_Clang_Win64_Release
+
+#endif

@@ -1,0 +1,41 @@
+#once
+
+{
+	.ProjectName = 'FrameFilterLib'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+#include "../fbuild/gen_def_unity.bff"
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#if __WINDOWS__
+		.CompilerOptions + ' /wd4250'
+#endif
+
+#include "../fbuild/gen_def_objunity.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{FD0636C8-EDF7-4F24-9E2E-F67ED4FE27E9}'
+#include "../fbuild/gen_ide_project.bff"
+}

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(DXSDK_DIR)Include;$(boost_dir);$(open_ssl_dir)\include;$(IncludePath);$(CPPDB_DIR)\include</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(boost_dir)lib;$(open_ssl_dir)\lib\VC\static;$(LibraryPath);$(CPPDB_DIR)\lib</LibraryPath>
+    <ExcludePath />
+    <ReferencePath>$(boost_dir);$(ReferencePath)</ReferencePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

@@ -1,0 +1,21 @@
+// Marco that generates ObjectList node with common parameters
+// These variables are expected to be defined:
+//   .ProjectName
+//   .Toolchain
+//   .Platform
+//   .Config
+//   .Trait
+//   .SourcePath
+//   .SourceFiles
+//   .SourceExcludePath
+//   .SourceExcludedFiles
+
+ObjectList('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ')
+{
+	.CompilerInputPath = .SourcePath
+	.CompilerInputFiles = .SourceFiles
+	.CompilerInputExcludePath = .SourceExcludePath
+	.CompilerInputExcludedFiles = .SourceExcludedFiles
+}
+.Libraries                 + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ'
+.LibrarianAdditionalInputs + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ'

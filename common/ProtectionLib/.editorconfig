@@ -1,0 +1,8 @@
+# These files are based on OpenSSL and thus use the same indentation rules to simplify comparision with originals.
+[RSA.{h,cpp}]
+indent_style = space
+indent_size = 4
+[BigNum/*.{h,cpp}]
+indent_style = space
+indent_size = 4
+

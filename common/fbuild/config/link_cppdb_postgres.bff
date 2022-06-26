@@ -1,0 +1,8 @@
+#if !HAVE_CPPDB
+#if HAVE_LIBPQ
+^Libraries
+	+ 'cppdb_postgres-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif
+#include "link_libpq.bff"
+#endif
+#include "link_cppdb.bff"

@@ -1,0 +1,420 @@
+#once
+
+//
+// Third-party libraries
+//
+
+#if !HAVE_BOOST
+	// We will use bundled Boost instead
+#	include "extlibs/boost/prebuilt.bff"
+#else
+#	if __WINDOWS__
+		Print("warning: HAVE_BOOST is defined in local.bff, using user-specified Boost instead of one from $RepoPath_TCCommon$/extlibs/")
+#	endif
+#endif
+#if !HAVE_BOOST
+	Error("Boost is required")
+#endif
+
+#if !HAVE_OPENSSL
+	// We will use bundled OpenSSL instead
+#	include "extlibs/openssl/prebuilt.bff"
+#else
+#	if __WINDOWS__
+		Print("warning: HAVE_OPENSSL is defined in local.bff, using user-specified OpenSSL instead of one from $RepoPath_TCCommon$/extlibs/")
+#	endif
+#endif
+#if !HAVE_OPENSSL
+	Error("OpenSSL is required")
+#endif
+
+#if !HAVE_LIBPQ
+	// We will use bundled libpq instead
+#	include "extlibs/libpq/prebuilt.bff"
+#else
+#	if __WINDOWS__
+		Print("warning: HAVE_LIBPQ is defined in local.bff, using user-specified libpq instead of one from $RepoPath_TCCommon$/extlibs/")
+#	endif
+#endif
+#if !HAVE_LIBPQ
+	#if !HAVE_CPPDB
+		Print("warning: None of HAVE_CPPDB or HAVE_LIBPQ specified. CppDB's PostgreSQL backend will be unavailable except if pulled in as shared library at run-time.")
+	#endif
+#endif
+
+#if !HAVE_WEBSOCKETPP
+	// We will use bundled WebSocket++ instead
+#	include "extlibs/websocketpp/prebuilt.bff"
+#else
+	Print("warning: HAVE_WEBSOCKETPP is defined in local.bff, using user-specified WebSocket++ instead of one from $RepoPath_TCCommon$/extlibs/")
+#endif
+#if !HAVE_WEBSOCKETPP
+	Error("WebSocket++ is required")
+#endif
+
+#if !HAVE_WEBRTC
+	// We will use bundled WebRTC instead
+#	include "extlibs/webrtc/prebuilt.bff"
+#else
+	Print("warning: HAVE_WEBRTC is defined in local.bff, using user-specified WebRTC instead of one from $RepoPath_TCCommon$/extlibs/")
+#endif
+#if !HAVE_WEBRTC
+	Error("WebRTC is required")
+#endif
+
+#if !HAVE_SQLITE
+// We will use bundled SQLite instead
+#endif
+
+#if !HAVE_GOOGLETEST
+// We will use bundled Google Test instead
+#endif
+
+#if !HAVE_CURL
+// We will use bundled curl instead
+#if !__WINDOWS__ ; Not ported
+#error External curl is required
+#endif
+#endif
+
+#if !HAVE_CARES
+	// We will use bundled c-ares instead
+#	include "extlibs/c-ares/prebuilt.bff"
+#else
+#	if __WINDOWS__
+		Print("warning: HAVE_CARES is defined in local.bff, using user-specified c-ares instead of one from $RepoPath_TCCommon$/extlibs/")
+#	endif
+#endif
+#if !HAVE_CARES
+	Error("c-ares is required")
+#endif
+
+#if !HAVE_SPEEX
+// We will use bundled Speex instead
+#endif
+
+#if __WINDOWS__
+// On Windows we use bundled PHP SDK
+#define HAVE_PHP
+#endif
+
+#if !HAVE_PHP
+Print("NOTE: PHP includes are missing, following projects will be disabled:")
+Print("  php_trueconf")
+#endif
+
+// We use bundled OpenH264
+#include "extlibs/openh264/prebuilt.bff"
+#if !HAVE_OPENH264
+	Error("OpenH264 is required")
+#endif
+
+#if !HAVE_IPP
+	// We will use bundled IPP instead
+#	include "extlibs/ipp/prebuilt.bff"
+#else
+	Print("warning: HAVE_IPP is defined in local.bff, using user-specified IPP instead of one from $RepoPath_TCCommon$/extlibs/")
+#endif
+#if !HAVE_IPP
+	Error("IPP is required")
+#endif
+
+#if __WINDOWS__
+// On Windows we use WinLDAP which is always available
+#define HAVE_LDAP
+#endif
+
+#if __LINUX__
+// On Linux we need Cyrus SASL for OpenLDAP
+#if HAVE_SASL
+#define HAVE_LDAP
+#endif
+#endif
+
+#if !HAVE_LDAP
+Print("NOTE: Cyrus SASL is missing, following projects will be disabled:")
+Print("  ldap_core")
+Print("  php_trueconf")
+Print("  UnitTestLDAP")
+#endif
+
+// We always use bundled stb libraries because they are marketed as header-only and not packaged anywhere.
+#include "commonlibs/extlibs/stb/stb.bff"
+
+#if __WINDOWS__
+#include "extlibs/DirectShowBaseClasses/BaseClasses.bff"
+#endif
+
+#if __LINUX__
+#include "extlibs/openldap/openldap.bff"
+#endif
+
+#include "extlibs/libtorrent/libtorrent.bff"
+#include "extlibs/sqlite/sqlite.bff"
+#include "extlibs/cppdb/cppdb.bff"
+#include "extlibs/VMProtectSDK/VMProtectSDK.bff"
+
+//
+// Static libraries (common-libs)
+//
+#include "commonlibs/chatlib/chatlib.bff"
+#include "commonlibs/mdnslib/mdnslib.bff"
+#include "commonlibs/SecureLib/SecureLib.bff"
+#include "commonlibs/std-generic/std-generic.bff"
+
+//
+// Static libraries
+//
+#include "acs_v2/acs_v2.bff"
+#include "Bwt/Bwt.bff"
+#include "chatutils/chatutilslib.bff"
+#include "FakeClient/FakeClient.bff"
+#include "FileTransfer/FileTransfer.bff"
+#include "FrameFilterLib/FrameFilterLib.bff"
+#include "googletest/googletest.bff"
+#include "http/http.bff"
+#include "http_v2/http_v2.bff"
+#include "IppLib2/IppLib2.bff"
+#include "JPEGUtils/JPEGUtils.bff"
+#include "live555/live555.bff"
+#include "live555Extra/live555Extra.bff"
+#include "lua/lualib.bff"
+#include "MDNS_Responder/MDNS_Responderlib.bff"
+#include "MediaParserLib/MediaParserLib.bff"
+#include "net/net.bff"
+#include "newtransport/newtransport.bff"
+#include "ProtectionLib/ProtectionLib.bff"
+#include "RegistryKeyUtility/RegistryKeyUtilityLib.bff"
+#include "SIPParserBase/SIPParserBase.bff"
+#include "SIPParserLib/SIPParserLib.bff"
+#include "statuslib/statuslib.bff"
+#include "std/std.bff"
+#include "streams/streams.bff"
+#include "streams_v2/streams_v2.bff"
+#include "tools/H323Gateway/Lib/H323Lib.bff"
+#include "tools/Server/Server.bff"
+#include "tools/SingleGatewayLib/SingleGatewayLib.bff"
+#include "tools/Watchdog/Watchdog.bff"
+#include "TransceiverCircuit/TransceiverCircuitLib.bff"
+#include "TransceiverLib/TransceiverLib.bff"
+#include "TransceiverLib_v2/TransceiverLib_v2.bff"
+#include "Transcoder/Transcoder.bff"
+#include "transport/transport.bff"
+#include "TrueGateway/TrueGateway.bff"
+#include "webrtc_api/webrtc_api.bff"
+#include "WebSocket/WebSocket.bff"
+#include "WebSocket_v2/WebSocket_v2.bff"
+#if HAVE_LDAP
+#include "ldap_core/ldap_core.bff"
+#endif
+
+#if __WINDOWS__ ; Not ported
+#include "acs/acs.bff"
+#include "Audio/Audio.bff"
+#include "CheckSrv/CheckSrv.bff"
+#include "ClientInterface/ClientInterface.bff"
+#include "Hidapi/Hidapi.bff"
+#include "libcurl/libcurl.bff"
+#include "libspeex/libspeex.bff"
+#include "SmtpMail/SmtpMailer/SmtpMailer.bff"
+#include "STUNClientLib/STUNClientLib.bff"
+#include "STUNParserLib/STUNParserLib.bff"
+#include "sudis/sudis.bff"
+#include "UPnPLib/UPnPLib.bff"
+#include "Video/Video.bff"
+#include "VSClient/Client.bff"
+#include "WinFirewallManager/WinFirewallManager.bff"
+#include "WiresharkStreamParser/WiresharkStreamParser.bff"
+#endif
+
+//
+// Main executables
+//
+#include "RegistryKeyUtility/RegistryKeyUtility.bff"
+#include "TransceiverCircuit/TransceiverCircuit.bff"
+#if HAVE_PHP
+#if HAVE_LDAP
+#include "php_trueconf/php_trueconf.bff"
+#endif
+#endif
+
+#if __WINDOWS__ ; Not ported
+#include "_Visicron/Visicron.bff"
+#include "CodecsDll/CodecsDll.bff"
+#include "TCInstall/TCInstall.bff"
+#include "tools/Restarter/Restarter.bff"
+#include "VideoBot/VideoBot.bff"
+#endif
+
+//
+// Tests
+//
+#include "tests/UnitTestBwt/UnitTestBwt.bff"
+#include "tests/UnitTestChat/UnitTestChat.bff"
+#include "tests/UnitTestCommon/UnitTestCommon.bff"
+#include "tests/UnitTestCommonWebRTC/UnitTestCommonWebRTC.bff"
+#include "tests/UnitTestH323Lib/UnitTestH323Lib.bff"
+#include "tests/UnitTestMDNS_Responder/UnitTestMDNS_Responder.bff"
+#include "tests/UnitTestNet/UnitTestNet.bff"
+#include "tests/UnitTestProtection/UnitTestProtection.bff"
+#include "tests/UnitTestRegistryKeyUtility/UnitTestRegistryKeyUtility.bff"
+#include "tests/UnitTestSecureLib/UnitTestSecureLib.bff"
+#include "tests/UnitTestSTD/UnitTestSTD.bff"
+#include "tests/UnitTestStreams/UnitTestStreams.bff"
+#include "tests/UnitTestTranscoder/UnitTestTranscoder.bff"
+#include "tests/UnitTestTransport/UnitTestTransport.bff"
+#if HAVE_LDAP
+#include "tests/UnitTestLDAP/UnitTestLDAP.bff"
+#endif
+
+//
+// Tools
+//
+#include "chatutils/chatutils.bff"
+#include "chat_db_replay/chat_db_replay.bff"
+#include "HWKeyReader/HWKeyReader.bff"
+#include "live555/mediaServer/live555MediaServer.bff"
+
+#if __WINDOWS__ ; Not ported
+#include "tools/dprint_tester/dprint_tester.bff"
+#include "tools/snifconverter/snifconverter.bff"
+#endif
+
+//
+// Other
+//
+#include "tools/CPUDetector/CPUDetector.bff"
+#include "tools/TestBwt/TestBwt.bff"
+#include "tools/TestDNS/TestDNS.bff"
+#include "Transcoder/TestTranscoder/TestTranscoder.bff"
+
+#if __WINDOWS__ ; Not ported
+#include "_TestUniformTransmit/TestUniformTransmit.bff"
+#include "VSClient/TestClient/_TestClientProtocol/TestClientProtocol.bff"
+#if !HAVE_TC3
+// If we have tc3 repo, then VCSFake will be added from tc3's projects.bff due to dependencies on tc3 libs.
+#include "_VCSFake/VCSFake.bff"
+#endif
+#include "IPCExample/IPCExample.bff"
+#endif
+
+//
+// Solution folders
+//
+#if __WINDOWS__
+
+.SLNProjects_LibsExternal = {}
+	+ 'BaseClasses-proj'
+	+ 'libtorrent-proj'
+	+ 'stb-proj'
+	+ 'sqlite-proj'
+	+ 'cppdb-proj'
+
+.SLNProjects_LibsTCCommon = {}
+	+ 'acs-proj'
+	+ 'acs_v2-proj'
+	+ 'Audio-proj'
+	+ 'Bwt-proj'
+	+ 'chatlib-proj'
+	+ 'chatutilslib-proj'
+	+ 'CheckSrv-proj'
+	+ 'Client-proj'
+	+ 'ClientInterface-proj'
+	+ 'FakeClient-proj'
+	+ 'FileTransfer-proj'
+	+ 'FrameFilterLib-proj'
+	+ 'googletest-proj'
+	+ 'H323Lib-proj'
+	+ 'Hidapi-proj'
+	+ 'http-proj'
+	+ 'http_v2-proj'
+	+ 'IppLib2-proj'
+	+ 'JPEGUtils-proj'
+	+ 'ldap_core-proj'
+	+ 'libcurl-proj'
+	+ 'libspeex-proj'
+	+ 'live555-proj'
+	+ 'live555Extra-proj'
+	+ 'lualib-proj'
+	+ 'MDNS_Responderlib-proj'
+	+ 'mdnslib-proj'
+	+ 'MediaParserLib-proj'
+	+ 'net-proj'
+	+ 'newtransport-proj'
+	+ 'ProtectionLib-proj'
+	+ 'RegistryKeyUtilityLib-proj'
+	+ 'SecureLib-proj'
+	+ 'Server-proj'
+	+ 'SingleGatewayLib-proj'
+	+ 'SIPParserBase-proj'
+	+ 'SIPParserLib-proj'
+	+ 'SmtpMailer-proj'
+	+ 'statuslib-proj'
+	+ 'std-generic-proj'
+	+ 'std-proj'
+	+ 'streams-proj'
+	+ 'streams_v2-proj'
+	+ 'STUNClientLib-proj'
+	+ 'STUNParserLib-proj'
+	+ 'sudis-proj'
+	+ 'TransceiverCircuitLib-proj'
+	+ 'TransceiverLib-proj'
+	+ 'TransceiverLib_v2-proj'
+	+ 'Transcoder-proj'
+	+ 'transport-proj'
+	+ 'TrueGateway-proj'
+	+ 'UPnPLib-proj'
+	+ 'Video-proj'
+	+ 'Watchdog-proj'
+	+ 'webrtc_api-proj'
+	+ 'WebSocket-proj'
+	+ 'WebSocket_v2-proj'
+	+ 'WinFirewallManager-proj'
+	+ 'WiresharkStreamParser-proj'
+
+.SLNProjects_Main = {}
+	+ 'CodecsDll-proj'
+	+ 'php_trueconf-proj'
+	+ 'RegistryKeyUtility-proj'
+	+ 'Restarter-proj'
+	+ 'TCInstall-proj'
+	+ 'TransceiverCircuit-proj'
+	+ 'VideoBot-proj'
+	+ 'Visicron-proj'
+
+.SLNProjects_Tests = {}
+	+ 'UnitTestBwt-proj'
+	+ 'UnitTestChat-proj'
+	+ 'UnitTestCommon-proj'
+	+ 'UnitTestCommonWebRTC-proj'
+	+ 'UnitTestH323Lib-proj'
+	+ 'UnitTestLDAP-proj'
+	+ 'UnitTestMDNS_Responder-proj'
+	+ 'UnitTestNet-proj'
+	+ 'UnitTestProtection-proj'
+	+ 'UnitTestRegistryKeyUtility-proj'
+	+ 'UnitTestSecureLib-proj'
+	+ 'UnitTestSTD-proj'
+	+ 'UnitTestStreams-proj'
+	+ 'UnitTestTranscoder-proj'
+	+ 'UnitTestTransport-proj'
+
+.SLNProjects_Tools = {}
+	+ 'chat_db_replay-proj'
+	+ 'chatutils-proj'
+	+ 'dprint_tester-proj'
+	+ 'HWKeyReader-proj'
+	+ 'live555MediaServer-proj'
+	+ 'snifconverter-proj'
+
+.SLNProjects_Other = {}
+	+ 'CPUDetector-proj'
+	+ 'IPCExample-proj'
+	+ 'TestBwt-proj'
+	+ 'TestClientProtocol-proj'
+	+ 'TestDNS-proj'
+	+ 'TestTranscoder-proj'
+	+ 'TestUniformTransmit-proj'
+	+ 'VCSFake-proj'
+
+#endif

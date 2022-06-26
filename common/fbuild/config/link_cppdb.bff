@@ -1,0 +1,7 @@
+#if HAVE_CPPDB
+^LinkerOptions
+	+ ."cppdb_LinkerOptions_$Toolchain$_$Platform$_$Config$"
+#else
+^Libraries
+	+ 'cppdb-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif

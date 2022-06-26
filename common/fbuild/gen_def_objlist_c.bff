@@ -1,0 +1,24 @@
+// Marco that generates ObjectList node with common parameters for C sources only
+// These variables are expected to be defined:
+//   .ProjectName
+//   .Toolchain
+//   .Platform
+//   .Config
+//   .Trait
+//   .SourcePath
+//   .SourceFiles
+//   .SourceExcludePath
+//   .SourceExcludedFiles
+
+ObjectList('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ_C')
+{
+	.CompilerInputPattern = { '*.c' }
+	.CompilerOptions - .CompilerOptions_CXX + .CompilerOptions_C
+
+	.CompilerInputPath = .SourcePath
+	.CompilerInputFiles = .SourceFiles
+	.CompilerInputExcludePath = .SourceExcludePath
+	.CompilerInputExcludedFiles = .SourceExcludedFiles
+}
+.Libraries                 + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ_C'
+.LibrarianAdditionalInputs + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ_C'

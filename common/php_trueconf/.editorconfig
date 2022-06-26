@@ -1,0 +1,6 @@
+[php-devel-VC**]
+# Line endings doesn't seem to be consistent.
+end_of_line = unset
+# Indentation rules doesn't seem to be consistent.
+indent_style = unset
+trim_trailing_whitespace = false

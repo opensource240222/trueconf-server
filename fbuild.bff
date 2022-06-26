@@ -1,0 +1,191 @@
+.RootBFF = 'fbuild.bff'
+.RepoPath_TCCommon = 'common'
+.RepoPath_CommonLibs = '$RepoPath_TCCommon$/commonlibs'
+.RepoPath_TC3 = '.'
+.VCXPath = '$RepoPath_TC3$/projects'
+#define HAVE_TC3
+
+#include "common/fbuild/defaults.bff"
+#include "local.bff"
+
+.Includes = {}
+.IncludesLocal = {}
+	+ "$RepoPath_TCCommon$"
+	+ "$RepoPath_CommonLibs$"
+	+ "$RepoPath_TC3$"
+	+ "$RepoPath_TCCommon$/extlibs/rapidjson"
+#include "common/fbuild/config.bff"
+
+#include "projects.bff"
+
+#include "common/fbuild/gen_action_aliases.bff"
+
+.MainProjects = {}
+#if __WINDOWS__ ; Not ported
+	+ 'AppServer'
+#if HAVE_MYSQLCLIENT
+	+ 'BaseServer'
+#endif
+	+ 'CodecsDll'
+	+ 'RegistryServer'
+	+ 'RegOffline'
+	+ 'Restarter'
+	+ 'RoutersMonitorDll'
+	+ 'RoutingServer'
+	+ 'ServerManager'
+	+ 'ServersConfigDll'
+	+ 'TCInstall'
+	+ 'TransceiverCircuit'
+	+ 'VCS'
+	+ 'VideoBot'
+	+ 'Visicron'
+#endif
+#if HAVE_PHP
+	+ 'php_trueconf'
+#endif
+	+ 'RegistryKeyUtility'
+.GroupName = 'Main'
+#include "common/fbuild/gen_project_group_aliases.bff"
+
+#include "common/fbuild/gen_custom_project_group.bff"
+
+.SolutionItems = {}
+	+ '$RepoPath_TC3$/.editorconfig'
+	+ '$RepoPath_TCCommon$/.editorconfig'
+	+ '$RepoPath_CommonLibs$/.editorconfig'
+	+ '$RepoPath_CommonLibs$/vs.natvis'
+
+#if __WINDOWS__
+#include "common/fbuild/gen_common_vcx_projects.bff"
+VSSolution('solution')
+{
+	.SolutionOutput = 'All.sln'
+	.SolutionProjects =
+	{
+		'All-proj'
+		'Compile-proj'
+		'Test-proj'
+		'UpdateSolution-proj'
+	}
+	.SolutionBuildProject = 'All-proj'
+
+	.SolutionConfigs = {}
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.T = // Anonymous structs aren't supported, using temporary name
+		[
+			.Config = '$Toolchain$ $Platform$ $Config$ $Trait$'
+			.Platform = 'Win32' // See update_config.bff for explanation
+		]
+		^SolutionConfigs + { .T }
+	}
+
+	.Folder_LibsExternal =
+	[
+		.Path = '0. Libs (external)'
+		.Projects = .SLNProjects_LibsExternal
+	]
+	.Folder_LibsTCCommon =
+	[
+		.Path = '1. Libs (common)'
+		.Projects = .SLNProjects_LibsTCCommon
+			+ 'WebSocket_v2-proj'
+	]
+	.Folder_LibsTC3 =
+	[
+		.Path = '2. Libs (tc3)'
+		.Projects = .SLNProjects_LibsTC3
+	]
+	.Folder_Main =
+	[
+		.Path = '3. Main'
+		.Projects = .SLNProjects_Main
+	]
+	.Folder_Tests =
+	[
+		.Path = '4. Tests'
+		.Projects = .SLNProjects_Tests
+	]
+	.Folder_Tools =
+	[
+		.Path = '5. Tools'
+		.Projects = .SLNProjects_Tools
+	]
+	.Folder_Other =
+	[
+		.Path = '6. Other'
+		.Projects = .SLNProjects_Other
+	]
+	.SolutionFolders =
+	{
+		.Folder_LibsExternal
+		.Folder_LibsTCCommon
+		.Folder_LibsTC3
+		.Folder_Main
+		.Folder_Tests
+		.Folder_Tools
+		.Folder_Other
+	}
+}
+#endif
+
+// Target that builds and copies all dependencies of VCSFake from 'common' to a separate folder.
+// That folder can then be placed alongside a standalone checkout of 'common' and this will allow to build VCSFake from that ckeckout.
+// TODO: This currently doesn't work on Linux because we create thin archives ('T' in .LibrarianOptions).
+#if __WINDOWS__
+{
+	.TargetName = 'ExportVCSFakeDeps'
+	.ExportDir = 'VCSFakeDeps'
+	.Libs = {}
+		+ 'AppServices'
+		+ 'BaseServices'
+		+ 'LicenseLib'
+		+ 'ServerServices'
+		+ 'VCSServices'
+	.Headers = {}
+		+ 'AppServer/Services'
+		+ 'BaseServer/Services'
+		+ 'LicenseLib'
+		+ 'ServerServices'
+		+ 'VCS/Services'
+
+	.Targets = {}
+	ForEach(.X in .Headers)
+	{
+		.Name = '$TargetName$-Headers-$X$'
+		CopyDir('$Name$')
+		{
+			.SourcePaths = .X
+			.Dest = '$ExportDir$/$X$'
+			.SourcePathsPattern = { '*.h' '*.hpp' }
+		}
+		^Targets + .Name
+	}
+	Alias('$TargetName$-Headers') {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+
+		.Targets = { '$TargetName$-Headers' }
+		ForEach(.X in .Libs)
+		{
+			.Name = '$TargetName$-$Toolchain$-$Platform$-$Config$-$Trait$-$X$'
+			Copy('$Name$')
+			{
+				.Source = '$X$-$Toolchain$-$Platform$-$Config$-$Trait$'
+				.Dest = '$ExportDir$/$Toolchain$-$Platform$-$Config$-$Trait$/'
+			}
+			^Targets + .Name
+		}
+		Alias('$TargetName$-$Toolchain$-$Platform$-$Config$-$Trait$') {}
+	}
+#include "common/fbuild/gen_target_aliases.bff"
+}
+
+#endif
+
+#if HAVE_CUSTOM_ALIAS
+#include "custom_alias.bff"
+#endif

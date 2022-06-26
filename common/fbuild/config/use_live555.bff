@@ -1,0 +1,7 @@
+^IncludesLocal
+	+ '$RepoPath_TCCommon$/live555/UsageEnvironment/include'
+	+ '$RepoPath_TCCommon$/live555/BasicUsageEnvironment/include'
+	+ '$RepoPath_TCCommon$/live555/liveMedia/include'
+	+ '$RepoPath_TCCommon$/live555/groupsock/include'
+^Definitions
+	+ 'LIVE_DLL'

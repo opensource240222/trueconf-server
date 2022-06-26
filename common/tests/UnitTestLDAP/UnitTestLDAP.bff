@@ -1,0 +1,74 @@
+#once
+
+{
+	.ProjectName = 'UnitTestLDAP'
+	^AllProjects + .ProjectName
+	^TestProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/tests/$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'googletest'
+		+ 'boost'
+		+ 'openldap'
+	.ExternalLibraries_Link
+		+ 'googletest'
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'curl'
+		+ 'cares'
+		+ 'openldap'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' Advapi32.lib'
+		+ ' ws2_32.lib'
+		+ ' User32.lib'
+		+ ' Gdi32.lib'
+		+ ' wldap32.lib'
+		+ ' Dnsapi.lib'
+		+ ' Crypt32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../fbuild/update_config.bff"
+
+#include "../../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ {} // TODO: Fix FASTBuild, it complains about unexpected # after variable name
+				+ 'ldap_core-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+
+		Test('Test-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$')
+		{
+			.TestExecutable = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+			.TestOutput = '$OutputPath$/TestOutput.txt'
+		}
+	}
+
+#include "../../fbuild/gen_project_aliases.bff"
+
+#include "../../fbuild/gen_ide_project.bff"
+}

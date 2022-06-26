@@ -1,0 +1,47 @@
+#once
+
+{
+	.ProjectName = 'ProtectionLib'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.SourcePath = .ProjectPath
+	.ProjectConfigs = {}
+
+#if __LINUX__
+	.ExtraCompilerOptions_Release + ' -mno-red-zone'
+#endif
+
+#include "../fbuild/gen_def_unity.bff"
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#if __WINDOWS__
+		// These options are required to achieve the same effect as GCC's __attribute__((used)). More info in VMProtect/SecuredSections.h
+		.CompilerOptions - '/Gy' + ' /Gy-'
+		.CompilerOptions - '/GL' + ' /GL-'
+#endif
+
+		// Disable exceptions to simplify control flow and avoid dependencies on C++ runtime library
+#if __WINDOWS__
+		.CompilerOptions - '/EHsc' + ' /EHs-'
+#endif
+#if __LINUX__
+		.CompilerOptions + ' -fno-exceptions'
+#endif
+
+#include "../fbuild/gen_def_objunity.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+#include "../fbuild/gen_ide_project.bff"
+}

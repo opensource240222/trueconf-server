@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <paths>
+        <dir name="D:/ktrushnikov/git/ldap_core"/>
+        <dir name="D:/ktrushnikov/git/ldap_core/common"/>
+    </paths>
+    <exclude>
+        <path name="D:/ktrushnikov/git/ldap_core/Win32-Debug-Default/"/>
+        <path name="D:/ktrushnikov/git/ldap_core/Debug/"/>
+    </exclude>
+    <libraries>
+        <library>windows</library>
+    </libraries>
+</project>

@@ -1,0 +1,38 @@
+#once
+
+{
+	.ProjectName = 'ClientInterface'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludes
+		+ '$dxsdk_dir$/include'
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{3E552C15-DAC2-4F4A-BA17-58790F53D6F1}'
+#include "../fbuild/gen_ide_project.bff"
+}

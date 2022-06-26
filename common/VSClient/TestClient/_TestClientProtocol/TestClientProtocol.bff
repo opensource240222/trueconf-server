@@ -1,0 +1,141 @@
+#once
+
+{
+	.ProjectName = 'TestClientProtocol'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/VSClient/TestClient/_$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+	.ExtraDefinitions
+		+ '_ZOOMCALL_'
+		+ '_H264_INCLUDED_'
+		+ '_VPX_INCLUDED_'
+	.SourcePath = .ProjectPath
+	.SourceFiles
+		+ '$RepoPath_TCCommon$/Transcoder/AppDependedImp.cpp'
+	.SourceExcludedFiles
+		+ 'testMinAudio.cpp'
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+		+ 'ipp'
+	.ExternalLibraries_Link
+		+ 'webrtc'
+		+ 'libtorrent'
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'cares'
+		+ 'openssl'
+		+ 'openh264'
+		+ 'speex'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /STACK:240000'
+		+ ' /DYNAMICBASE:NO'
+		+ ' /NODEFAULTLIB:"libmmt.lib"'
+		+ ' /NODEFAULTLIB:"libirc.lib"'
+		+ ' /NODEFAULTLIB:"svml_disp.lib"'
+		+ ' /NODEFAULTLIB:"libdecimal.lib"'
+		+ ' /DELAYLOAD:"nvcuda.dll"'
+		+ ' /DELAYLOAD:"nvcuvid.dll"'
+		+ ' comsupp.lib'
+		+ ' comsuppw.lib'
+		+ ' Crypt32.lib'
+		+ ' cuda.lib'
+		+ ' cudart_static.lib'
+		+ ' d3d9.lib'
+		+ ' ddraw.lib'
+		+ ' delayimp.lib'
+		+ ' dxguid.lib'
+		+ ' Gdi32.lib'
+		+ ' libavcodec.lib'
+		+ ' libavformat.lib'
+		+ ' libavutil.lib'
+		+ ' libswresample.lib'
+		+ ' libmfx.lib'
+		+ ' libmp3lame.lib'
+		+ ' Msacm32.lib'
+		+ ' Mswsock.lib'
+		+ ' nppi.lib'
+		+ ' nvcuvid.lib'
+		+ ' oldnames.lib'
+		+ ' pdh.lib'
+		+ ' Setupapi.lib'
+		+ ' ShLwApi.lib'
+		+ ' strmiids.lib'
+		+ ' version.lib'
+		+ ' Vfw32.lib'
+		+ ' Wininet.lib'
+		+ ' winmm.lib'
+		+ ' Ws2_32.lib'
+	.ExtraLinkerOptions_Debug
+		+ ' /NODEFAULTLIB:"libcmt.lib"'
+	.ExtraLinkerOptions_MSVC141
+		+ ' Dmoguids.lib'
+		+ ' Msdmo.lib'
+		+ ' Strmiids.lib'
+		+ ' Winmm.lib'
+		+ ' wmcodecdspuuid.lib'
+		+ ' glew32s.lib'
+	.ExtraLinkerOptions_Clang = .ExtraLinkerOptions_MSVC141
+	.ExtraLinkerOptions_Win32
+		+ ' /DELAYLOAD:"nppi32_65.dll"'
+	.ExtraLinkerOptions_Win32XP = .ExtraLinkerOptions_Win32
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../../fbuild/update_config.bff"
+
+#include "../../../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Audio-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Bwt-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'CheckSrv-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Client-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'FileTransfer-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'IppLib2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'MediaParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SIPParserBase-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'statuslib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'streams-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'STUNClientLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'STUNParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transcoder-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transport-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'UPnPLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Video-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'WinFirewallManager-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../../../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{3E99CC87-7D69-4313-9755-4AAA1D5DA8BD}'
+#include "../../../fbuild/gen_ide_project.bff"
+}

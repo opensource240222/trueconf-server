@@ -1,0 +1,79 @@
+#once
+
+{
+	.ProjectName = 'ServerManager'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/$ProjectName$'
+	.TargetName = 'vs_srvmgr$EXESuffix$'
+
+	.SourcePath = .ProjectPath
+	.SourceExcludePath
+		+ '$ProjectPath$/Services'
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ExternalLibraries_Link
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'cares'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /DYNAMICBASE:NO'
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ ' Gdi32.lib'
+		+ ' pdh.lib'
+		+ ' Shell32.lib'
+		+ ' Winmm.lib'
+		+ ' Ws2_32.lib'
+		+ ' wsock32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../common/fbuild/update_config.bff"
+
+#include "../common/fbuild/gen_def_objlist.bff"
+#include "../common/fbuild/gen_def_resource.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Bwt-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'CheckSrv-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'http-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ProtectionLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Server-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ServerManagerServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ServerServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SmtpMailer-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transport-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Watchdog-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'WinFirewallManager-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../common/fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{EA1B88A6-CB34-4C44-8DB6-CD92A19F91D0}'
+#include "../common/fbuild/gen_ide_project.bff"
+}

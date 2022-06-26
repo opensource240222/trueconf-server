@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	<Type Name="basic_string_view&lt;*,*&gt;">
+		<DisplayString>{data_,[size_]}</DisplayString>
+		<Expand>
+			<Item Name="[size]">size_</Item>
+			<ArrayItems>
+				<Size>size_</Size>
+				<ValuePointer>data_</ValuePointer>
+			</ArrayItems>
+		</Expand>
+	</Type>
+	<Type Name="vs::Box&lt;*,*,*&gt;">
+		<DisplayString>{(inner&lt;void&gt;::type&amp;)m_storage}</DisplayString>
+		<Expand>
+			<ExpandedItem>(inner&lt;void&gt;::type&amp;)m_storage</ExpandedItem>
+		</Expand>
+	</Type>
+	<Type Name="vs::function&lt;*&gt;">
+		<Intrinsic Name="impl_ptr" Expression="(impl_base*)((uintptr_t)m_impl &amp; ~(uintptr_t)0x1)"/>
+		<DisplayString Condition="m_impl == nullptr">empty</DisplayString>
+		<DisplayString Condition="m_impl != nullptr">{*impl_ptr()}</DisplayString>
+		<Expand>
+			<ExpandedItem>impl_ptr()</ExpandedItem>
+		</Expand>
+	</Type>
+	<Type Name="vs::Synchronized&lt;*,*&gt;">
+		<DisplayString>{m_data}</DisplayString>
+		<Expand>
+			<ExpandedItem>m_data</ExpandedItem>
+		</Expand>
+	</Type>
+	<Type Name="VS_Container">
+		<DisplayString>{m_valueCnt} items, {m_valueSize} bytes</DisplayString>
+		<Expand>
+			<Item Name="[items]">m_valueCnt</Item>
+			<Item Name="[size]">m_valueSize</Item>
+			<Item Name="[allocated]">m_MemorySize</Item>
+			<CustomListItems>
+				<Variable Name="NV_p" InitialValue="(char*)m_value"/>
+				<Variable Name="NV_name" InitialValue="(char*)0"/>
+				<Variable Name="NV_type" InitialValue="(uint8_t)0"/>
+				<Variable Name="NV_value_size" InitialValue="(size_t)0"/>
+
+				<Size>m_valueCnt</Size>
+				<Loop>
+					<Break Condition="NV_p >= (char*)m_value + m_valueSize"/>
+					<Exec>NV_name = NV_p + sizeof(uint8_t)</Exec>
+					<Exec>NV_p += sizeof(uint8_t) + *(uint8_t*)NV_p</Exec>
+					<Exec>NV_type = *(uint8_t*)NV_p</Exec>
+					<Exec>NV_p += sizeof(uint8_t)</Exec>
+					<If Condition="NV_type == VS_CNT_BOOL_VT">
+						<Item Name="{NV_name,s8b}">*(unsigned char*)NV_p != 0</Item>
+						<Exec>NV_p += sizeof(unsigned char)</Exec>
+					</If>
+					<If Condition="NV_type == VS_CNT_INTEGER_VT">
+						<Item Name="{NV_name,s8b}">*(int32_t*)NV_p</Item>
+						<Exec>NV_p += sizeof(int32_t)</Exec>
+					</If>
+					<If Condition="NV_type == VS_CNT_DOUBLE_VT">
+						<Item Name="{NV_name,s8b}">*(double*)NV_p</Item>
+						<Exec>NV_p += sizeof(double)</Exec>
+					</If>
+					<If Condition="NV_type == VS_CNT_STRING_VT">
+						<Exec>NV_value_size = *(uint32_t*)NV_p</Exec>
+						<Item Name="{NV_name,s8b}">(char*)(NV_p + sizeof(uint32_t)),s8</Item>
+						<Exec>NV_p += sizeof(uint32_t) + NV_value_size</Exec>
+					</If>
+					<If Condition="NV_type == VS_CNT_BINARY_VT">
+						<Exec>NV_value_size = *(uint32_t*)NV_p</Exec>
+						<Item Name="{NV_name,s8b}">(unsigned char*)(NV_p + sizeof(uint32_t)),[NV_value_size]</Item>
+						<Exec>NV_p += sizeof(uint32_t) + NV_value_size</Exec>
+					</If>
+					<If Condition="NV_type == VS_CNT_INT64_VT">
+						<Item Name="{NV_name,s8b}">*(int64_t*)NV_p</Item>
+						<Exec>NV_p += sizeof(int64_t)</Exec>
+					</If>
+				</Loop>
+			</CustomListItems>
+		</Expand>
+	</Type>
+	<Type Name="VS_SimpleStr">
+		<DisplayString Condition="m_str == nullptr">null</DisplayString>
+		<DisplayString Condition="m_str != nullptr">{m_str,s8}</DisplayString>
+	</Type>
+	<Type Name="VS_WideStr">
+		<DisplayString Condition="m_str == nullptr">null</DisplayString>
+		<DisplayString Condition="m_str != nullptr">{m_str,su}</DisplayString>
+	</Type>
+	<Type Name="VS_IPPortAddress">
+		<Intrinsic Name="ipv4" Expression="(uint8_t*)&amp;m_ip"/>
+		<Intrinsic Name="ipv6" Expression="(uint16_t*)&amp;m_ip"/>
+		<DisplayString Condition="m_addressType == ADDR_UNDEF">empty</DisplayString>
+		<DisplayString Condition="m_addressType == ADDR_IPV4">{(int)ipv4()[3],u}.{(int)ipv4()[2],u}.{(int)ipv4()[1],u}.{(int)ipv4()[0],u}:{m_port,u}</DisplayString>
+		<DisplayString Condition="m_addressType == ADDR_IPV6">[IPv6]:{m_port,u}</DisplayString>
+		<Expand>
+			<Synthetic Name="[ip]" Condition="m_addressType == ADDR_IPV4">
+				<DisplayString>{(int)ipv4()[3],u}.{(int)ipv4()[2],u}.{(int)ipv4()[1],u}.{(int)ipv4()[0],u}</DisplayString>
+			</Synthetic>
+			<Synthetic Name="[ip]" Condition="m_addressType == ADDR_IPV6">
+				<DisplayString>{ipv6()[0],x} {ipv6()[1],x} {ipv6()[2],x} {ipv6()[3],x} {ipv6()[4],x} {ipv6()[5],x} {ipv6()[6],x} {ipv6()[7],x}</DisplayString>
+			</Synthetic>
+			<Item Name="[port]">m_port</Item>
+			<Synthetic Name="[protocol]">
+				<DisplayString Condition="type == CONNECTIONTYPE_TCP">TCP</DisplayString>
+				<DisplayString Condition="type == CONNECTIONTYPE_UDP">UDP</DisplayString>
+				<DisplayString Condition="type == CONNECTIONTYPE_BOTH">TCP,UDP</DisplayString>
+				<DisplayString Condition="type == CONNECTIONTYPE_TLS">TLS</DisplayString>
+			</Synthetic>
+		</Expand>
+	</Type>
+	<Type Name="VS_TransportMessage">
+		<Intrinsic Name="field_0" Expression="mess + sizeof(VS_FixedPartMessage)"/>
+		<Intrinsic Name="field_1" Expression="field_0() + *field_0() + 2"/>
+		<Intrinsic Name="field_2" Expression="field_1() + *field_1() + 2"/>
+		<Intrinsic Name="field_3" Expression="field_2() + *field_2() + 2"/>
+		<Intrinsic Name="field_4" Expression="field_3() + *field_3() + 2"/>
+		<Intrinsic Name="field_5" Expression="field_4() + *field_4() + 2"/>
+		<Intrinsic Name="field_6" Expression="field_5() + *field_5() + 2"/>
+		<Intrinsic Name="field_7" Expression="field_6() + *field_6() + 2"/>
+		<Intrinsic Name="field_8" Expression="field_7() + *field_7() + 2"/>
+		<DisplayString Condition="!isValid || !mess">empty</DisplayString>
+		<Expand>
+			<Item Name="[fixed]">(VS_FixedPartMessage*)mess</Item>
+			<Item Name="[SrcCID]">field_0()+1,s8</Item>
+			<Item Name="[SrcService]">field_1()+1,s8</Item>
+			<Item Name="[AddString]">field_2()+1,s8</Item>
+			<Item Name="[DstCID]">field_3()+1,s8</Item>
+			<Item Name="[DstService]">field_4()+1,s8</Item>
+			<Item Name="[SrcUser]">field_5()+1,s8</Item>
+			<Item Name="[DstUser]">field_6()+1,s8</Item>
+			<Item Name="[SrcServer]">field_7()+1,s8</Item>
+			<Item Name="[DstServer]">field_8()+1,s8</Item>
+		</Expand>
+	</Type>
+	<Type Name="transport::Message">
+		<Intrinsic Name="data" Expression="m_msg._Mypair._Myval2._Myfirst"/>
+		<Intrinsic Name="size" Expression="m_msg._Mypair._Myval2._Mylast - m_msg._Mypair._Myval2._Myfirst"/>
+		<Intrinsic Name="field_0" Expression="data() + sizeof(transport::MessageFixedPart)"/>
+		<Intrinsic Name="field_1" Expression="field_0() + *field_0() + 2"/>
+		<Intrinsic Name="field_2" Expression="field_1() + *field_1() + 2"/>
+		<Intrinsic Name="field_3" Expression="field_2() + *field_2() + 2"/>
+		<Intrinsic Name="field_4" Expression="field_3() + *field_3() + 2"/>
+		<Intrinsic Name="field_5" Expression="field_4() + *field_4() + 2"/>
+		<Intrinsic Name="field_6" Expression="field_5() + *field_5() + 2"/>
+		<Intrinsic Name="field_7" Expression="field_6() + *field_6() + 2"/>
+		<Intrinsic Name="field_8" Expression="field_7() + *field_7() + 2"/>
+		<DisplayString Condition="size() &lt; sizeof(transport::MessageFixedPart) + 18">empty</DisplayString>
+		<Expand>
+			<Item Name="[fixed]">(transport::MessageFixedPart*)data()</Item>
+			<Item Name="[SrcCID]">field_0()+1,s8</Item>
+			<Item Name="[SrcService]">field_1()+1,s8</Item>
+			<Item Name="[AddString]">field_2()+1,s8</Item>
+			<Item Name="[DstCID]">field_3()+1,s8</Item>
+			<Item Name="[DstService]">field_4()+1,s8</Item>
+			<Item Name="[SrcUser]">field_5()+1,s8</Item>
+			<Item Name="[DstUser]">field_6()+1,s8</Item>
+			<Item Name="[SrcServer]">field_7()+1,s8</Item>
+			<Item Name="[DstServer]">field_8()+1,s8</Item>
+		</Expand>
+	</Type>
+</AutoVisualizer>

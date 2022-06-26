@@ -1,0 +1,53 @@
+#once
+
+{
+	.ProjectName = 'RegistryKeyUtilityLib'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/RegistryKeyUtility'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.SourcePath = .ProjectPath
+	.SourceExcludedFiles
+		+ 'main.cpp'
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ProjectConfigs = {}
+
+	.CompilerInputFiles_Permissive =
+	{
+		'$ProjectPath$/storage/StorageCSV.cpp'
+	}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+		ObjectList('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ_Permissive')
+		{
+			.CompilerInputFiles = .CompilerInputFiles_Permissive
+			// Boost.Typeof relies on an old MSVC bug to work.
+			// MSVC in /permissive- mode is no longer "compatible" with that bug and produces an error.
+			// The logic in Boost.Typeof is fixed in Boost 1.66, but until we upgrade we have to compile problematic file without /permissive-.
+			.CompilerOptions - '/permissive-'
+		}
+		.LibrarianAdditionalInputs + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ_Permissive'
+		ObjectList('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ')
+		{
+			.CompilerInputPath = .SourcePath
+			.CompilerInputFiles = .SourceFiles
+			.CompilerInputExcludePath = .SourceExcludePath
+			.CompilerInputExcludedFiles = .SourceExcludedFiles + .CompilerInputFiles_Permissive
+		}
+		.LibrarianAdditionalInputs + '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-OBJ'
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+#include "../fbuild/gen_ide_project.bff"
+}

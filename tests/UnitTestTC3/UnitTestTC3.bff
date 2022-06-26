@@ -1,0 +1,119 @@
+#once
+
+{
+	.ProjectName = 'UnitTestTC3'
+	^AllProjects + .ProjectName
+	^TestProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/tests/$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/lua/lua-src/src'
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'googletest'
+		+ 'boost'
+		+ 'sqlite'
+	.ExternalLibraries_Link
+		+ 'googletest'
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'curl'
+		+ 'cares'
+		+ 'sqlite'
+		+ 'openldap'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ ' dnsapi.lib'
+		+ ' Gdi32.lib'
+		+ ' pdh.lib'
+		+ ' Shell32.lib'
+		+ ' Secur32.lib'
+		+ ' Wininet.lib'
+		+ ' Winmm.lib'
+		+ ' wldap32.lib'
+		+ ' Ws2_32.lib'
+		+ ' wsock32.lib'
+#endif
+#if __LINUX__
+	.ExtraLinkerOptions_Release
+		+ ' -lVMProtectSDK'
+		+ ' -Wl,-rpath=^$ORIGIN'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../common/fbuild/update_config.bff"
+
+#include "../../common/fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'acs_v2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'AppServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'BaseServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'FakeClient-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'H323Lib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ldap_core-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'LicenseLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'lualib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'MediaParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'newtransport-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ProtectionLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SIPParserBase-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SIPParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'statuslib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'streams-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'TrueGateway-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transport-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'TransceiverLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Server-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'VCSServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				//+ 'VCSServices_v2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ServerServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if  __WINDOWS__ ; Not ported
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'AppServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'RoutingServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+
+			// Technically this is a run-time dependency, not a pre-build dependency. But FASTBuild doesn't have them.
+			.PreBuildDependencies = {}
+				+ 'VMProtectSDK-$Toolchain$-$Platform$-$Config$-$Trait$'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+
+		Test('Test-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$')
+		{
+			.TestExecutable = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$'
+			.TestOutput = '$OutputPath$/TestOutput.txt'
+		}
+	}
+#include "../../common/fbuild/gen_project_aliases.bff"
+	.ProjectGuid = '{9497008E-E949-4541-B296-CF185B80954A}'
+#include "../../common/fbuild/gen_ide_project.bff"
+
+}

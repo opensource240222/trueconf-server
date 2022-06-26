@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="websocketpp_dir"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="$(websocketpp_dir)"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="ws2_32.lib"
+	/>
+</VisualStudioPropertySheet>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Document Version="2">
+    <Protection InputFileName="../../../GCC-Linux32-Release-Default/UnitTestProtection" Options="988872">
+        <Folders />
+        <Procedures>
+            <Procedure MapAddress="protection::bn2binpad(protection::bignum_st const*, unsigned char*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_abs_is_word(protection::bignum_st const*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_add(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::BN_add_word(protection::bignum_st*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_add_words(unsigned int*, unsigned int const*, unsigned int const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_bin2bn(unsigned char const*, int, protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::BN_bin2bn_static(unsigned char const*, int, void*)" Options="0" />
+            <Procedure MapAddress="protection::BN_bn2binpad(protection::bignum_st const*, unsigned char*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_clear_free(protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::bn_cmp_part_words(unsigned int const*, unsigned int const*, int, int)" Options="0" />
+            <Procedure MapAddress="protection::bn_cmp_words(unsigned int const*, unsigned int const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_copy(protection::bignum_st*, protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::bn_correct_top(protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_end(protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_free(protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_get(protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_new()" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_start(protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_div(protection::bignum_st*, protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::bn_div_fixed_top(protection::bignum_st*, protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::bn_div_words(unsigned int, unsigned int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_expand(protection::bignum_st*, int)" Options="0" />
+            <Procedure MapAddress="protection::bn_expand2(protection::bignum_st*, int)" Options="0" />
+            <Procedure MapAddress="protection::bn_expand_internal(protection::bignum_st const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_free(protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::bn_free_d(protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::bn_from_mont_fixed_top(protection::bignum_st*, protection::bignum_st const*, protection::bn_mont_ctx_st*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_from_montgomery(protection::bignum_st*, protection::bignum_st const*, protection::bn_mont_ctx_st*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::bn_from_montgomery_word(protection::bignum_st*, protection::bignum_st*, protection::bn_mont_ctx_st*)" Options="0" />
+            <Procedure MapAddress="protection::BN_get_flags(protection::bignum_st const*, int)" Options="0" />
+            <Procedure MapAddress="protection::bn_init(protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_bit_set(protection::bignum_st const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_odd(protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_one(protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_word(protection::bignum_st const*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_zero(protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::bn_left_align(protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::BN_lshift(protection::bignum_st*, protection::bignum_st const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_lshift1(protection::bignum_st*, protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::bn_lshift_fixed_top(protection::bignum_st*, protection::bignum_st const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_mod_exp_mont(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_ctx*, protection::bn_mont_ctx_st*)" Options="0" />
+            <Procedure MapAddress="protection::BN_mod_inverse(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_MONT_CTX_free(protection::bn_mont_ctx_st*)" Options="0" />
+            <Procedure MapAddress="protection::BN_MONT_CTX_init(protection::bn_mont_ctx_st*)" Options="0" />
+            <Procedure MapAddress="protection::BN_MONT_CTX_new()" Options="0" />
+            <Procedure MapAddress="protection::BN_MONT_CTX_set(protection::bn_mont_ctx_st*, protection::bignum_st const*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_mul(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_add_words(unsigned int*, unsigned int const*, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_comba4(unsigned int*, unsigned int*, unsigned int*)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_comba8(unsigned int*, unsigned int*, unsigned int*)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_fixed_top(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_mont_fixed_top(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bn_mont_ctx_st*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_normal(unsigned int*, unsigned int*, int, unsigned int*, int)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_part_recursive(unsigned int*, unsigned int*, unsigned int*, int, int, int, unsigned int*)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_recursive(unsigned int*, unsigned int*, unsigned int*, int, int, int, unsigned int*)" Options="0" />
+            <Procedure MapAddress="protection::BN_mul_word(protection::bignum_st*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_words(unsigned int*, unsigned int const*, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_new()" Options="0" />
+            <Procedure MapAddress="protection::BN_nnmod(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_num_bits(protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::BN_num_bits_word(unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_POOL_finish(protection::bignum_pool*)" Options="0" />
+            <Procedure MapAddress="protection::BN_POOL_get(protection::bignum_pool*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_POOL_init(protection::bignum_pool*)" Options="0" />
+            <Procedure MapAddress="protection::BN_POOL_release(protection::bignum_pool*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_rshift(protection::bignum_st*, protection::bignum_st const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_rshift1(protection::bignum_st*, protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::bn_rshift_fixed_top(protection::bignum_st*, protection::bignum_st const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_set_bit(protection::bignum_st*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_set_negative(protection::bignum_st*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_set_word(protection::bignum_st*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_comba4(unsigned int*, unsigned int const*)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_comba8(unsigned int*, unsigned int const*)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_fixed_top(protection::bignum_st*, protection::bignum_st const*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_normal(unsigned int*, unsigned int const*, int, unsigned int*)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_recursive(unsigned int*, unsigned int const*, int, unsigned int*)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_words(unsigned int*, unsigned int const*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_STACK_finish(protection::bignum_ctx_stack*)" Options="0" />
+            <Procedure MapAddress="protection::BN_STACK_init(protection::bignum_ctx_stack*)" Options="0" />
+            <Procedure MapAddress="protection::BN_STACK_pop(protection::bignum_ctx_stack*)" Options="0" />
+            <Procedure MapAddress="protection::BN_STACK_push(protection::bignum_ctx_stack*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_sub(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::bn_sub_part_words(unsigned int*, unsigned int const*, unsigned int const*, int, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_sub_word(protection::bignum_st*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_sub_words(unsigned int*, unsigned int const*, unsigned int const*, int)" Options="0" />
+            <Procedure MapAddress="protection::bn_to_mont_fixed_top(protection::bignum_st*, protection::bignum_st const*, protection::bn_mont_ctx_st*, protection::bignum_ctx*)" Options="0" />
+            <Procedure MapAddress="protection::BN_uadd(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::BN_ucmp(protection::bignum_st const*, protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::BN_usub(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*)" Options="0" />
+            <Procedure MapAddress="protection::BN_value_one()" Options="0" />
+            <Procedure MapAddress="protection::bn_wexpand(protection::bignum_st*, int)" Options="0" />
+            <Procedure MapAddress="protection::BN_word2bn_static(unsigned int, void*)" Options="0" />
+            <Procedure MapAddress="protection::BN_zero_ex(protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::CalculateHWInfoSourcesChecksum(protection::HWInfoSourceFlags)" Options="0" />
+            <Procedure MapAddress="protection::CheckIfBTRFSHasDevice(int, char const*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::CheckSaltedHWKey(char const*, char const*, char const*)" Options="0" />
+            <Procedure MapAddress="protection::CheckSaltedHWKey(char const*, char const*, unsigned char const*)" Options="0" />
+            <Procedure MapAddress="protection::explicit_bzero(void*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::FormatDeviceID(unsigned int, char*)" Options="0" />
+            <Procedure MapAddress="protection::FormatU32(unsigned int, char*)" Options="0" />
+            <Procedure MapAddress="protection::GetDeviceByMountpoint(char const*, unsigned int&amp;, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::GetHWInfoSources(char*)" Options="0" />
+            <Procedure MapAddress="protection::GetSaltedHWKey(char const*, char const*, char*)" Options="0" />
+            <Procedure MapAddress="protection::HWInfoToKey(protection::HWInfo const&amp;, char*)" Options="0" />
+            <Procedure MapAddress="protection::int_bn_mod_inverse(protection::bignum_st*, protection::bignum_st const*, protection::bignum_st const*, protection::bignum_ctx*, int*)" Options="0" />
+            <Procedure MapAddress="protection::MD5::Final()" Options="0" />
+            <Procedure MapAddress="protection::MD5::GetBytes(unsigned char*) const" Options="0" />
+            <Procedure MapAddress="protection::MD5::GetString(char*, bool) const" Options="0" />
+            <Procedure MapAddress="protection::MD5::MD5()" Options="0" />
+            <Procedure MapAddress="protection::MD5::Reset()" Options="0" />
+            <Procedure MapAddress="protection::MD5::Transform(unsigned char const*)" Options="0" />
+            <Procedure MapAddress="protection::MD5::Update(void const*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::memcmp(void const*, void const*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::memcpy(void*, void const*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::memmove(void*, void const*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::memset(void*, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::OpenSpecialFS(char const*, unsigned int, protection::(anonymous namespace)::FD&amp;, unsigned int&amp;)" Options="0" />
+            <Procedure MapAddress="protection::OPENSSL_zalloc(unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::ParseMountinfoRecord(char*, char const**)" Options="0" />
+            <Procedure MapAddress="protection::ParseOSReleaseOptionValue(char const*&amp;, char const*)" Options="0" />
+            <Procedure MapAddress="protection::ParseUnsigned(char const*&amp;, char const*)" Options="0" />
+            <Procedure MapAddress="protection::ReadBlockDeviceInfo(protection::HWInfo::Disk*&amp;, protection::HWInfo::Disk const*, int, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::ReadDisksInfo_BTRFS(protection::HWInfo::Disk*&amp;, protection::HWInfo::Disk const*, char const*, int, int, unsigned int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::ReadDisksInfo_Default(protection::HWInfo::Disk*&amp;, protection::HWInfo::Disk const*, char const*, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::ReadFile(int, char const*, void*, unsigned int&amp;, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo(protection::HWInfo&amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo_CPU(protection::HWInfo&amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo_Disks(protection::HWInfo&amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo_Filesystem(protection::HWInfo&amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo_MachineID(protection::HWInfo&amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo_Memory(protection::HWInfo&amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo_OSRelease(protection::HWInfo&amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo_Timezone(protection::HWInfo&amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWKey(char*)" Options="0" />
+            <Procedure MapAddress="protection::RSA_padding_check_PKCS1_type_1(unsigned char*, int, unsigned char const*, int, int)" Options="0" />
+            <Procedure MapAddress="protection::RSA_public_decrypt_PKCS1_type_1(int, unsigned char const*, unsigned char*, protection::bignum_st*, protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::RSA_verify_SHA1_PKCS1_type_1(unsigned char const*, unsigned int, unsigned char const*, unsigned int, protection::bignum_st*, protection::bignum_st*)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::BufferToBlock(void const*, unsigned int*)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::Final()" Options="0" />
+            <Procedure MapAddress="protection::SHA1::GetBytes(unsigned char*) const" Options="0" />
+            <Procedure MapAddress="protection::SHA1::GetString(char*) const" Options="0" />
+            <Procedure MapAddress="protection::SHA1::Reset()" Options="0" />
+            <Procedure MapAddress="protection::SHA1::SHA1()" Options="0" />
+            <Procedure MapAddress="protection::SHA1::Transform(unsigned int*)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::Update(void const*, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::strcmp(char const*, char const*)" Options="0" />
+            <Procedure MapAddress="protection::strlen(char const*)" Options="0" />
+            <Procedure MapAddress="protection::TryReadCompositeBlockDeviceInfo(protection::HWInfo::Disk*&amp;, protection::HWInfo::Disk const*, int, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::TryReadDiskDeviceInfo(protection::HWInfo::Disk&amp;, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::TryReadPartitionInfo(protection::HWInfo::Disk*&amp;, protection::HWInfo::Disk const*, int, int, unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::VerifyDeviceID(int, unsigned int)" Options="0" />
+            <Procedure MapAddress='string &quot;/etc/machine-id&quot;' Options="0" />
+            <Procedure MapAddress='string &quot;/etc/os-release&quot;' Options="0" />
+            <Procedure MapAddress='string &quot;/etc/timezone&quot;' Options="0" />
+            <Procedure MapAddress='string &quot;/usr/lib/os-release&quot;' Options="0" />
+            <Procedure MapAddress='string &quot;fs/btrfs&quot;' Options="0" />
+            <Procedure MapAddress='string &quot;self/mountinfo&quot;' Options="0" />
+        </Procedures>
+        <Objects />
+        <Messages />
+    </Protection>
+    <DLLBox>
+        <Folders />
+    </DLLBox>
+    <Script />
+    <LicenseManager />
+</Document>

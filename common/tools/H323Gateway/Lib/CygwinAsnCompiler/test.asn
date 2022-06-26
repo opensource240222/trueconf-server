@@ -1,0 +1,17 @@
+MultiplexEntrySend  ::=SEQUENCE
+{
+  sequenceNumber  SequenceNumber,
+  multiplexEntryDescriptors SET SIZE (1..15) OF MultiplexEntryDescriptor,
+  ...
+}
+
+RRRprotocol-discriminator ::= INTEGER (0..255) --(GCF)
+
+SSSsubIdentifier  ::=     IA5String (SIZE (1..64)) 
+
+QWQWe164Address     ::=   IA5String(SIZE(1..18)) (FROM ("ETkdA"))
+
+EncodedFastStartToken ::= TYPE-IDENTIFIER.&Type (FastStartToken)
+
+ModeDescription ::=SET SIZE (1..256) OF ModeElement
+

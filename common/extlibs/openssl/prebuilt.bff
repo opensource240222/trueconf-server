@@ -1,0 +1,33 @@
+#if __WINDOWS__
+
+#define HAVE_OPENSSL
+.openssl_Includes = '$RepoPath_TCCommon$/extlibs/openssl/include'
+
+#if USE_DYNAMIC_OPENSSL
+.openssl_LinkerOptions_MSVC141_Win32_Debug     = ' $RepoPath_TCCommon$/extlibs/openssl/msvc140/win32-debug-dll/libssl.lib $RepoPath_TCCommon$/extlibs/openssl/msvc140/win32-debug-dll/libcrypto.lib'
+.openssl_LinkerOptions_MSVC141_Win32_Release   = ' $RepoPath_TCCommon$/extlibs/openssl/msvc140/win32-release-dll/libssl.lib  $RepoPath_TCCommon$/extlibs/openssl/msvc140/win32-release-dll/libcrypto.lib'
+.openssl_LinkerOptions_MSVC141_Win64_Debug     = ' $RepoPath_TCCommon$/extlibs/openssl/msvc140/win64-debug-dll/libssl.lib $RepoPath_TCCommon$/extlibs/openssl/msvc140/win64-debug-dll/libcrypto.lib'
+.openssl_LinkerOptions_MSVC141_Win64_Release   = ' $RepoPath_TCCommon$/extlibs/openssl/msvc140/win64-release-dll/libssl.lib  $RepoPath_TCCommon$/extlibs/openssl/msvc140/win64-release-dll/libcrypto.lib'
+#else
+.openssl_LinkerOptions_MSVC141_Win32_Debug     = ' $RepoPath_TCCommon$/extlibs/openssl/msvc140/win32-debug-static/libssl.lib $RepoPath_TCCommon$/extlibs/openssl/msvc140/win32-debug-static/libcrypto.lib'
+.openssl_LinkerOptions_MSVC141_Win32_Release   = ' $RepoPath_TCCommon$/extlibs/openssl/msvc140/win32-release-static/libssl.lib  $RepoPath_TCCommon$/extlibs/openssl/msvc140/win32-release-static/libcrypto.lib'
+.openssl_LinkerOptions_MSVC141_Win64_Debug     = ' $RepoPath_TCCommon$/extlibs/openssl/msvc140/win64-debug-static/libssl.lib $RepoPath_TCCommon$/extlibs/openssl/msvc140/win64-debug-static/libcrypto.lib'
+.openssl_LinkerOptions_MSVC141_Win64_Release   = ' $RepoPath_TCCommon$/extlibs/openssl/msvc140/win64-release-static/libssl.lib  $RepoPath_TCCommon$/extlibs/openssl/msvc140/win64-release-static/libcrypto.lib'
+#endif
+
+.openssl_LinkerOptions_MSVC141_Win32XP_Debug   = .openssl_LinkerOptions_MSVC141_Win32_Debug
+.openssl_LinkerOptions_MSVC141_Win32XP_Release = .openssl_LinkerOptions_MSVC141_Win32_Release
+
+.openssl_LinkerOptions_MSVC141_Win32_VLD       = .openssl_LinkerOptions_MSVC141_Win32_Debug
+.openssl_LinkerOptions_MSVC141_Win32XP_VLD     = .openssl_LinkerOptions_MSVC141_Win32XP_Debug
+.openssl_LinkerOptions_MSVC141_Win64_VLD       = .openssl_LinkerOptions_MSVC141_Win64_Debug
+
+.openssl_LinkerOptions_Clang_Win32_Debug       = .openssl_LinkerOptions_MSVC141_Win32_Debug
+.openssl_LinkerOptions_Clang_Win32_Release     = .openssl_LinkerOptions_MSVC141_Win32_Release
+.openssl_LinkerOptions_Clang_Win32XP_Debug     = .openssl_LinkerOptions_Clang_Win32_Debug
+.openssl_LinkerOptions_Clang_Win32XP_Release   = .openssl_LinkerOptions_Clang_Win32_Release
+.openssl_LinkerOptions_Clang_Win64_Debug       = .openssl_LinkerOptions_MSVC141_Win64_Debug
+.openssl_LinkerOptions_Clang_Win64_Release     = .openssl_LinkerOptions_MSVC141_Win64_Release
+.openssl_LinkerOptions_Clang_Win64_ASan        = .openssl_LinkerOptions_Clang_Win64_Release
+
+#endif

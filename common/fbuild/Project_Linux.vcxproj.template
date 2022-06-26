@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="GCC-Linux32-Debug-Default|x86">
+      <Configuration>GCC-Linux32-Debug-Default</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="GCC-Linux32-Release-Default|x86">
+      <Configuration>GCC-Linux32-Release-Default</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Clang-Linux32-Debug-Default|x86">
+      <Configuration>Clang-Linux32-Debug-Default</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Clang-Linux32-Release-Default|x86">
+      <Configuration>Clang-Linux32-Release-Default</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="GCC-Linux64-Debug-Default|x86">
+      <Configuration>GCC-Linux64-Debug-Default</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="GCC-Linux64-Release-Default|x86">
+      <Configuration>GCC-Linux64-Release-Default</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Clang-Linux64-Debug-Default|x86">
+      <Configuration>Clang-Linux64-Debug-Default</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Clang-Linux64-Release-Default|x86">
+      <Configuration>Clang-Linux64-Release-Default</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{__PROJECT_GUID__}</ProjectGuid>
+    <Keyword>Linux</Keyword>
+    <RootNamespace>__PROJECT_NAME___Linux</RootNamespace>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <ApplicationType>Linux</ApplicationType>
+    <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
+    <TargetLinuxPlatform>Generic</TargetLinuxPlatform>
+    <LinuxProjectType>{FC1A4D80-50E9-41DA-9192-61C0DBAA00D2}</LinuxProjectType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)'=='GCC-Linux32-Debug-Default'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='GCC-Linux32-Release-Default'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Clang-Linux32-Debug-Default'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Clang-Linux32-Release-Default'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='GCC-Linux64-Debug-Default'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='GCC-Linux64-Release-Default'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Clang-Linux64-Debug-Default'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Clang-Linux64-Release-Default'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <OutDir>$(ProjectDir)__PROJECT_NAME__\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)__PROJECT_NAME__\$(Configuration)\</IntDir>
+    <LocalRemoteCopySources>false</LocalRemoteCopySources>
+    <RemoteRootDir>/mnt/__ROOT_DIR__</RemoteRootDir>
+    <RemoteProjectDir>$(RemoteRootDir)</RemoteProjectDir>
+    <RemoteBuildCommandLine>set -o pipefail; fbuild -config fbuild.linux.bff -noprogress -fixuperrorpaths -cache __PROJECT_NAME__-$(Configuration) | sed -ue "s|^`readlink -f '$(RemoteRootDir)'`/|`echo '$(SolutionDir)' | sed -e 'y:\\\:/:'`|"</RemoteBuildCommandLine>
+    <RemoteReBuildCommandLine>set -o pipefail; fbuild -config fbuild.linux.bff -noprogress -fixuperrorpaths -clean -cache __PROJECT_NAME__-$(Configuration) | sed -ue "s|^`readlink -f '$(RemoteRootDir)'`/|`echo '$(SolutionDir)' | sed -e 'y:\\\:/:'`|"</RemoteReBuildCommandLine>
+    <RemoteCleanCommandLine>fbuild -config fbuild.linux.bff -noprogress -fixuperrorpaths Clean-__PROJECT_NAME__-$(Configuration)</RemoteCleanCommandLine>
+    __REMOTE_DEBUGGER_COMMAND__
+    <SourceMap>$(SolutionDir)=$(RemoteRootDir)/;$(SourceMap)</SourceMap>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <ItemGroup>
+  </ItemGroup>
+  <ItemDefinitionGroup />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

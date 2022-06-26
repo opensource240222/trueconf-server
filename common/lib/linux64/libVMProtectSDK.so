@@ -1,0 +1,2 @@
+/* This is a linker script that allows us to use the same library name (without suffix) when linking both 32-bit and 64-bit binaries */
+INPUT(-lVMProtectSDK64)

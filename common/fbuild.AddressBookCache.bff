@@ -1,0 +1,104 @@
+#if !__WINDOWS__
+#error AddressBookCache is Windows-only project
+#endif
+
+.RootBFF = 'fbuild.AddressBookCache.bff'
+.RepoPath_TCCommon = '.'
+.VCXPath = '$RepoPath_TCCommon$/projects/AddressBookCache'
+
+#include "local.bff"
+.Enabled_Traits = { 'Terminal' }
+.IncludesLocal = {}
+	+ "$RepoPath_TCCommon$"
+#include "fbuild/config.bff"
+
+#import qtdir
+
+; Static libraries
+#include "acs/acs.bff"
+#include "Audio/Audio.bff"
+#include "CheckSrv/CheckSrv.bff"
+#include "ClientInterface/ClientInterface.bff"
+#include "extlibs/DirectShowBaseClasses/BaseClasses.bff"
+#include "IppLib2/IppLib2.bff"
+#include "LibTorrent/LibTorrent.bff"
+#include "MediaParserLib/MediaParserLib.bff"
+#include "SecureLib/SecureLib.bff"
+#include "SIPParserLib/SIPParserLib.bff"
+#include "SIPParserBase/SIPParserBase.bff"
+#include "std/std.bff"
+#include "streams/streams.bff"
+#include "STUNClientLib/STUNClientLib.bff"
+#include "STUNParserLib/STUNParserLib.bff"
+#include "Transcoder/Transcoder.bff"
+#include "transport/Transport.bff"
+#include "UPnPLib/UPnPLib.bff"
+#include "Video/Video.bff"
+#include "VSClient/Client.AddressBookCache.bff" // including special version, that uses .qtdir
+#include "WinFirewallManager/WinFirewallManager.bff"
+
+; AddressBookCache library
+#include "AddressBookCache/AddressBookCache.bff"
+
+.MainProjects = {}
+	+ 'AddressBookCache'
+
+#include "fbuild/gen_action_aliases.bff"
+.GroupName = 'Main'
+#include "fbuild/gen_project_group_aliases.bff"
+
+#include "fbuild/gen_common_vcx_projects.bff"
+VSSolution('solution')
+{
+	.SolutionOutput = 'AddressBookCache.sln'
+	.SolutionProjects =
+	{
+		'AddressBookCache-proj'
+		'All-proj'
+		'UpdateSolution-proj'
+	}
+	.SolutionBuildProject = 'All-proj'
+
+	.SolutionConfigs = {}
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.T = // Anonymous structs aren't supported, using temporary name
+		[
+			.Config = '$Toolchain$ $Platform$ $Config$ $Trait$'
+			.Platform = 'Win32' // See update_config.bff for explanation
+		]
+		^SolutionConfigs + { .T }
+	}
+
+	.Folder_Libs =
+	[
+		.Path = '0. Libs (common)'
+		.Projects = {}
+			+ 'acs-proj'
+			+ 'Audio-proj'
+			+ 'BaseClasses-proj'
+			+ 'CheckSrv-proj'
+			+ 'Client-proj'
+			+ 'ClientInterface-proj'
+			+ 'IppLib2-proj'
+			+ 'LibTorrent-proj'
+			+ 'MediaParserLib-proj'
+			+ 'SecureLib-proj'
+			+ 'SIPParserLib-proj'
+			+ 'SIPParserBase-proj'
+			+ 'std-proj'
+			+ 'streams-proj'
+			+ 'STUNClientLib-proj'
+			+ 'STUNParserLib-proj'
+			+ 'Transcoder-proj'
+			+ 'Transport-proj'
+			+ 'UPnPLib-proj'
+			+ 'Video-proj'
+			+ 'WinFirewallManager-proj'
+	]
+	.SolutionFolders =
+	{
+		.Folder_Libs
+	}
+}

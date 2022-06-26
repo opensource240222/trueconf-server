@@ -1,0 +1,244 @@
+//
+// This is local.bff used when building projects on the build machine from this branch.
+// Build machine only has to provide local_dirs.bff with paths to external components (compiler, pre-built libraries, etc).
+//
+
+#include "local_dirs.bff"
+
+#if __WINDOWS__
+
+// Superset of all configurations that are built on the build machine.
+//   Win32XP is required by Visicron.dll tasks
+//   Win64 and Debug are required by libspeex task
+.Enabled_Platforms = { 'Win32' 'Win32XP' 'Win64' }
+.Enabled_Configs = { 'Debug' 'Release' }
+.Enabled_Traits = { 'Default' }
+
+// Use VS 2017
+#define HAVE_MSVC141
+
+// These variables are expected to be defined in local_dirs.bff:
+//   .msvc141_dir
+//   .msvc141_ver
+//   .winsdk10_dir
+//   .winsdk71a_dir
+//   .dxsdk_dir
+
+// Specific versions of external libraries that are required to build from this branch.
+// Variables on the right are expected to be defined in local_dirs.bff.
+// Unversioned variables are created to simplify the code below.
+
+#endif
+
+
+#if __LINUX__
+
+//
+// Common part for all Linux distributions
+//
+
+#if DEBIAN_9
+
+// Superset of all configurations that are built on the build machine.
+.Enabled_Platforms = { 'Linux32' 'Linux64' }
+.Enabled_Configs = { 'Release' }
+.Enabled_Traits = { 'Default' }
+
+#define HAVE_GCC
+.gcc_bin = '/usr/bin/gcc'
+.gcc_libexecdir = '/usr/lib/gcc/x86_64-linux-gnu/6'
+.binutils_bindir = '/usr/bin'
+
+// Specific versions of external libraries that are required to build from this branch.
+// Variables on the right are expected to be defined in local_dirs.bff.
+// Unversioned variables are created to simplify the code below.
+.php_dir         = .php_7_2_dir
+
+#define HAVE_BOOST
+.boost_Includes = { '/usr/include/boost' }
+.boost_LinkerOptions_GCC_Linux32_Release = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_GCC_Linux64_Release = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+
+#define HAVE_OPENSSL
+.openssl_Includes = {}
+.openssl_LinkerOptions_GCC_Linux32_Release = ' -lssl -lcrypto'
+.openssl_LinkerOptions_GCC_Linux64_Release = ' -lssl -lcrypto'
+
+#define HAVE_CURL
+.curl_Includes = {}
+.curl_LinkerOptions_GCC_Linux32_Release = ' -lcurl -lidn -lssl -lcrypto -lssl -lcrypto -lz'
+.curl_LinkerOptions_GCC_Linux64_Release = ' -lcurl -lidn -lssl -lcrypto -lssl -lcrypto -lz'
+
+#define HAVE_CARES
+.cares_Includes = {}
+.cares_LinkerOptions_GCC_Linux32_Release = ' -lcares'
+.cares_LinkerOptions_GCC_Linux64_Release = ' -lcares'
+
+#define HAVE_LIBPQ
+.libpq_Includes = { '/usr/include/postgresql' }
+.libpq_LinkerOptions_GCC_Linux32_Release = ' -lpq'
+.libpq_LinkerOptions_GCC_Linux64_Release = ' -lpq'
+
+#define HAVE_PHP
+.php_Includes = {}
+	+ '$php_dir$/php/'
+	+ '$php_dir$/php/main'
+	+ '$php_dir$/php/TSRM'
+	+ '$php_dir$/php/Zend'
+	+ '$php_dir$/php/ext'
+	+ '$php_dir$/php/ext/date/lib'
+
+#define HAVE_SASL
+.sasl_Includes = { '/usr/include/sasl' }
+.sasl_LinkerOptions_GCC_Linux32_Release = ' -lsasl2'
+.sasl_LinkerOptions_GCC_Linux64_Release = ' -lsasl2'
+
+#define HAVE_SPEEX
+.speex_Includes = {}
+.speex_LinkerOptions_GCC_Linux32_Release   = ' -lspeex'
+.speex_LinkerOptions_GCC_Linux64_Release   = ' -lspeex'
+
+#define HAVE_LAME
+.lame_Includes = {}
+.lame_LinkerOptions_GCC_Linux32_Release   = ' -lmp3lame'
+.lame_LinkerOptions_GCC_Linux64_Release   = ' -lmp3lame'
+
+#endif
+
+#if DEBIAN_10
+
+// Superset of all configurations that are built on the build machine.
+.Enabled_Platforms = { 'Linux32' 'Linux64' }
+.Enabled_Configs = { 'Release' }
+.Enabled_Traits = { 'Default' }
+
+#define HAVE_GCC
+.gcc_bin = '/usr/bin/gcc'
+.gcc_libexecdir = '/usr/lib/gcc/x86_64-linux-gnu/8'
+.binutils_bindir = '/usr/bin'
+
+// Specific versions of external libraries that are required to build from this branch.
+// Variables on the right are expected to be defined in local_dirs.bff.
+// Unversioned variables are created to simplify the code below.
+.php_dir         = .php_7_2_dir
+
+#define HAVE_BOOST
+.boost_Includes = { '/usr/include/boost' }
+.boost_LinkerOptions_GCC_Linux32_Release = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_GCC_Linux64_Release = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+
+#define HAVE_OPENSSL
+.openssl_Includes = {}
+.openssl_LinkerOptions_GCC_Linux32_Release = ' -lssl -lcrypto'
+.openssl_LinkerOptions_GCC_Linux64_Release = ' -lssl -lcrypto'
+
+#define HAVE_CURL
+.curl_Includes = {}
+.curl_LinkerOptions_GCC_Linux32_Release = ' -lcurl -lidn -lssl -lcrypto -lssl -lcrypto -lz'
+.curl_LinkerOptions_GCC_Linux64_Release = ' -lcurl -lidn -lssl -lcrypto -lssl -lcrypto -lz'
+
+#define HAVE_CARES
+.cares_Includes = {}
+.cares_LinkerOptions_GCC_Linux32_Release = ' -lcares'
+.cares_LinkerOptions_GCC_Linux64_Release = ' -lcares'
+
+#define HAVE_LIBPQ
+.libpq_Includes = { '/usr/include/postgresql' }
+.libpq_LinkerOptions_GCC_Linux32_Release = ' -lpq'
+.libpq_LinkerOptions_GCC_Linux64_Release = ' -lpq'
+
+#define HAVE_PHP
+.php_Includes = {}
+	+ '$php_dir$/php/'
+	+ '$php_dir$/php/main'
+	+ '$php_dir$/php/TSRM'
+	+ '$php_dir$/php/Zend'
+	+ '$php_dir$/php/ext'
+	+ '$php_dir$/php/ext/date/lib'
+
+#define HAVE_SASL
+.sasl_Includes = { '/usr/include/sasl' }
+.sasl_LinkerOptions_GCC_Linux32_Release = ' -lsasl2'
+.sasl_LinkerOptions_GCC_Linux64_Release = ' -lsasl2'
+
+#define HAVE_SPEEX
+.speex_Includes = {}
+.speex_LinkerOptions_GCC_Linux32_Release   = ' -lspeex'
+.speex_LinkerOptions_GCC_Linux64_Release   = ' -lspeex'
+
+#define HAVE_LAME
+.lame_Includes = {}
+.lame_LinkerOptions_GCC_Linux32_Release   = ' -lmp3lame'
+.lame_LinkerOptions_GCC_Linux64_Release   = ' -lmp3lame'
+
+#endif
+
+#if ASTRA_1_6
+
+// Superset of all configurations that are built on the build machine.
+.Enabled_Platforms = { 'Linux32' 'Linux64' }
+.Enabled_Configs = { 'Release' }
+.Enabled_Traits = { 'Default' }
+
+#define HAVE_GCC
+.gcc_bin = '/usr/bin/gcc'
+.gcc_libexecdir = '/usr/lib/gcc/x86_64-linux-gnu/6'
+.binutils_bindir = '/usr/bin'
+
+// Specific versions of external libraries that are required to build from this branch.
+// Variables on the right are expected to be defined in local_dirs.bff.
+// Unversioned variables are created to simplify the code below.
+.php_dir         = .php_7_2_dir
+
+#define HAVE_BOOST
+.boost_Includes = { '/usr/include/boost' }
+.boost_LinkerOptions_GCC_Linux32_Release = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+.boost_LinkerOptions_GCC_Linux64_Release = ' -lboost_filesystem -lboost_regex -lboost_program_options -lboost_timer -lboost_chrono -lboost_system'
+
+#define HAVE_OPENSSL
+.openssl_Includes = {}
+.openssl_LinkerOptions_GCC_Linux32_Release = ' -lssl -lcrypto'
+.openssl_LinkerOptions_GCC_Linux64_Release = ' -lssl -lcrypto'
+
+#define HAVE_CURL
+.curl_Includes = {}
+.curl_LinkerOptions_GCC_Linux32_Release = ' -lcurl -lidn -lssl -lcrypto -lssl -lcrypto -lz'
+.curl_LinkerOptions_GCC_Linux64_Release = ' -lcurl -lidn -lssl -lcrypto -lssl -lcrypto -lz'
+
+#define HAVE_CARES
+.cares_Includes = {}
+.cares_LinkerOptions_GCC_Linux32_Release = ' -lcares'
+.cares_LinkerOptions_GCC_Linux64_Release = ' -lcares'
+
+#define HAVE_LIBPQ
+.libpq_Includes = { '/usr/include/postgresql' }
+.libpq_LinkerOptions_GCC_Linux32_Release = ' -lpq'
+.libpq_LinkerOptions_GCC_Linux64_Release = ' -lpq'
+
+#define HAVE_PHP
+.php_Includes = {}
+	+ '$php_dir$/php/'
+	+ '$php_dir$/php/main'
+	+ '$php_dir$/php/TSRM'
+	+ '$php_dir$/php/Zend'
+	+ '$php_dir$/php/ext'
+	+ '$php_dir$/php/ext/date/lib'
+
+#define HAVE_SASL
+.sasl_Includes = { '/usr/include/sasl' }
+.sasl_LinkerOptions_GCC_Linux32_Release = ' -lsasl2'
+.sasl_LinkerOptions_GCC_Linux64_Release = ' -lsasl2'
+
+#define HAVE_SPEEX
+.speex_Includes = {}
+.speex_LinkerOptions_GCC_Linux32_Release   = ' -lspeex'
+.speex_LinkerOptions_GCC_Linux64_Release   = ' -lspeex'
+
+#define HAVE_LAME
+.lame_Includes = {}
+.lame_LinkerOptions_GCC_Linux32_Release   = ' -lmp3lame'
+.lame_LinkerOptions_GCC_Linux64_Release   = ' -lmp3lame'
+
+#endif
+
+#endif

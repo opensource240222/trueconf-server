@@ -1,0 +1,20 @@
+.FBuildExtraArgs = '-cacheread -cachewrite -dist'
+.SolutionProjectGroup = 'All'
+
+.build_dir = 'tmp'
+
+#if __WINDOWS__
+.vld_dir = 'C:/Program Files (x86)/Visual Leak Detector'
+#endif
+
+.clang_ExtraCompilerOptions = ''
+#if __WINDOWS__
+.msvc120_ExtraCompilerOptions = '' // Not used, but required for compatibility with old local.bff files
+.msvc140_ExtraCompilerOptions = '' // Not used, but required for compatibility with old local.bff files
+.msvc141_ExtraCompilerOptions = ''
+#endif
+#if __LINUX__
+.gcc_ExtraCompilerOptions = ''
+.gcc47_ExtraCompilerOptions = '' // Not used, but required for compatibility with old local.bff files
+.clang34_ExtraCompilerOptions = '' // Not used, but required for compatibility with old local.bff files
+#endif

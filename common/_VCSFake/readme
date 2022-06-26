@@ -1,0 +1,10 @@
+Command for gathering all headers for VCSFake is
+rsync -Prm -f '- common/' -f '+ */' -f '+ *.h' -f '+ *.hpp' -f '- *' /path/to/tc3 /path/to/header_copy 
+
+Libs from tc3 needed to build VCSFake:
+	AppServices.lib
+	BaseServices.lib
+	LicenseLib.lib
+	ServerServices.lib
+	ServersConfigLib.lib
+	VCSServices.lib

@@ -1,0 +1,9 @@
+#if HAVE_CURL
+^Includes
+	+ .curl_Includes
+#else
+^Definitions
+	+ 'CURL_STATICLIB'
+^IncludesLocal
+	+ '$RepoPath_TCCommon$/libcurl/include'
+#endif

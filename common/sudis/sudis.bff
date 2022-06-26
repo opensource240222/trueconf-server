@@ -1,0 +1,90 @@
+#once
+
+{
+	.ProjectName = 'sudis'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+
+	.ExtraIncludesLocal
+		+ .ProjectPath
+	.SourcePath = .ProjectPath
+	.SourceFiles
+		+ '$ProjectPath$/thrift/Thrift.cpp'
+		+ '$ProjectPath$/thrift/TApplicationException.cpp'
+		+ '$ProjectPath$/thrift/transport/TBufferTransports.cpp'
+		+ '$ProjectPath$/thrift/windows/GetTimeOfDay.cpp'
+	.SourceExcludePath
+		+ '$ProjectPath$/thrift'
+	.SourceExcludedFiles
+		+ 'TCciUserListV1_server.skeleton.cpp'
+		+ 'TCciUserListV2_server.skeleton.cpp'
+		+ 'TCciUserLoginV1_server.skeleton.cpp'
+		+ 'TCciUserLogoutV1_server.skeleton.cpp'
+		+ 'TCciUserRoleListV1_server.skeleton.cpp'
+		+ 'TServiceExtSpsb_server.skeleton.cpp'
+		+ 'TicketV3_server.skeleton.cpp'
+		+ 'UserLoginV3_server.skeleton.cpp'
+		+ 'VS_CryptoPro.cpp'
+		+ 'VS_CryptoPro.h'
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ExternalLibraries_Link
+		+ 'cppdb'
+		+ 'boost'
+	.ProjectConfigs = {}
+
+#include "../fbuild/gen_def_unity.bff"
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' pdh.lib'
+		+ ' user32.lib'
+#endif
+
+	.LibConfigs = .Configs_Default + .Configs_Conferendo
+	ForEach(.Cfg in .LibConfigs)
+	{
+		.TargetName = '$ProjectName$$LIBSuffix$'
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objunity.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+	.DllConfigs = .Configs_SVKSM
+	ForEach(.Cfg in .DllConfigs)
+	{
+		.TargetName = '$ProjectName$$DLLSuffix$'
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objunity.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		DLL('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-DLL')
+		{
+			.Libraries
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /DLL /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-DLL' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{94AEA1A6-3323-4CB4-82A7-D3C465284673}'
+#include "../fbuild/gen_ide_project.bff"
+}

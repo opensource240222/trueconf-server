@@ -1,0 +1,7 @@
+^Libraries
+	+ 'live555-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __LINUX__
+^LinkerOptions
+	+ ' -Wl,-rpath=^$ORIGIN' // This allows executables to run from the build directory.
+	+ ' -Wl,-rpath=^$ORIGIN/../../lib/vcs' // This allows executables to run from the package install location.
+#endif

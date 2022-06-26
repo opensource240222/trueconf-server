@@ -1,0 +1,99 @@
+#once
+
+{
+	.ProjectName = 'AppServer'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/$ProjectName$'
+	.TargetName = 'vs_appsrv$EXESuffix$'
+
+	.ExtraIncludes
+		+ .websocketpp_Includes
+	.SourcePath = .ProjectPath
+	.SourceExcludePath
+		+ '$ProjectPath$/Services'
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ExternalLibraries_Link
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'curl'
+		+ 'cares'
+		+ 'openssl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /DYNAMICBASE:NO'
+		+ ' Advapi32.lib'
+		+ ' Crypt32.lib'
+		+ ' Gdi32.lib'
+		+ ' pdh.lib'
+		+ ' Secur32.lib'
+		+ ' Shell32.lib'
+		+ ' Shlwapi.lib'
+		+ ' Wininet.lib'
+		+ ' Winmm.lib'
+		+ ' Ws2_32.lib'
+		+ ' wsock32.lib'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../common/fbuild/update_config.bff"
+
+#include "../common/fbuild/gen_def_objlist.bff"
+#include "../common/fbuild/gen_def_resource.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'acs-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'acs_v2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'AppServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Bwt-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'CheckSrv-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'FakeClient-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'H323Lib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'http-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'lualib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'MediaParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'newtransport-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ProtectionLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Server-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ServersConfigLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'ServerServices-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SIPParserBase-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SIPParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SmtpMailer-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'statuslib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'streams-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'TransceiverLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transport-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'TrueGateway-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Watchdog-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'WebSocket-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'WinFirewallManager-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../common/fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{5EC60994-CC48-42B7-8791-1CCB9D0786AB}'
+#include "../common/fbuild/gen_ide_project.bff"
+}

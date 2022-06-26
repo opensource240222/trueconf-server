@@ -1,0 +1,47 @@
+#once
+
+{
+	.ProjectName = 'HWKeyReader'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.SourcePath = .ProjectPath
+
+	.ProjectConfigs = {}
+
+#if __LINUX__
+	.ExtraLinkerOptions_Release
+		+ ' -lVMProtectSDK'
+		+ ' -Wl,-rpath=^$ORIGIN'
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') {.Targets = .LibrarianAdditionalInputs}
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'ProtectionLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+
+			// Technically this is a run-time dependency, not a pre-build dependency. But FASTBuild doesn't have them.
+			.PreBuildDependencies = {}
+				+ 'VMProtectSDK-$Toolchain$-$Platform$-$Config$-$Trait$'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') {.Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE'}
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+#include "../fbuild/gen_ide_project.bff"
+}

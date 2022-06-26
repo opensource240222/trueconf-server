@@ -1,0 +1,66 @@
+From 19aafe43b27b52be6a006c652bbefd936bd3721c Mon Sep 17 00:00:00 2001
+From: Anatol Belski <ab@php.net>
+Date: Sat, 4 Jan 2014 00:47:10 +0100
+Subject: [PATCH] Fixed bug #66009 Failed compilation of PHP extension with C++
+ std library using VS 2012
+
+Visual Studio 2012 includes sanity checks for C++11 features, see
+http://msdn.microsoft.com/en-us/library/vstudio/bb531344(v=vs.110).aspx
+To fix the 'inline' keyword redefinition for C++ in debug mode, the
+new macros ZEND_WIN32_KEEP_INLINE is introduced, ZEND_WIN32_FORCE_INLINE is
+automatically appended in release mode.
+---
+ TSRM/tsrm_config.w32.h | 9 +--------
+ Zend/zend_config.w32.h | 9 +++++++--
+ 2 files changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/TSRM/tsrm_config.w32.h b/TSRM/tsrm_config.w32.h
+index 14c6443..1443e7c 100644
+--- a/TSRM/tsrm_config.w32.h
++++ b/TSRM/tsrm_config.w32.h
+@@ -2,6 +2,7 @@
+ #define TSRM_CONFIG_W32_H
+ 
+ #include <../main/config.w32.h>
++#include "Zend/zend_config.w32.h"
+ 
+ #define HAVE_UTIME 1
+ #define HAVE_ALLOCA 1
+@@ -11,12 +12,4 @@
+ #include <stdlib.h>
+ #include <crtdbg.h>
+ 
+-#undef inline
+-#ifdef ZEND_WIN32_FORCE_INLINE
+-# define inline __forceinline
+-#else
+-# define inline
+-#endif
+-
+-
+ #endif
+diff --git a/Zend/zend_config.w32.h b/Zend/zend_config.w32.h
+index f779a50..6ea6760 100644
+--- a/Zend/zend_config.w32.h
++++ b/Zend/zend_config.w32.h
+@@ -62,10 +62,15 @@ typedef unsigned int uint;
+ /* This will cause the compilation process to be MUCH longer, but will generate
+  * a much quicker PHP binary
+  */
+-#undef inline
+ #ifdef ZEND_WIN32_FORCE_INLINE
++/* _ALLOW_KEYWORD_MACROS is only relevant for C++ */
++# if (_MSC_VER >= 1700) && !defined(_ALLOW_KEYWORD_MACROS)
++#  define _ALLOW_KEYWORD_MACROS
++# endif
++# undef inline
+ # define inline __forceinline
+-#else
++#elif !defined(ZEND_WIN32_KEEP_INLINE)
++# undef inline
+ # define inline
+ #endif
+ 
+-- 
+2.1.4
+

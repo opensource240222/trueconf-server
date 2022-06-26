@@ -1,0 +1,65 @@
+#once
+
+{
+	.ProjectName = 'Transcoder'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ '$ProjectPath$/ipp_speech_core/usc/include'
+		+ '$ProjectPath$/ipp_speech_core/common/include'
+		+ '$ProjectPath$/ipp_speech_core/g711/include'
+		+ '$ProjectPath$/ipp_speech_core/g722/include'
+		+ '$ProjectPath$/ipp_speech_core/g722.1/include'
+		+ '$ProjectPath$/ipp_speech_core/g723.1/include'
+		+ '$ProjectPath$/ipp_speech_core/g728/include'
+		+ '$ProjectPath$/ipp_speech_core/g729i/include'
+		+ '$ProjectPath$/ipp_speech_core/g729fp/include'
+		+ '$ProjectPath$/ipp_speech_core/g729.1/include'
+		+ '$ProjectPath$/ipp_speech_core/amrwb/include'
+		+ '$ProjectPath$/ipp_speech_core/amrwbe/include'
+		+ '$ProjectPath$/ipp_speech_core/gsmamr/include'
+		+ '$ProjectPath$/ipp_speech_core/gsmfr/include'
+		+ '$ProjectPath$/ipp_speech_core/vad/include'
+		+ '$ProjectPath$/ipp_speech_core/ec/include'
+		+ '$ProjectPath$/ffmpeg'
+		+ '$ProjectPath$/vpx/include'
+		+ '$RepoPath_TCCommon$/IppLib2'
+	.ExtraDefinitions
+		+ 'NO_SCRATCH_MEMORY_USED'
+		+ 'CONFIG_OS_SUPPORT=1'
+		+ 'CONFIG_MULTITHREAD=1'
+	.SourcePath = .ProjectPath
+	.SourceExcludePath
+		+ '$ProjectPath$/H263Parser'
+		+ '$ProjectPath$/TestTranscoder'
+	.SourceExcludedFiles
+		+ 'AppDependedImp.cpp'
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+		+ 'speex'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+#include "../fbuild/gen_def_objlist_c.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{48053D0C-F727-4F4D-B660-2B0386FD1B1E}'
+#include "../fbuild/gen_ide_project.bff"
+}

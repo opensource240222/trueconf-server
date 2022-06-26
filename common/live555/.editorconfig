@@ -1,0 +1,6 @@
+[*.{c,cpp,h,hh}]
+end_of_line = lf
+indent_style = space
+indent_size = 2
+tab_width = 8
+trim_trailing_whitespace = false

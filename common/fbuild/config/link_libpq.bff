@@ -1,0 +1,4 @@
+#if HAVE_LIBPQ
+^LinkerOptions
+	+ ."libpq_LinkerOptions_$Toolchain$_$Platform$_$Config$"
+#endif

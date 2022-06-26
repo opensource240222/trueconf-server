@@ -1,0 +1,112 @@
+.RootBFF = 'fbuild.bff'
+.RepoPath_TCCommon = '.'
+.RepoPath_CommonLibs = '$RepoPath_TCCommon$/commonlibs'
+.VCXPath = '$RepoPath_TCCommon$/projects'
+
+#include "fbuild/defaults.bff"
+#include "local.bff"
+
+.Includes = {}
+.IncludesLocal = {}
+	+ "$RepoPath_TCCommon$"
+	+ "$RepoPath_CommonLibs$"
+	+ "$RepoPath_TCCommon$/extlibs/rapidjson"
+#include "fbuild/config.bff"
+
+#include "projects.bff"
+
+#include "fbuild/gen_action_aliases.bff"
+
+.MainProjects = {}
+#if __WINDOWS__ ; Not ported
+	+ 'CodecsDll'
+	+ 'Restarter'
+	+ 'TCInstall'
+	+ 'TransceiverCircuit'
+	+ 'VideoBot'
+	+ 'Visicron'
+#endif
+#if HAVE_PHP
+	+ 'php_trueconf'
+#endif
+	+ 'RegistryKeyUtility'
+.GroupName = 'Main'
+#include "fbuild/gen_project_group_aliases.bff"
+
+#include "fbuild/gen_custom_project_group.bff"
+
+.SolutionItems = {}
+	+ '$RepoPath_TCCommon$/.editorconfig'
+	+ '$RepoPath_CommonLibs$/.editorconfig'
+	+ '$RepoPath_CommonLibs$/vs.natvis'
+
+#if __WINDOWS__
+#include "fbuild/gen_common_vcx_projects.bff"
+VSSolution('solution')
+{
+	.SolutionOutput = 'All.sln'
+	.SolutionProjects =
+	{
+		'All-proj'
+		'Compile-proj'
+		'Test-proj'
+		'UpdateSolution-proj'
+	}
+	.SolutionBuildProject = 'All-proj'
+
+	.SolutionConfigs = {}
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.T = // Anonymous structs aren't supported, using temporary name
+		[
+			.Config = '$Toolchain$ $Platform$ $Config$ $Trait$'
+			.Platform = 'Win32' // See update_config.bff for explanation
+		]
+		^SolutionConfigs + { .T }
+	}
+
+	.Folder_LibsExternal =
+	[
+		.Path = '0. Libs (external)'
+		.Projects = .SLNProjects_LibsExternal
+	]
+	.Folder_LibsTCCommon =
+	[
+		.Path = '1. Libs (common)'
+		.Projects = .SLNProjects_LibsTCCommon
+	]
+	.Folder_Main =
+	[
+		.Path = '2. Main'
+		.Projects = .SLNProjects_Main
+	]
+	.Folder_Tests =
+	[
+		.Path = '3. Tests'
+		.Projects = .SLNProjects_Tests
+	]
+	.Folder_Tools =
+	[
+		.Path = '4. Tools'
+		.Projects = .SLNProjects_Tools
+	]
+	.Folder_Other =
+	[
+		.Path = '5. Other'
+		.Projects = .SLNProjects_Other
+	]
+	.SolutionFolders =
+	{
+		.Folder_LibsExternal
+		.Folder_LibsTCCommon
+		.Folder_Main
+		.Folder_Tests
+		.Folder_Tools
+		.Folder_Other
+	}
+}
+#endif
+#if HAVE_CUSTOM_ALIAS
+#include "custom_alias.bff"
+#endif

@@ -1,0 +1,127 @@
+#once
+
+{
+	.ProjectName = 'TestUniformTransmit'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/_TestUniformTransmit'
+	.TargetName = '$ProjectName$$EXESuffix$'
+
+	.ExtraIncludesLocal
+		+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+	.ExtraDefinitions
+		+ '_H323GATEWAYCLIENT_'
+		+ '_H264_INCLUDED_'
+		+ '_VPX_INCLUDED_'
+		+ 'LIVE_DLL'
+	.SourcePath = .ProjectPath
+	.SourceFiles
+		+ '$RepoPath_TCCommon$/Transcoder/AppDependedImp.cpp'
+		+ '$RepoPath_TCCommon$/TransceiverCircuit/VS_TransceiverParticipant.cpp'
+		+ '$RepoPath_TCCommon$/TransceiverCircuit/VS_RelayMediaSource.cpp'
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+		+ 'openssl'
+		+ 'ipp'
+		+ 'curl'
+	.ExternalLibraries_Link
+		+ 'webrtc'
+		+ 'cppdb_postgres'
+		+ 'boost'
+		+ 'cares'
+		+ 'openssl'
+		+ 'openh264'
+		+ 'speex'
+		+ 'ipp'
+		+ 'curl'
+	.ProjectConfigs = {}
+
+#if __WINDOWS__
+	.ExtraLinkerOptions
+		+ ' /NODEFAULTLIB:"libmmt.lib"'
+		+ ' /NODEFAULTLIB:"libirc.lib"'
+		+ ' /NODEFAULTLIB:"svml_disp.lib"'
+		+ ' /NODEFAULTLIB:"libdecimal.lib"'
+		+ ' /DELAYLOAD:"nvcuda.dll"'
+		+ ' /DELAYLOAD:"nvcuvid.dll"'
+		+ ' comsupp.lib'
+		+ ' comsuppw.lib'
+		+ ' Crypt32.lib'
+		+ ' cuda.lib'
+		+ ' cudart_static.lib'
+		+ ' delayimp.lib'
+		+ ' dxguid.lib'
+		+ ' Gdiplus.lib'
+		+ ' libavcodec.lib'
+		+ ' libavformat.lib'
+		+ ' libavutil.lib'
+		+ ' libswresample.lib'
+		+ ' libmfx.lib'
+		+ ' libvpx.lib'
+		+ ' Msacm32.lib'
+		+ ' Mswsock.lib'
+		+ ' nppi.lib'
+		+ ' nvapi.lib'
+		+ ' nvcuvid.lib'
+		+ ' pdh.lib'
+		+ ' Setupapi.lib'
+		+ ' version.lib'
+		+ ' Vfw32.lib'
+		+ ' Ws2_32.lib'
+	.ExtraLinkerOptions_Debug
+		+ ' /NODEFAULTLIB:"libcmt.lib"'
+	.ExtraLinkerOptions_MSVC141
+		+ ' Dmoguids.lib'
+		+ ' Gdi32.lib'
+		+ ' Msdmo.lib'
+		+ ' Strmiids.lib'
+		+ ' Winmm.lib'
+		+ ' wmcodecdspuuid.lib'
+	.ExtraLinkerOptions_Clang = .ExtraLinkerOptions_MSVC141
+	.ExtraLinkerOptions_Win32
+		+ ' /DELAYLOAD:"nppi32_65.dll"'
+	.ExtraLinkerOptions_Win32XP = .ExtraLinkerOptions_Win32
+#endif
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Executable('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE')
+		{
+			.Libraries
+				+ 'FrameFilterLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'H323Lib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'IppLib2-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'JPEGUtils-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'MediaParserLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'net-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SecureLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Server-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'SingleGatewayLib-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'stb-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'std-generic-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'streams-$Toolchain$-$Platform$-$Config$-$Trait$'
+				+ 'Transcoder-$Toolchain$-$Platform$-$Config$-$Trait$'
+#if __WINDOWS__
+			.LinkerOptions + ' /SUBSYSTEM:CONSOLE,$LinkerSubsystemVersion$'
+#endif
+			.LinkerOptions
+				+ .LinkerOptionsEnd
+			Using(."LinkerStamp_$Config$")
+			.LinkerStampExeArgs + ' "$LinkerOutput$"'
+		}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-EXE' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+#include "../fbuild/gen_ide_project.bff"
+}

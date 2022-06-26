@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Document Version="2">
+    <Protection InputFileName="../MSVC141-Win32-Release-Default/tc_server.exe" Options="726984">
+        <Messages>
+            <Message Id="0">Can&apos;t start the application while debugging process is active. Please close the debugger and continue.</Message>
+            <Message Id="1">You&apos;re trying to start the application from unsupported version of a virtual machine. Please contact our technical support for further assistance.</Message>
+            <Message Id="2">File is corrupted! Please re-install the application.</Message>
+        </Messages>
+        <Folders />
+        <Procedures>
+            <Procedure MapAddress="protection::bn2binpad(struct protection::bignum_st const *,unsigned char *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_abs_is_word(struct protection::bignum_st const *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_add(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::BN_add_word(struct protection::bignum_st *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_add_words(unsigned int *,unsigned int const *,unsigned int const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_bin2bn(unsigned char const *,int,struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::BN_bin2bn_static(unsigned char const *,int,void *)" Options="0" />
+            <Procedure MapAddress="protection::BN_bn2binpad(struct protection::bignum_st const *,unsigned char *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_clear_free(struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::bn_cmp_part_words(unsigned int const *,unsigned int const *,int,int)" Options="0" />
+            <Procedure MapAddress="protection::bn_cmp_words(unsigned int const *,unsigned int const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_copy(struct protection::bignum_st *,struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::bn_correct_top(struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_end(struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_free(struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_get(struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_new(void)" Options="0" />
+            <Procedure MapAddress="protection::BN_CTX_start(struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_div(struct protection::bignum_st *,struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::bn_div_fixed_top(struct protection::bignum_st *,struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::bn_div_words(unsigned int,unsigned int,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_expand(struct protection::bignum_st *,int)" Options="0" />
+            <Procedure MapAddress="protection::bn_expand2(struct protection::bignum_st *,int)" Options="0" />
+            <Procedure MapAddress="protection::bn_expand_internal(struct protection::bignum_st const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_free(struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::bn_free_d(struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::bn_from_mont_fixed_top(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bn_mont_ctx_st *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_from_montgomery(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bn_mont_ctx_st *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::bn_from_montgomery_word(struct protection::bignum_st *,struct protection::bignum_st *,struct protection::bn_mont_ctx_st *)" Options="0" />
+            <Procedure MapAddress="protection::BN_get_flags(struct protection::bignum_st const *,int)" Options="0" />
+            <Procedure MapAddress="protection::bn_init(struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_bit_set(struct protection::bignum_st const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_odd(struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_one(struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_word(struct protection::bignum_st const *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_is_zero(struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::bn_left_align(struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::BN_lshift(struct protection::bignum_st *,struct protection::bignum_st const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_lshift1(struct protection::bignum_st *,struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::bn_lshift_fixed_top(struct protection::bignum_st *,struct protection::bignum_st const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_mod_exp_mont(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_ctx *,struct protection::bn_mont_ctx_st *)" Options="0" />
+            <Procedure MapAddress="protection::BN_mod_inverse(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_MONT_CTX_free(struct protection::bn_mont_ctx_st *)" Options="0" />
+            <Procedure MapAddress="protection::BN_MONT_CTX_init(struct protection::bn_mont_ctx_st *)" Options="0" />
+            <Procedure MapAddress="protection::BN_MONT_CTX_new(void)" Options="0" />
+            <Procedure MapAddress="protection::BN_MONT_CTX_set(struct protection::bn_mont_ctx_st *,struct protection::bignum_st const *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_mul(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_add_words(unsigned int *,unsigned int const *,int,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_comba4(unsigned int *,unsigned int *,unsigned int *)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_comba8(unsigned int *,unsigned int *,unsigned int *)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_fixed_top(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_mont_fixed_top(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bn_mont_ctx_st *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_normal(unsigned int *,unsigned int *,int,unsigned int *,int)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_part_recursive(unsigned int *,unsigned int *,unsigned int *,int,int,int,unsigned int *)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_recursive(unsigned int *,unsigned int *,unsigned int *,int,int,int,unsigned int *)" Options="0" />
+            <Procedure MapAddress="protection::BN_mul_word(struct protection::bignum_st *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_mul_words(unsigned int *,unsigned int const *,int,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_new(void)" Options="0" />
+            <Procedure MapAddress="protection::BN_nnmod(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_num_bits(struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::BN_num_bits_word(unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_POOL_finish(struct protection::bignum_pool *)" Options="0" />
+            <Procedure MapAddress="protection::BN_POOL_get(struct protection::bignum_pool *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_POOL_init(struct protection::bignum_pool *)" Options="0" />
+            <Procedure MapAddress="protection::BN_POOL_release(struct protection::bignum_pool *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_rshift(struct protection::bignum_st *,struct protection::bignum_st const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_rshift1(struct protection::bignum_st *,struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::bn_rshift_fixed_top(struct protection::bignum_st *,struct protection::bignum_st const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_set_bit(struct protection::bignum_st *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_set_negative(struct protection::bignum_st *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_set_word(struct protection::bignum_st *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_comba4(unsigned int *,unsigned int const *)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_comba8(unsigned int *,unsigned int const *)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_fixed_top(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_normal(unsigned int *,unsigned int const *,int,unsigned int *)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_recursive(unsigned int *,unsigned int const *,int,unsigned int *)" Options="0" />
+            <Procedure MapAddress="protection::bn_sqr_words(unsigned int *,unsigned int const *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_STACK_finish(struct protection::bignum_ctx_stack *)" Options="0" />
+            <Procedure MapAddress="protection::BN_STACK_init(struct protection::bignum_ctx_stack *)" Options="0" />
+            <Procedure MapAddress="protection::BN_STACK_pop(struct protection::bignum_ctx_stack *)" Options="0" />
+            <Procedure MapAddress="protection::BN_STACK_push(struct protection::bignum_ctx_stack *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::BN_sub(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::bn_sub_part_words(unsigned int *,unsigned int const *,unsigned int const *,int,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_sub_word(struct protection::bignum_st *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::bn_sub_words(unsigned int *,unsigned int const *,unsigned int const *,int)" Options="0" />
+            <Procedure MapAddress="protection::bn_to_mont_fixed_top(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bn_mont_ctx_st *,struct protection::bignum_ctx *)" Options="0" />
+            <Procedure MapAddress="protection::BN_uadd(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::BN_ucmp(struct protection::bignum_st const *,struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::BN_usub(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *)" Options="0" />
+            <Procedure MapAddress="protection::BN_value_one(void)" Options="0" />
+            <Procedure MapAddress="protection::bn_wexpand(struct protection::bignum_st *,int)" Options="0" />
+            <Procedure MapAddress="protection::BN_word2bn_static(unsigned int,void *)" Options="0" />
+            <Procedure MapAddress="protection::BN_zero_ex(struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::CheckSaltedHWKey(char const * const,char const *,char const * const)" Options="0" />
+            <Procedure MapAddress="protection::CheckSaltedHWKey(char const * const,char const *,unsigned char const * const)" Options="0" />
+            <Procedure MapAddress="protection::explicit_bzero(void *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::FormatI32(int,char * const)" Options="0" />
+            <Procedure MapAddress="protection::FormatU32(unsigned int,char * const)" Options="0" />
+            <Procedure MapAddress="protection::GetSaltedHWKey(char const * const,char const *,char * const)" Options="0" />
+            <Procedure MapAddress="protection::HWInfoToKey(struct protection::HWInfo const &amp;,char * const)" Options="0" />
+            <Procedure MapAddress="protection::int_bn_mod_inverse(struct protection::bignum_st *,struct protection::bignum_st const *,struct protection::bignum_st const *,struct protection::bignum_ctx *,int *)" Options="0" />
+            <Procedure MapAddress="protection::MD5::Final(void)" Options="0" />
+            <Procedure MapAddress="protection::MD5::GetBytes(unsigned char * const)" Options="0" />
+            <Procedure MapAddress="protection::MD5::GetString(char * const,bool)" Options="0" />
+            <Procedure MapAddress="protection::MD5::MD5(void)" Options="0" />
+            <Procedure MapAddress="protection::MD5::Reset(void)" Options="0" />
+            <Procedure MapAddress="protection::MD5::Transform(unsigned char const * const)" Options="0" />
+            <Procedure MapAddress="protection::MD5::Update(void const *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::memcmp(void const *,void const *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::memcpy(void *,void const *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::memmove(void *,void const *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::memset(void *,int,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::OPENSSL_zalloc(unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWInfo(struct protection::HWInfo &amp;)" Options="0" />
+            <Procedure MapAddress="protection::ReadHWKey(char * const)" Options="0" />
+            <Procedure MapAddress="protection::RSA_padding_check_PKCS1_type_1(unsigned char *,int,unsigned char const *,int,int)" Options="0" />
+            <Procedure MapAddress="protection::RSA_public_decrypt_PKCS1_type_1(int,unsigned char const *,unsigned char *,struct protection::bignum_st *,struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::RSA_verify_SHA1_PKCS1_type_1(unsigned char const *,unsigned int,unsigned char const *,unsigned int,struct protection::bignum_st *,struct protection::bignum_st *)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::BufferToBlock(void const *,unsigned int * const)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::Final(void)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::GetBytes(unsigned char * const)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::GetString(char * const)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::Reset(void)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::SHA1(void)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::Transform(unsigned int * const)" Options="0" />
+            <Procedure MapAddress="protection::SHA1::Update(void const *,unsigned int)" Options="0" />
+            <Procedure MapAddress="protection::strlen(char const *)" Options="0" />
+            <Procedure MapAddress="VS_CheckLicense(enum VS_LicenseEvents)" Options="0" />
+            <Procedure MapAddress="VS_License::AddLicence(class VS_License const &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::AddLicenceCopy(class VS_License const &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::CompareCountableResources(class VS_License const &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::ConvertFromSigned(struct VS_License::SignedHWLicense const &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::ConvertToSigned(struct VS_License::SignedHWLicense &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::Decode(void const *,int)" Options="0" />
+            <Procedure MapAddress="VS_License::DeductLicense(class VS_License const &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::DeductLicenseCopy(class VS_License const &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::Deserialize(void const *,unsigned int)" Options="0" />
+            <Procedure MapAddress="VS_License::HasSharedResources(void)" Options="0" />
+            <Procedure MapAddress="VS_License::IsValid(void)" Options="0" />
+            <Procedure MapAddress="VS_License::MergeLicense(class VS_License const &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::NumAdd(int,int)" Options="0" />
+            <Procedure MapAddress="VS_License::NumMax(int,int)" Options="0" />
+            <Procedure MapAddress="VS_License::NumMin(int,int)" Options="0" />
+            <Procedure MapAddress="VS_License::NumSub(int,int)" Options="0" />
+            <Procedure MapAddress="VS_License::Serialize(class std::unique_ptr&lt;unsigned char [0],struct std::default_delete&lt;unsigned char [0]&gt; &gt; &amp;,unsigned int &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::ShareAvailable(class VS_License const &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::SignedHWLicense::Decode(void const *,int)" Options="0" />
+            <Procedure MapAddress="VS_License::SignedHWLicense::Encode(class std::unique_ptr&lt;unsigned char [0],struct std::default_delete&lt;unsigned char [0]&gt; &gt; &amp;,unsigned int &amp;)" Options="0" />
+            <Procedure MapAddress="VS_License::SignedHWLicense::MakeSign(char const *)" Options="0" />
+            <Procedure MapAddress="VS_License::SignedHWLicense::SetHWKey(void)" Options="0" />
+            <Procedure MapAddress="VS_License::SignedHWLicense::SignedHWLicense(void)" Options="0" />
+            <Procedure MapAddress="VS_License::SignedHWLicense::VerifyHWKey(void)" Options="0" />
+            <Procedure MapAddress="VS_License::SignedHWLicense::VerifySign(char const *)" Options="0" />
+            <Procedure MapAddress="VS_License::SignedHWLicense::VerifySign(void)" Options="0" />
+            <Procedure MapAddress="VS_License::VS_License(void)" Options="0" />
+            <Procedure MapAddress="VS_ReadLicense(class VS_SimpleStr const &amp;,enum VS_License::Flags,class VS_Container &amp;)" Options="0" />
+        </Procedures>
+        <Objects />
+    </Protection>
+    <DLLBox>
+        <Folders />
+    </DLLBox>
+    <Script />
+    <LicenseManager />
+</Document>

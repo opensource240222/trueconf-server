@@ -1,0 +1,991 @@
+.CompilerInputPattern = { '*.cpp', '*.cc' }
+.UnityInputPattern    = { '*.cpp', '*.cc' }
+.ProjectAllowedFileExtensions = { '*.cpp' '*.hpp' '*.cxx' '*.hxx' '*.c' '*.h' '*.cc' '*.hh' '*.inl' '*.rc' '.editorconfig' }
+.TestTimeOut = 300
+
+// Link static libraries into DLLs normally (FASTBuild defaults for this options are strange).
+.LinkerLinkObjects = false
+
+.AllProjects = {}
+.MainProjects = {}
+.TestProjects = {}
+
+.ExtraIncludes = {}
+.ExtraIncludesLocal = {}
+.ExtraDefinitions = {}
+//.SourcePath is not set here because it almost always must be set to .ProjectPath
+.SourceFiles = {}
+.SourceExcludePath = {}
+.SourceExcludedFiles = {}
+.ExternalLibraries_Use = {}
+.ExternalLibraries_Link = {}
+
+#if __WINDOWS__
+
+Settings
+{
+	// Use clean environment to prevent rebuilds caused by changes in it.
+	// All important variables are imported exclicitly.
+#import SystemRoot
+#import CommonProgramFiles
+	.Environment =
+	{
+		'PATH=$SystemRoot$/system32;$CommonProgramFiles$/system/ado' // required by #import directives
+		'SystemRoot=$SystemRoot$' // required by cl.exe
+		'TMP=$SystemRoot$/temp' // required by cl.exe (error D8050)
+	}
+}
+
+.ExtraDefinitions = {}
+// Toolchains
+.ExtraDefinitions_Clang = {}
+.ExtraDefinitions_MSVC141 = {}
+// Platforms
+.ExtraDefinitions_Win32 = {}
+.ExtraDefinitions_Win32XP = {}
+.ExtraDefinitions_Win64 = {}
+// Configs
+.ExtraDefinitions_ASan = {}
+.ExtraDefinitions_Debug = {}
+.ExtraDefinitions_Release = {}
+.ExtraDefinitions_VLD = {}
+
+.ExtraCompilerOptions = ''
+// Toolchains
+.ExtraCompilerOptions_Clang = ''
+.ExtraCompilerOptions_MSVC141 = ''
+// Platforms
+.ExtraCompilerOptions_Win32 = ''
+.ExtraCompilerOptions_Win32XP = ''
+.ExtraCompilerOptions_Win64 = ''
+// Configs
+.ExtraCompilerOptions_ASan = ''
+.ExtraCompilerOptions_Debug = ''
+.ExtraCompilerOptions_Release = ''
+.ExtraCompilerOptions_VLD = ''
+
+.ExtraLinkerOptions = ''
+// Toolchains
+.ExtraLinkerOptions_Clang = ''
+.ExtraLinkerOptions_MSVC141 = ''
+// Platforms
+.ExtraLinkerOptions_Win32 = ''
+.ExtraLinkerOptions_Win32XP = ''
+.ExtraLinkerOptions_Win64 = ''
+// Configs
+.ExtraLinkerOptions_ASan = ''
+.ExtraLinkerOptions_Debug = ''
+.ExtraLinkerOptions_Release = ''
+.ExtraLinkerOptions_VLD = ''
+
+.LinkerStampNone =
+[
+	.LinkerStampExeArgs = ''
+]
+.LinkerStampUPX =
+[
+	.LinkerStampExe = '$RepoPath_TCCommon$/util/upx.exe'
+	.LinkerStampExeArgs = '-9'
+]
+.LinkerStamp_Debug   = .LinkerStampNone
+.LinkerStamp_Release = .LinkerStampNone
+.LinkerStamp_VLD     = .LinkerStampNone
+.LinkerStamp_ASan    = .LinkerStampNone
+
+.PreprocessorDefinitions_Win32 = ''
+.PreprocessorDefinitions_Win32XP = ''
+.PreprocessorDefinitions_Win64 = '_WIN64=1;_M_AMD64=100;_M_X64=100;'
+
+.LIBSuffix = '.lib'
+.EXESuffix = '.exe'
+.DLLSuffix = '.dll'
+
+.UnityPath = '$RepoPath_TCCommon$/Unity-Windows'
+
+.LibPathLocal_MSVC141_Win32_Debug = ''
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win32/vc140/debug"'
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win32/vc140"'
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win32/debug"'
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win32"'
+.LibPathLocal_MSVC141_Win32_Release = ''
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win32/vc140"'
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win32"'
+
+.LibPathLocal_MSVC141_Win32XP_Debug   = .LibPathLocal_MSVC141_Win32_Debug
+.LibPathLocal_MSVC141_Win32XP_Release = .LibPathLocal_MSVC141_Win32_Release
+
+.LibPathLocal_MSVC141_Win64_Debug = ''
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win64/vc140/debug"'
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win64/vc140"'
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win64/debug"'
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win64"'
+.LibPathLocal_MSVC141_Win64_Release = ''
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win64/vc140"'
+	+ ' /LIBPATH:"$RepoPath_TCCommon$/lib/win64"'
+
+.LibPathLocal_Clang_Win32_Debug     = .LibPathLocal_MSVC141_Win32_Debug
+.LibPathLocal_Clang_Win32_Release   = .LibPathLocal_MSVC141_Win32_Release
+.LibPathLocal_Clang_Win32XP_Debug   = .LibPathLocal_MSVC141_Win32XP_Debug
+.LibPathLocal_Clang_Win32XP_Release = .LibPathLocal_MSVC141_Win32XP_Release
+.LibPathLocal_Clang_Win64_Debug     = .LibPathLocal_MSVC141_Win64_Debug
+.LibPathLocal_Clang_Win64_Release   = .LibPathLocal_MSVC141_Win64_Release
+
+.Enabled_Toolchains = {}
+
+#if HAVE_MSVC141
+Compiler('Compiler_MSVC141_Win32')
+{
+	.Executable = '$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/cl.exe'
+	.ExtraFiles = {
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/c1.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/c1xx.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/c2.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/1033/clui.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/pgodb140.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/msobj140.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/mspdb140.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/mspdbcore.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/mspdbsrv.exe'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/msvcp140.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/vcruntime140.dll'
+	}
+}
+.Librarian_MSVC141_Win32 = '$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/lib.exe'
+.Linker_MSVC141_Win32 = '$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX86/x86/link.exe'
+.LibPathSystem_MSVC141_Win32 = ''
+	+ ' /LIBPATH:"$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/lib/x86"'
+	+ ' /LIBPATH:"$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/atlmfc/lib/x86"'
+	+ ' /LIBPATH:"$winsdk10_dir$/lib/10.0.14393.0/ucrt/x86"'
+	+ ' /LIBPATH:"$winsdk10_dir$/lib/10.0.14393.0/um/x86"'
+	+ ' /LIBPATH:"$dxsdk_dir$/Lib/x86"'
+.LibPathSystem_MSVC141_Win32XP = ''
+	+ ' /LIBPATH:"$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/lib/x86"'
+	+ ' /LIBPATH:"$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/atlmfc/lib/x86"'
+	+ ' /LIBPATH:"$winsdk10_dir$/lib/10.0.14393.0/ucrt/x86"'
+	+ ' /LIBPATH:"$winsdk71a_dir$/lib"'
+	+ ' /LIBPATH:"$winsdk10_dir$/lib/10.0.14393.0/um/x86"' // hack to allow finding ddraw.lib
+	+ ' /LIBPATH:"$dxsdk_dir$/Lib/x86"'
+
+Compiler('Compiler_MSVC141_Win64')
+{
+	.Executable = '$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/cl.exe'
+	.ExtraFiles = {
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/c1.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/c1xx.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/c2.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/1033/clui.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/pgodb140.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/msobj140.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/mspdb140.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/mspdbcore.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/mspdbsrv.exe'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/msvcp140.dll'
+		'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/vcruntime140.dll'
+	}
+}
+.Librarian_MSVC141_Win64 = '$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/lib.exe'
+.Linker_MSVC141_Win64 = '$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/bin/HostX64/x64/link.exe'
+.LibPathSystem_MSVC141_Win64 = ''
+	+ ' /LIBPATH:"$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/lib/x64"'
+	+ ' /LIBPATH:"$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/atlmfc/lib/x64"'
+	+ ' /LIBPATH:"$winsdk10_dir$/lib/10.0.14393.0/ucrt/x64"'
+	+ ' /LIBPATH:"$winsdk10_dir$/lib/10.0.14393.0/um/x64"'
+	+ ' /LIBPATH:"$dxsdk_dir$/Lib/x64"'
+
+.Enabled_Toolchains + 'MSVC141'
+#endif
+
+#if HAVE_CLANG
+Compiler('Compiler_Clang_Win32')
+{
+	.Executable = '$clang_dir$/bin/clang-cl.exe'
+	.ExtraFiles = {}
+	.CompilerFamily = 'msvc'
+}
+.Librarian_Clang_Win32 = .Librarian_MSVC141_Win32
+.Linker_Clang_Win32 = .Linker_MSVC141_Win32
+.LibPathSystem_Clang_Win32 = .LibPathSystem_MSVC141_Win32
+.LibPathSystem_Clang_Win32XP = .LibPathSystem_MSVC141_Win32XP
+
+Alias('Compiler_Clang_Win64')
+{
+	.Targets = 'Compiler_Clang_Win32'
+}
+.Librarian_Clang_Win64 = .Librarian_MSVC141_Win64
+.Linker_Clang_Win64 = .Linker_MSVC141_Win64
+.LibPathSystem_Clang_Win64 = .LibPathSystem_MSVC141_Win64
+
+.Enabled_Toolchains + 'Clang'
+#endif
+
+Compiler('Compiler_RC')
+{
+	.Executable = '$winsdk10_dir$/bin/x86/rc.exe'
+	.CompilerFamily = 'custom'
+}
+
+.vld_LinkerOptions_Win32 = ' "$vld_dir$/lib/Win32/vld.lib" /include:__imp_?g_vld@@3VVisualLeakDetector@@A'
+.vld_LinkerOptions_Win32XP = .vld_LinkerOptions_Win32
+.vld_LinkerOptions_Win64 = ' "$vld_dir$/lib/Win64/vld.lib" /include:__imp_?g_vld@@3VVisualLeakDetector@@A'
+
+.Config_Base =
+[
+	.Includes + {} // Copy global varible into config
+	.IncludesLocal + {} // Copy global varible into config
+	.Definitions =
+	{
+		'_MBCS'
+		'_CRT_SECURE_NO_WARNINGS'
+		'_SCL_SECURE_NO_WARNINGS'
+		'WIN32_LEAN_AND_MEAN'
+		'NOMINMAX'
+		'WIN32' // Some broken libraries check for this macro instead of _WIN32
+	}
+]
+
+// Toolchains
+.Configs_Toolchains = {}
+{
+#if HAVE_MSVC141
+	.Config_MSVC141 =
+	[
+		Using(.Config_Base)
+		.Toolchain = 'MSVC141'
+		.PlatformToolset = 'v141'
+
+		.Opt_ISystem = '/I'
+
+		.CompilerOptions_C = ''
+		.CompilerOptions_CXX = ' /std:c++17'
+		.CompilerOptions_Debug = ' /MTd /Od /Oy- /RTC1'
+		.CompilerOptions_Release = ' /MT /O2 /Oy- /Oi /GL /Gy /Zo'
+		.CompilerOptions_Win32 = ''
+		.CompilerOptions_Win64 = ' /bigobj'
+		.CompilerOptions = '"%1" /nologo /c /Z7 /W3 /EHsc /GS' + .CompilerOptions_CXX
+			+ ' /permissive-'
+			+ ' /Zc:strictStrings-' // Don't enforce comformant string literal conversion yet, they aren't treated as errors by default in GCC/Clang
+			+ ' /Zc:threadSafeInit-' // We have to disable "magic statics" because they somehow use TLS (thread local storage) and Armadillo isn't compatible with TLS.
+			+ ' /we4473 /we4474 /we4477 /we4777' // printf/scanf format string errors, similar to GCC's -Werror=format
+			+ ' /we4839 /we4840' // Disallow passing structs to C variadic functions
+			+ ' /we4150' // Diasllow delete for incomplete types
+			+ ' /we4715' // "Not all control paths return a value" (-Wreturn-type in GCC)
+			+ ' /we4099' // Catch mismatching "struct" vs "class" in declarations, prevents confusing linker errors
+			+ .msvc141_ExtraCompilerOptions
+		.PCHOptions = .CompilerOptions + ' /Fp"%2" /Fo"%3"'
+		.CompilerOptions + ' /Fo"%2"'
+		.LibrarianOptions = '/NOLOGO /OUT:"%2" "%1"'
+		.LinkerOptions = '/OUT:"%2" "%1" /NOLOGO'
+			+ ' /IGNORE:4099' // Don't warn about missing pdb files
+		// Uncomment to debug linking issues:
+		//	+ ' /VERBOSE:LIB'
+		// Uncomment to get lists of unused libraries (you can use any other .dll):
+		//	+ ' /VERBOSE:UNUSEDLIBS /DELAYLOAD:acledit.dll'
+		.LinkerOptionsEnd = ''
+		.LinkerOptions_Debug = ' /DEBUG:FULL'
+		.LinkerOptions_Release = ' /DEBUG /OPT:REF,ICF /LTCG'
+		.ResourceCompilerOptions = '/nologo /fo"%2"'
+		.IncludesSystem =
+		{
+			'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/include'
+			'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/atlmfc/include'
+			'$winsdk10_dir$/include/10.0.14393.0/ucrt'
+			'$winsdk10_dir$/include/10.0.14393.0/um'
+			'$winsdk10_dir$/include/10.0.14393.0/shared'
+		}
+		.Definitions
+			+ '_HAS_AUTO_PTR_ETC'
+			+ '_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING'
+			+ '_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING'
+
+		.Enabled_Configs - 'ASan'
+	]
+#endif
+#if HAVE_CLANG
+	.Config_Clang =
+	[
+		Using(.Config_Base)
+		.Toolchain = 'Clang'
+		.PlatformToolset = 'v141'
+
+		.Opt_ISystem = '-imsvc'
+
+		.CompilerOptions_C = ''
+		.CompilerOptions_CXX = ' /std:c++17'
+		.CompilerOptions_Debug = ' /MTd /Od /Oy- /RTC1'
+		.CompilerOptions_Release = ' /MT /O2 /Oy- /Oi /Gy /Zo'
+		.CompilerOptions_Win32 = ' -m32'
+		.CompilerOptions_Win64 = ' -m64'
+		.CompilerOptions = '"%1" /nologo /c /Z7 /W3 /EHsc /GS /Zc:wchar_t /Zc:threadSafeInit-' + .CompilerOptions_CXX
+			+ ' -fms-compatibility'
+			+ ' -fms-extensions'
+			+ ' -fmsc-version=1918' // VS 2017 15.8
+			+ ' /we4473 /we4474 /we4477 /we4777' // printf/scanf format string errors, similar to GCC's -Werror=format
+			+ ' /we4839 /we4840' // Disallow passing structs to C variadic functions
+			+ ' /we4150' // Diasllow delete for incomplete types
+			+ ' /we4715' // "Not all control paths return a value" (-Wreturn-type in GCC)
+			+ ' -Wno-error=c++11-narrowing' // A lot of unported code violates this rule, disable it for now
+			+ ' -Xclang -fno-show-column' // Many tools don't expect column number in MSVC-style error messages and fail to parse them
+			+ ' -Werror=nonportable-include-path' // Check that paths in #include directives don't rely on non case-sensitive file system, this will prevent build failures in Linux
+			+ .clang_ExtraCompilerOptions
+		.PCHOptions = .CompilerOptions + ' /Fp"%2" /Fo"%3"'
+		.CompilerOptions + ' /Fo"%2"'
+		.LibrarianOptions = '/NOLOGO /OUT:"%2" "%1"'
+		.LinkerOptions = '/OUT:"%2" "%1" /NOLOGO'
+			+ ' /IGNORE:4099' // Don't warn about missing pdb files
+		// Uncomment to debug linking issues:
+		//	+ ' /VERBOSE:LIB'
+		// Uncomment to get lists of unused libraries (you can use any other .dll):
+		//	+ ' /VERBOSE:UNUSEDLIBS /DELAYLOAD:acledit.dll'
+		.LinkerOptionsEnd = ''
+		.LinkerOptions_Debug = ' /DEBUG:FULL'
+		.LinkerOptions_Release = ' /DEBUG /OPT:REF,ICF'
+		.ResourceCompilerOptions = '/nologo /fo"%2"'
+		.IncludesSystem =
+		{
+			'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/include'
+			'$msvc141_dir$/VC/Tools/MSVC/$msvc141_ver$/atlmfc/include'
+			'$winsdk10_dir$/include/10.0.14393.0/ucrt'
+			'$winsdk10_dir$/include/10.0.14393.0/um'
+			'$winsdk10_dir$/include/10.0.14393.0/shared'
+		}
+		.Definitions
+			+ 'BOOST_USE_WINDOWS_H' // Incompatible declarations for WinAPI functions in Boost headers, Clang doesn't like this
+			+ '_WINSOCK_DEPRECATED_NO_WARNINGS'
+			+ '_HAS_AUTO_PTR_ETC'
+			+ '_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING'
+			+ '_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING'
+
+		.Enabled_Configs - 'VLD'
+	]
+#endif
+	ForEach(.X in .Enabled_Toolchains)
+	{
+		^Configs_Toolchains + { ."Config_$X$" }
+	}
+}
+
+// Platforms
+.Configs_Platforms = {}
+ForEach(.Cfg in .Configs_Toolchains)
+{
+	.Config_Win32 =
+	[
+		Using(.Cfg)
+		.Platform = 'Win32'
+		.Compiler = 'Compiler_$Toolchain$_$Platform$'
+		.Librarian = ."Librarian_$Toolchain$_$Platform$"
+		.Linker = ."Linker_$Toolchain$_$Platform$"
+
+		.CompilerOptions + .CompilerOptions_Win32
+		.LibrarianOptions
+			+ ."LibPathSystem_$Toolchain$_$Platform$"
+		.LinkerOptions
+			+ ' /MACHINE:X86'
+			+ ."LibPathSystem_$Toolchain$_$Platform$"
+		.LinkerSubsystemVersion = '6.0'
+		.Definitions
+			+ '_WIN32_WINNT=0x0601'
+
+		.Enabled_Configs - 'ASan'
+	]
+	.Config_Win32XP =
+	[
+		Using(.Cfg)
+		.Platform = 'Win32XP'
+		.PlatformToolset + '_xp'
+		.Compiler = 'Compiler_$Toolchain$_Win32'
+		.Librarian = ."Librarian_$Toolchain$_Win32"
+		.Linker = ."Linker_$Toolchain$_Win32"
+
+		.CompilerOptions + .CompilerOptions_Win32
+		.LibrarianOptions
+			+ ."LibPathSystem_$Toolchain$_$Platform$"
+		.LinkerOptions
+			+ ' /MACHINE:X86'
+			+ ."LibPathSystem_$Toolchain$_$Platform$"
+		.LinkerSubsystemVersion = '5.01'
+		.Definitions
+			+ '_WIN32_WINNT=0x0601'
+			+ '_USING_V110_SDK71_'
+
+		.Enabled_Configs - 'ASan'
+	]
+	.Config_Win64 =
+	[
+		Using(.Cfg)
+		.Platform = 'Win64'
+		.Compiler = 'Compiler_$Toolchain$_$Platform$'
+		.Librarian = ."Librarian_$Toolchain$_$Platform$"
+		.Linker = ."Linker_$Toolchain$_$Platform$"
+
+		.CompilerOptions + .CompilerOptions_Win64
+		.LibrarianOptions
+			+ ."LibPathSystem_$Toolchain$_$Platform$"
+		.LinkerOptions
+			+ ' /MACHINE:X64'
+			+ ."LibPathSystem_$Toolchain$_$Platform$"
+		.LinkerSubsystemVersion = '6.0'
+		.Definitions
+			+ '_WIN32_WINNT=0x0601'
+	]
+	ForEach(.X in .Enabled_Platforms)
+	{
+		^Configs_Platforms + { ."Config_$X$" }
+	}
+}
+
+// Traits
+.Configs_Traits = {}
+ForEach(.Cfg in .Configs_Platforms)
+{
+	.Config_Default =
+	[
+		Using(.Cfg)
+		.Trait = 'Default'
+	]
+	.Config_SVKSM =
+	[
+		Using(.Cfg)
+		.Trait = 'SVKSM'
+		.Definitions +
+		{
+			'_SVKS_M_BUILD_'
+		}
+	]
+	.Config_Conferendo =
+	[
+		Using(.Cfg)
+		.Trait = 'Conferendo'
+		.Definitions +
+		{
+			'_BUILD_CONFERENDO'
+		}
+	]
+	.Config_Terminal =
+	[
+		Using(.Cfg)
+		.Trait = 'Terminal'
+		.Definitions +
+		{
+			'VZOCHAT7'
+		}
+	]
+	ForEach(.X in .Enabled_Traits)
+	{
+		^Configs_Traits + { ."Config_$X$" }
+	}
+}
+
+// Configurations
+.Configs = {}
+ForEach(.Cfg in .Configs_Traits)
+{
+	.Config_Debug =
+	[
+		Using(.Cfg)
+		.Config = 'Debug'
+		.CompilerOptions + .CompilerOptions_Debug
+		.LibrarianOptions
+			+ ."LibPathLocal_$Toolchain$_$Platform$_$Config$"
+		.LinkerOptions + .LinkerOptions_Debug
+			+ ."LibPathLocal_$Toolchain$_$Platform$_$Config$"
+		.Definitions +
+		{
+			'_DEBUG'
+		}
+		.FBuildExtraArgs = .FBuildExtraArgs + ' -nostoponerror'
+	]
+	.Config_Release =
+	[
+		Using(.Cfg)
+		.Config = 'Release'
+		.CompilerOptions + .CompilerOptions_Release
+		.LibrarianOptions + ' /LTCG'
+			+ ."LibPathLocal_$Toolchain$_$Platform$_$Config$"
+		.LinkerOptions + .LinkerOptions_Release
+			+ ."LibPathLocal_$Toolchain$_$Platform$_$Config$"
+		.Definitions +
+		{
+			'NDEBUG'
+			'ENABLE_ARMADILLO_BUILD'
+		}
+	]
+	.Config_VLD =
+	[
+		Using(.Cfg)
+		.Config = 'VLD'
+		.CompilerOptions + .CompilerOptions_Debug
+		.LibrarianOptions
+			+ ."LibPathLocal_$Toolchain$_$Platform$_Debug"
+		.LinkerOptions + .LinkerOptions_Debug
+			+ ."LibPathLocal_$Toolchain$_$Platform$_Debug"
+			+ ."vld_LinkerOptions_$Platform$"
+		.Includes
+			+ ' $vld_dir$/include'
+		.Definitions
+			+ '_DEBUG'
+	]
+#if HAVE_CLANG
+	.Config_ASan =
+	[
+		Using(.Cfg)
+		.Config = 'ASan'
+		.CompilerOptions + .CompilerOptions_Release
+			+ ' -fsanitize=address'
+		.LibrarianOptions
+			+ ."LibPathLocal_$Toolchain$_$Platform$_Release"
+		.LinkerOptions + .LinkerOptions_Release
+			+ ."LibPathLocal_$Toolchain$_$Platform$_Release"
+			+ ' "$clang_dir$/lib/clang/$clang_ver$/lib/windows/clang_rt.asan-x86_64.lib"'
+			+ ' /WHOLEARCHIVE:"$clang_dir$/lib/clang/$clang_ver$/lib/windows/clang_rt.asan-x86_64.lib"'
+			+ ' "$clang_dir$/lib/clang/$clang_ver$/lib/windows/clang_rt.asan_cxx-x86_64.lib"'
+			+ ' /WHOLEARCHIVE:"$clang_dir$/lib/clang/$clang_ver$/lib/windows/clang_rt.asan_cxx-x86_64.lib"'
+		.Definitions
+			+ 'NDEBUG'
+	]
+#endif
+	Using(.Cfg) // Load config-specific .Enabled_Configs value
+	ForEach(.X in .Enabled_Configs)
+	{
+		^Configs + { ."Config_$X$" }
+	}
+}
+
+#endif
+
+#if __LINUX__
+
+Settings
+{
+	// Use clean environment to prevent rebuilds caused by changes in it.
+	// All important variables are imported exclicitly.
+	.Environment =
+	{
+//		'PATH=/bin:/usr/bin'
+	}
+}
+
+.ExtraDefinitions = {}
+// Toolchains
+.ExtraDefinitions_Clang = {}
+.ExtraDefinitions_GCC = {}
+// Platforms
+.ExtraDefinitions_Linux32 = {}
+.ExtraDefinitions_Linux64 = {}
+// Configs
+.ExtraDefinitions_ASan = {}
+.ExtraDefinitions_Debug = {}
+.ExtraDefinitions_MSan = {}
+.ExtraDefinitions_Release = {}
+.ExtraDefinitions_ReleaseLTO = {}
+.ExtraDefinitions_TSan = {}
+.ExtraDefinitions_UBSan = {}
+
+.ExtraCompilerOptions = ''
+// Toolchains
+.ExtraCompilerOptions_Clang = ''
+.ExtraCompilerOptions_GCC = ''
+// Platforms
+.ExtraCompilerOptions_Linux32 = ''
+.ExtraCompilerOptions_Linux64 = ''
+// Configs
+.ExtraCompilerOptions_ASan = ''
+.ExtraCompilerOptions_Debug = ''
+.ExtraCompilerOptions_MSan = ''
+.ExtraCompilerOptions_Release = ''
+.ExtraCompilerOptions_ReleaseLTO = ''
+.ExtraCompilerOptions_TSan = ''
+.ExtraCompilerOptions_UBSan = ''
+
+.ExtraLinkerOptions = ''
+// Toolchains
+.ExtraLinkerOptions_Clang = ''
+.ExtraLinkerOptions_GCC = ''
+// Platforms
+.ExtraLinkerOptions_Linux32 = ''
+.ExtraLinkerOptions_Linux64 = ''
+// Configs
+.ExtraLinkerOptions_ASan = ''
+.ExtraLinkerOptions_Debug = ''
+.ExtraLinkerOptions_MSan = ''
+.ExtraLinkerOptions_Release = ''
+.ExtraLinkerOptions_ReleaseLTO = ''
+.ExtraLinkerOptions_TSan = ''
+.ExtraLinkerOptions_UBSan = ''
+
+.LinkerStampNone =
+[
+	.LinkerStampExeArgs = ''
+]
+.LinkerStampUPX = .LinkerStampNone
+// TODO: should we use it? should we require it installed or bundle it?
+//[
+//	.LinkerStampExe = '$RepoPath_TCCommon$/util/upx.exe'
+//	.LinkerStampExeArgs = '-9'
+//]
+.LinkerStamp_Debug      = .LinkerStampNone
+.LinkerStamp_Release    = .LinkerStampNone
+.LinkerStamp_ReleaseLTO = .LinkerStampNone
+.LinkerStamp_ASan       = .LinkerStampNone
+.LinkerStamp_MSan       = .LinkerStampNone
+.LinkerStamp_TSan       = .LinkerStampNone
+.LinkerStamp_UBSan      = .LinkerStampNone
+
+.LIBSuffix = '.a'
+.EXESuffix = ''
+.DLLSuffix = '.so'
+
+.UnityPath = '$RepoPath_TCCommon$/Unity-Linux'
+
+.LibPathLocal_Linux32_Debug = ''
+	+ ' -L "$RepoPath_TCCommon$/lib/linux32/debug"'
+	+ ' -L "$RepoPath_TCCommon$/lib/linux32"'
+.LibPathLocal_Linux32_Release = ''
+	+ ' -L "$RepoPath_TCCommon$/lib/linux32"'
+
+.LibPathLocal_Linux64_Debug = ''
+	+ ' -L "$RepoPath_TCCommon$/lib/linux64/debug"'
+	+ ' -L "$RepoPath_TCCommon$/lib/linux64"'
+.LibPathLocal_Linux64_Release = ''
+	+ ' -L "$RepoPath_TCCommon$/lib/linux64"'
+
+.Enabled_Toolchains = {}
+
+#if HAVE_GCC
+// This _may_ work for distributed compilation
+Compiler('Compiler_GCC')
+{
+	.CompilerFamily = 'gcc'
+	.Executable = .gcc_bin
+	.ExtraFiles =
+	{
+		'$gcc_libexecdir$/cc1'
+		'$gcc_libexecdir$/cc1plus'
+		'$binutils_bindir$/as'
+	}
+}
+.Enabled_Toolchains + 'GCC'
+#endif
+
+#if HAVE_CLANG
+// This won't work for distributed compilation
+Compiler('Compiler_Clang')
+{
+	.CompilerFamily = 'clang'
+	.Executable = .clang_bin
+}
+.Enabled_Toolchains + 'Clang'
+#endif
+
+.Config_Base =
+[
+	.IncludesSystem =
+	{
+	}
+	.Includes + {} // Copy global varible into config
+	.IncludesLocal + {} // Copy global varible into config
+	.Definitions = {}
+
+	.LinkerOptions_Linux32_Debug = ''
+	.LinkerOptions_Linux32_Release = ''
+	.LinkerOptions_Linux32_ReleaseLTO = ''
+	.LinkerOptions_Linux64_Debug = ''
+	.LinkerOptions_Linux64_Release = ''
+	.LinkerOptions_Linux64_ReleaseLTO = ''
+
+	.FBuildExtraArgs = '-cache -dist'
+]
+
+// Toolchains
+.Configs_Toolchains = {}
+{
+#if HAVE_GCC
+	.Config_GCC =
+	[
+		Using(.Config_Base)
+		.Toolchain = 'GCC'
+		.Compiler = 'Compiler_GCC'
+		.CompilerOptions_C = ''
+		.CompilerOptions_CXX = ' -std=c++1z'
+		.CompilerOptions_Debug = ' -O0 -g'
+		.CompilerOptions_Release = ' -O2 -g'
+			+ ' -fstack-protector-strong' // This seems to be required by VMProtect
+		.CompilerOptions_ReleaseLTO = ' -flto -fno-fat-lto-objects -O0'
+		.CompilerOptions = '-o "%2" "%1" -c -Wall -Wextra -msse2' + .CompilerOptions_CXX
+			+ ' -Werror=format -Werror=format-security'
+			+ ' -Werror=delete-incomplete'
+			+ ' -Werror=return-type'
+			+ .gcc_ExtraCompilerOptions
+		.PCHOptions = .CompilerOptions
+		.Librarian = '/usr/bin/ar'
+		.LibrarianOptions = 'rcsT "%2" "%1"' // r=insert files, c=create, s=make index, T=thin archive
+		.Linker = .gcc_bin
+		.LinkerOptions = '-o "%2" -Wl,--start-group "%1" -Wl,--end-group -Wl,--as-needed'
+		// Uncomment to debug linking issues:
+		//	+ ' -Wl,--verbose'
+		.LinkerOptionsEnd = ' -lstdc++ -lpthread -lm -ldl -latomic'
+
+		.Enabled_Configs - 'MSan'
+	]
+#endif
+#if HAVE_CLANG
+	.Config_Clang =
+	[
+		Using(.Config_Base)
+		.Toolchain = 'Clang'
+		.Compiler = 'Compiler_Clang'
+		.CompilerOptions_C = ''
+		.CompilerOptions_CXX = ' -std=c++1z'
+		.CompilerOptions_Debug = ' -O0 -g'
+		.CompilerOptions_Release = ' -O2 -g'
+			+ ' -fstack-protector-strong' // This seems to be required by VMProtect
+		.CompilerOptions_ReleaseLTO = ' -flto -O0'
+		.CompilerOptions = '-o "%2" "%1" -c -Wall -Wextra' + .CompilerOptions_CXX
+			+ ' -Werror=format -Werror=format-security'
+			+ ' -Werror=delete-incomplete'
+			+ ' -Werror=return-type'
+			+ ' -Werror=implicit-fallthrough'
+			+ .clang_ExtraCompilerOptions
+		.PCHOptions = .CompilerOptions
+		.Definitions
+			+ ' BOOST_ASIO_HAS_STD_CHRONO=1' // Asio from Boost < 1.58 can't detect presence of C++11 features when Clang is used with libstdc++
+		.Librarian = '/usr/bin/ar'
+		.LibrarianOptions = 'rcsT "%2" "%1"' // r=insert files, c=create, s=make index, T=thin archive
+		.Linker = .clang_bin
+		.LinkerOptions = '-o "%2" -Wl,--start-group "%1" -Wl,--end-group -Wl,--as-needed'
+		// Uncomment to debug linking issues:
+		//	+ ' -Wl,--verbose'
+		.LinkerOptionsEnd = ' -lstdc++ -lpthread -lm -ldl -latomic'
+	]
+#endif
+	ForEach(.X in .Enabled_Toolchains)
+	{
+		^Configs_Toolchains + { ."Config_$X$" }
+	}
+}
+
+// Platforms
+.Configs_Platforms = {}
+ForEach(.Cfg in .Configs_Toolchains)
+{
+	.Config_Linux32 =
+	[
+		Using(.Cfg)
+		.Platform = 'Linux32'
+		.CompilerOptions + ' -m32'
+		.LinkerOptions + ' -m32'
+		.Enabled_Configs - 'MSan' - 'TSan'
+	]
+	.Config_Linux64 =
+	[
+		Using(.Cfg)
+		.Platform = 'Linux64'
+		.CompilerOptions + ' -m64'
+		.LinkerOptions + ' -m64'
+	]
+	ForEach(.X in .Enabled_Platforms)
+	{
+		^Configs_Platforms + { ."Config_$X$" }
+	}
+}
+
+// Traits
+.Configs_Traits = {}
+ForEach(.Cfg in .Configs_Platforms)
+{
+	.Config_Default =
+	[
+		Using(.Cfg)
+		.Trait = 'Default'
+	]
+	.Config_SVKSM =
+	[
+		Using(.Cfg)
+		.Trait = 'SVKSM'
+		.Definitions +
+		{
+			'_SVKS_M_BUILD_'
+		}
+	]
+	.Config_Conferendo =
+	[
+		Using(.Cfg)
+		.Trait = 'Conferendo'
+		.Definitions +
+		{
+			'_BUILD_CONFERENDO'
+		}
+	]
+	.Config_Terminal =
+	[
+		Using(.Cfg)
+		.Trait = 'Terminal'
+		.Definitions +
+		{
+			'VZOCHAT7'
+		}
+	]
+	ForEach(.X in .Enabled_Traits)
+	{
+		^Configs_Traits + { ."Config_$X$" }
+	}
+}
+
+// Configurations
+.Configs = {}
+ForEach(.Cfg in .Configs_Traits)
+{
+	.Config_Debug =
+	[
+		Using(.Cfg)
+		.Config = 'Debug'
+		.CompilerOptions + .CompilerOptions_Debug
+		.LinkerOptions
+			+ ."LinkerOptions_$Platform$_$Config$"
+			+ ."LibPathLocal_$Platform$_$Config$"
+		.Definitions +
+		{
+			'_DEBUG'
+		}
+		.FBuildExtraArgs + ' -nostoponerror'
+	]
+	.Config_Release =
+	[
+		Using(.Cfg)
+		.Config = 'Release'
+		.CompilerOptions + .CompilerOptions_Release
+		.LinkerOptions + ' -Wl,-O1'
+			+ ."LinkerOptions_$Platform$_$Config$"
+			+ ."LibPathLocal_$Platform$_$Config$"
+		.Definitions +
+		{
+			'NDEBUG'
+			'ENABLE_VMPROTECT_BUILD'
+		}
+	]
+	.Config_ReleaseLTO =
+	[
+		Using(.Cfg)
+		.Config = 'ReleaseLTO'
+		.Librarian = '/usr/bin/gcc-ar'
+		.CompilerOptions + .CompilerOptions_ReleaseLTO
+		.LinkerOptions + ' -Wl,-O1 -flto=jobserver -fuse-linker-plugin -O2'
+			+ ."LinkerOptions_$Platform$_$Config$"
+			+ ."LibPathLocal_$Platform$_Release"
+		.Definitions +
+		{
+			'NDEBUG'
+		}
+	]
+	.Config_ASan =
+	[
+		Using(.Cfg)
+		.Config = 'ASan'
+		.CompilerOptions + ' -O2 -g'
+			+ ' -fsanitize=address -fno-omit-frame-pointer'
+		.LinkerOptions + ' -Wl,-O1'
+			+ ' -fsanitize=address'
+			+ ."LibPathLocal_$Platform$_Release"
+		.Definitions +
+		{
+			'NDEBUG'
+		}
+	]
+	.Config_MSan =
+	[
+		Using(.Cfg)
+		.Config = 'MSan'
+		.CompilerOptions + ' -O2 -g'
+			+ ' -fsanitize=memory -fsanitize-memory-track-origins -fno-omit-frame-pointer'
+		.LinkerOptions + ' -Wl,-O1'
+			+ ' -fsanitize=memory'
+			+ ."LibPathLocal_$Platform$_Release"
+		.Definitions +
+		{
+			'NDEBUG'
+		}
+	]
+	.Config_TSan =
+	[
+		Using(.Cfg)
+		.Config = 'TSan'
+		.CompilerOptions + ' -O2 -g'
+			+ ' -fsanitize=thread'
+		.LinkerOptions + ' -Wl,-O1'
+			+ ' -fsanitize=thread'
+			+ ."LibPathLocal_$Platform$_Release"
+		.Definitions +
+		{
+			'NDEBUG'
+		}
+	]
+	.Config_UBSan =
+	[
+		Using(.Cfg)
+		.Config = 'UBSan'
+		.CompilerOptions + ' -O2 -g'
+			+ ' -fsanitize=undefined'
+		.LinkerOptions + ' -Wl,-O1'
+			+ ' -fsanitize=undefined'
+			+ ."LibPathLocal_$Platform$_Release"
+		.Definitions +
+		{
+			'NDEBUG'
+		}
+	]
+	Using(.Cfg) // Load config-specific .Enabled_Configs value
+	ForEach(.X in .Enabled_Configs)
+	{
+		^Configs + { ."Config_$X$" }
+	}
+}
+
+#endif
+
+// Create per toolchain config colletions
+.Configs_MSVC141 = {}
+.Configs_GCC = {}
+.Configs_Clang = {}
+ForEach(.Cfg in .Configs)
+{
+	Using(.Cfg)
+	^"Configs_$Toolchain$" + { .Cfg }
+}
+
+// Create per platform config colletions
+.Configs_Win32 = {}
+.Configs_Win32XP = {}
+.Configs_Win64 = {}
+.Configs_Linux32 = {}
+.Configs_Linux64 = {}
+ForEach(.Cfg in .Configs)
+{
+	Using(.Cfg)
+	^"Configs_$Platform$" + { .Cfg }
+}
+
+// Create per trait config colletions
+.Configs_Default = {}
+.Configs_SVKSM = {}
+.Configs_Conferendo = {}
+.Configs_Terminal = {}
+ForEach(.Cfg in .Configs)
+{
+	Using(.Cfg)
+	^"Configs_$Trait$" + { .Cfg }
+}
+
+// Create per configuration config colletions
+.Configs_Debug = {}
+.Configs_Release = {}
+.Configs_VLD = {}
+.Configs_ReleaseLTO = {}
+.Configs_ASan = {}
+.Configs_MSan = {}
+.Configs_TSan = {}
+.Configs_UBSan = {}
+ForEach(.Cfg in .Configs)
+{
+	Using(.Cfg)
+	^"Configs_$Config$" + { .Cfg }
+}

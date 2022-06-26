@@ -1,0 +1,6 @@
+#if !HAVE_CPPDB
+^Libraries
+	+ 'cppdb_sqlite-$Toolchain$-$Platform$-$Config$-$Trait$'
+#include "link_sqlite.bff"
+#endif
+#include "link_cppdb.bff"

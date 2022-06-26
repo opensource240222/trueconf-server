@@ -1,0 +1,50 @@
+#once
+
+{
+	.ProjectName = 'Client'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/VSClient'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludes
+		+ '$dxsdk_dir$/include'
+	.ExtraIncludesLocal
+			+ '$RepoPath_TCCommon$/Transcoder/ffmpeg'
+		+ '$RepoPath_TCCommon$/Transcoder/vpx/include'
+	.ExtraDefinitions
+		+ 'CONFIG_OS_SUPPORT=1'
+		+ 'CONFIG_MULTITHREAD=1'
+	.SourcePath = .ProjectPath
+	.SourceExcludePath
+		+ '$ProjectPath$/mf'
+		+ '$ProjectPath$/TestClient'
+		+ '$ProjectPath$/TestEchoCancel'
+	.SourceExcludedFiles
+		+ 'VS_AgcWebrtc.h'
+		+ 'VS_AgcWebrtc.cpp'
+
+	.ExternalLibraries_Use
+		+ 'webrtc'
+		+ 'boost'
+		+ 'openssl'
+		+ 'ipp'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../fbuild/update_config.bff"
+
+#include "../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{04555219-F4B7-4C56-A00E-7989DAC55F7A}'
+#include "../fbuild/gen_ide_project.bff"
+}

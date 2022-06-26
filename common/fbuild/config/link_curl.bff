@@ -1,0 +1,7 @@
+#if HAVE_CURL
+^LinkerOptions
+	+ ."curl_LinkerOptions_$Toolchain$_$Platform$_$Config$"
+#else
+^Libraries
+	+ 'libcurl-$Toolchain$-$Platform$-$Config$-$Trait$'
+#endif

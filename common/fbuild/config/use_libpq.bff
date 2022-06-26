@@ -1,0 +1,4 @@
+#if HAVE_LIBPQ
+^Includes
+	+ .libpq_Includes
+#endif

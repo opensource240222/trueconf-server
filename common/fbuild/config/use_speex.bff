@@ -1,0 +1,7 @@
+#if HAVE_SPEEX
+^Includes
+	+ .speex_Includes
+#else
+^IncludesLocal
+	+ '$RepoPath_TCCommon$/libspeex'
+#endif

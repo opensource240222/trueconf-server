@@ -1,0 +1,12 @@
+// Macro that generates action aliases for custom project group if it is specified.
+// These variables are expected to be defined:
+//   .SolutionProjectGroup
+
+.IF_V1 = { .SolutionProjectGroup } - 'All' - 'Main'
+.IF_V2 = {}
+ForEach(.IF_X in .IF_V1) { ^IF_V2 = {''} }
+ForEach(.IF_X in .IF_V2)
+{
+	.GroupName = .SolutionProjectGroup
+#include "gen_project_group_aliases.bff"
+}

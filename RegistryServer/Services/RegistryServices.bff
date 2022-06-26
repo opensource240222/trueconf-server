@@ -1,0 +1,32 @@
+#once
+
+{
+	.ProjectName = 'RegistryServices'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TC3$/RegistryServer/Services'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.SourcePath = .ProjectPath
+
+	.ExternalLibraries_Use
+		+ 'boost'
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+#include "../../common/fbuild/update_config.bff"
+
+#include "../../common/fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../../common/fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{9F36525D-11F1-4E16-8880-C0037DD86243}'
+#include "../../common/fbuild/gen_ide_project.bff"
+}

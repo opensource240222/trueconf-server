@@ -1,0 +1,8 @@
+[*.{c,h}]
+end_of_line = lf
+# Indentation rules doesn't seem to be consistent.
+indent_style = unset
+trim_trailing_whitespace = false
+
+[src/config.h]
+end_of_line = crlf

@@ -1,0 +1,6 @@
+^Includes
+	+ .boost_Includes
+#if __WINDOWS__
+^Definitions
+	+ 'BOOST_ASIO_ENABLE_CANCELIO'
+#endif

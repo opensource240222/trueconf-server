@@ -1,0 +1,42 @@
+#once
+
+#if !__WINDOWS__
+#error BaseClasses is Windows-only project
+#endif
+
+{
+	.ProjectName = 'BaseClasses'
+	^AllProjects + .ProjectName
+
+	.ProjectPath = '$RepoPath_TCCommon$/extlibs/DirectShow$ProjectName$'
+	.TargetName = '$ProjectName$$LIBSuffix$'
+
+	.ExtraIncludesLocal
+		+ .ProjectPath
+	.ExtraDefinitions
+		+ 'WINVER=0x400'
+		+ '_WIN32_DCOM'
+	.SourcePath = .ProjectPath
+	.ProjectConfigs = {}
+
+	ForEach(.Cfg in .Configs)
+	{
+		Using(.Cfg)
+		.Definitions
+			- 'NOMINMAX'
+#include "../../fbuild/update_config.bff"
+
+		.CompilerOptions + ' /Gz'
+
+#include "../../fbuild/gen_def_objlist.bff"
+		Alias('Compile-$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = .LibrarianAdditionalInputs }
+
+		Library('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB') {}
+		Alias('$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$') { .Targets = '$ProjectName$-$Toolchain$-$Platform$-$Config$-$Trait$-LIB' }
+	}
+
+#include "../../fbuild/gen_project_aliases.bff"
+
+	.ProjectGuid = '{C14D9535-35E5-4B7F-8614-B772A214EB0B}'
+#include "../../fbuild/gen_ide_project.bff"
+}

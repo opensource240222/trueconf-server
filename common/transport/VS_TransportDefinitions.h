@@ -1,0 +1,11 @@
+
+#ifndef VS_TRANSPORT_DEFINITIONS_H
+#define VS_TRANSPORT_DEFINITIONS_H
+
+/// 255 name characters + null character (see strlen(name), char name[_MAX_SIZE_ + 1];)
+#define   VS_TRANSPORT_MAX_SIZE_KEY					255
+#define   VS_TRANSPORT_MAX_SIZE_SERVICE_NAME		255
+#define   VS_TRANSPORT_MAX_SIZE_ADD_STRING			255
+#define   VS_TRANSPORT_MAX_SIZE_BODY				16777216
+
+#endif  // VS_TRANSPORT_DEFINITIONS_H
